@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-        StatusBarUtil.setStatusBarTranslucent(this);
+        StatusBarUtil.changeStatusBarTextColor(this);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

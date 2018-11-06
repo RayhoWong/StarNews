@@ -111,25 +111,4 @@ public class StatusBarUtil {
         toolbar.setPadding(toolbar.getPaddingLeft(), toolbar.getPaddingTop() + compatPadingTop,
                 toolbar.getPaddingRight(), toolbar.getPaddingBottom());
     }
-
-   /* public int getStatusBarHeight() {
-        int statusBarHeight = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
-        }
-        Log.d("CompatToolbar", "状态栏高度：" + px2dp(statusBarHeight) + "dp");
-        return statusBarHeight;
-    }
-
-    public float px2dp(float pxVal) {
-        final float scale = getContext().getResources().getDisplayMetrics().density;
-        return (pxVal / scale);
-    }
-*/
-
-
-
-
-
 }
