@@ -85,7 +85,6 @@ public class StatusBarUtil {
         }
     }
 
-
     /**
      * 为ToolBar添加一个状态栏高度的paddingTop
      * 效果等于fitsSystemWindows=true这个属性
