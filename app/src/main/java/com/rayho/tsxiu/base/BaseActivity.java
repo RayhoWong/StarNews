@@ -1,4 +1,4 @@
-package com.rayho.tsxiu;
+package com.rayho.tsxiu.base;
 
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.utils.StatusBarUtil;
+
+import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -29,6 +34,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         initToolBar();
         //默认6.0及以上改字体颜色(白色背景->深色字体)
         StatusBarUtil.changeStatusBarTextColor(this);
+
+        ButterKnife.bind(this);
 
         afterSetContentView();
     }
@@ -81,8 +88,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    /**
+     * 某些界面可能需要定制toolbar 那么就隐藏默认Base的toolbar
+     */
+    public void hideBaseToolbar(){
+        if(mToolbar.getVisibility() == View.VISIBLE){
+            mToolbar.setVisibility(View.GONE);
+        }
     }
 
     public TextView getToolbarTitle() {
@@ -152,4 +169,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean isShowBacking() {
         return true;
     }
+
 }

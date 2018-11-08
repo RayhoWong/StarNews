@@ -1,4 +1,4 @@
-package com.rayho.tsxiu;
+package com.rayho.tsxiu.utils;
 
 import android.app.Activity;
 import android.graphics.Color;

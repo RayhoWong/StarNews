@@ -33,7 +33,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:9.0.0-rc1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
 
-    //沉浸状态栏
-//    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+    //基于头条屏幕适配原理的适配方案
+//    implementation 'me.jessyan:autosize:1.0.6'
+
 
 }

@@ -1,4 +1,4 @@
-package com.rayho.tsxiu;
+package com.rayho.tsxiu.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,14 +11,18 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.base.BaseActivity;
+import com.rayho.tsxiu.utils.StatusBarUtil;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.message)
     TextView mTextMessage;
-    @BindView(R.id.toolbar)
+    @BindView(R.id.toolbarMain)
     Toolbar mToolBar;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -40,14 +44,15 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
-        StatusBarUtil.changeStatusBarTextColor(this);
-
+    @Override
+    public void afterSetContentView() {
+        hideBaseToolbar();
         mToolBar.setNavigationIcon(R.mipmap.arrow_back);
         mToolBar.setTitle("首页");
         mToolBar.setLogo(R.mipmap.ic_launcher);
