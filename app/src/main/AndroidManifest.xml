@@ -11,13 +11,13 @@
         android:theme="@style/AppTheme">
 
 
-        <!--按照设计图上的宽度高度 设置宽度高度`
+        <!--设计图一般按照主流的1080x1920作图 通过公式换算成dp-->
         <meta-data
             android:name="design_width_in_dp"
-            android:value="480"/>
+            android:value="360"/>
         <meta-data
             android:name="design_height_in_dp"
-            android:value="960"/>-->
+            android:value="640"/>
 
 
 

@@ -34,7 +34,11 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
 
     //基于头条屏幕适配原理的适配方案
-//    implementation 'me.jessyan:autosize:1.0.6'
+    implementation 'me.jessyan:autosize:1.0.6'
+
+    //MaterialDialog
+//    implementation 'com.afollestad.material-dialogs:core:2.0.0-beta4'
+
 
 
 }
