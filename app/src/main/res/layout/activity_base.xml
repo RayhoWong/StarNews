@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".base.BaseActivity">
 
-    <include layout="@layout/toolbar_layout"/>
+    <include layout="@layout/toolbar"/>
 
     <FrameLayout
         android:id="@+id/fl_content"

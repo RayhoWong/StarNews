@@ -42,7 +42,7 @@ public class TestActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(TestActivity.this,"我被收藏了",Toast.LENGTH_SHORT).show();
-//                ToastUtil toast = new ToastUtil(TestActivity.this,R.layout.toast_layout,"hahah");
+//                ToastUtil toast = new ToastUtil(TestActivity.this,R.layout.toast,"hahah");
 //                toast.showAtCenter();
 //                toast.showAtTop();
 //                toast.show(3000);
@@ -101,7 +101,6 @@ public class TestActivity extends BaseActivity {
 //                    }
 //                })
                 .show();
-
     }
 
 
