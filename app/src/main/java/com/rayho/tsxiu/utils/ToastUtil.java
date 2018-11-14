@@ -24,11 +24,11 @@ public class ToastUtil {
     private Handler mHandler = new Handler();
     private boolean canceled = true;
 
-    public ToastUtil(Context context, int layoutId, String msg) {
+    public ToastUtil(Context context,String msg) {
         message = msg;
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //自定义布局
-        View view = inflater.inflate(layoutId, null);
+        //自定义toast布局
+        View view = inflater.inflate(R.layout.toast, null);
         //自定义toast文本
         mTextView = view.findViewById(R.id.toast_msg);
         mTextView.setText(msg);
@@ -89,7 +89,6 @@ public class ToastUtil {
         Log.i("ToastUtil", "Toast that customed duration hide...");
     }
 
-
     /*private void showUntilCancel() {
         if (canceled) { //如果已经取消显示，就直接return
             return;
@@ -121,7 +120,7 @@ public class ToastUtil {
 
         @Override
         public void onFinish() {
-            hide();
+//            hide();
         }
     }
 }

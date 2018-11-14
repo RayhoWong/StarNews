@@ -10,7 +10,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.app.AppApplication;
 import com.rayho.tsxiu.utils.StatusBarUtil;
 
 import butterknife.ButterKnife;
@@ -34,10 +36,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         initToolBar();
         //默认6.0及以上改字体颜色(白色背景->深色字体)
         StatusBarUtil.changeStatusBarTextColor(this);
-
         ButterKnife.bind(this);
-
         afterSetContentView();
+
+
+
     }
 
     @Override

@@ -32,14 +32,14 @@ dependencies {
     //ButterKnife
     implementation 'com.jakewharton:butterknife:9.0.0-rc1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
-
     //基于头条屏幕适配原理的适配方案
     implementation 'me.jessyan:autosize:1.0.6'
-
     //MaterialDialog(这个库最新版2.0已经用kotlin重构了不支持java 但是旧版支持java调用
     // 具体api参考项目主页的Kotlin代码)
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    //超火的工具类大全
+    implementation 'com.blankj:utilcode:1.21.2'
 
 
 }
