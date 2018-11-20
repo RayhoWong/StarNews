@@ -34,6 +34,10 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
+    implementation 'com.android.support:recyclerview-v7:28.1.1'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
     //ButterKnife
     implementation 'com.jakewharton:butterknife:9.0.0-rc1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
@@ -47,6 +51,23 @@ dependencies {
     implementation 'com.blankj:utilcode:1.21.2'
     //日志库Timeber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    // Android 支持 Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    // 衔接 Retrofit & RxJava
+    // 此处一定要注意使用RxJava2的版本
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    // 支持Gson解析
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    //okhttp网络日志拦截器
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    // 依赖以下两个库，会自动引用基础库与Android库
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-navi:2.1.0'
+
+
 
 
 }

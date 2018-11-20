@@ -5,18 +5,14 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseActivity;
+import com.rayho.tsxiu.ui.CommonDialog;
 import com.rayho.tsxiu.utils.StatusBarUtil;
 import com.rayho.tsxiu.utils.ToastUtil;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import timber.log.Timber;
-import ui.CommonDialog;
 
 public class TestActivity extends BaseActivity {
 
