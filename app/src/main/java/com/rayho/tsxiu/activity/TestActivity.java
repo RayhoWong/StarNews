@@ -15,6 +15,8 @@ import com.rayho.tsxiu.utils.ToastUtil;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import timber.log.Timber;
+import ui.CommonDialog;
 
 public class TestActivity extends BaseActivity {
 
@@ -26,7 +28,8 @@ public class TestActivity extends BaseActivity {
     @Override
     public void afterSetContentView() {
         StatusBarUtil.setStatusBarTranslucent(this);
-
+        //tag为类名
+        Timber.d("hahaha");
 
 
         setToolbarTitle("设置");
@@ -46,7 +49,21 @@ public class TestActivity extends BaseActivity {
 //                toast.showAtCenter();
 //                toast.showAtTop();
 //                toast.show(3000);
-                openDialog();
+//                openDialog();
+                CommonDialog dialog = new CommonDialog(TestActivity.this);
+                dialog.setTitle("test")
+                      .setMessage("hahahha发生的发生的发发送到是发生的发生的发" +
+                              "水电费的说法是" +
+                              "胜多负少的水电费水电费是sfsfsdssfs发生放水电费水电费水电费hahahahah")
+//                      .setImageResId(R.mipmap.ic_launcher)
+                      .setOnClickBottomListener(new CommonDialog.OnClickBottomListener() {
+                          @Override
+                          public void onPositiveClick() {
+                              ToastUtil util = new ToastUtil(TestActivity.this,"haha");
+                              util.show();
+                          }
+                      })
+                      .show();
             }
         });
     }

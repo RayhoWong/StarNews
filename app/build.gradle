@@ -13,9 +13,14 @@ android {
     }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+        }
+
     }
 }
 
@@ -40,6 +45,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     //超火的工具类大全
     implementation 'com.blankj:utilcode:1.21.2'
+    //日志库Timeber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
 
 }

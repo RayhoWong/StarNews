@@ -16,6 +16,6 @@
         android:layout_marginRight="35dp"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
-        android:text="你好"/>
+        />
 
 </android.widget.RelativeLayout>

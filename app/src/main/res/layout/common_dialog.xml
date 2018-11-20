@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
-    android:background="@drawable/bg_custom_dialog"
+    android:background="@drawable/bg_common_dialog"
     android:minWidth="260dp"
     android:orientation="vertical"
     android:paddingTop="16dp">
@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:maxLines="3"
         android:gravity="center|left"
         android:lineSpacingExtra="3dp"
         android:lineSpacingMultiplier="1.2"
@@ -62,16 +63,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/negtive"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@null"
+            android:clickable="true"
             android:gravity="center"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
             android:singleLine="true"
             android:textColor="#999999"
             android:textSize="16sp"
@@ -83,16 +81,13 @@
             android:layout_height="match_parent"
             android:background="#E4E4E4" />
 
-        <Button
+        <TextView
             android:id="@+id/positive"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@null"
+            android:clickable="true"
             android:gravity="center"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
             android:singleLine="true"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
