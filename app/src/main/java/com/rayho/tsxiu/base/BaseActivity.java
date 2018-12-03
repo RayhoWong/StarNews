@@ -38,9 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         StatusBarUtil.changeStatusBarTextColor(this);
         ButterKnife.bind(this);
         afterSetContentView();
-
-
-
     }
 
     @Override
