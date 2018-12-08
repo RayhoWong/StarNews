@@ -1,4 +1,4 @@
-package com.rayho.tsxiu.fragment;
+package com.rayho.tsxiu.module_photo;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,26 +13,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rayho.tsxiu.R;
-import com.rayho.tsxiu.viewmodel.VideoViewModel;
 
-public class VideoFragment extends Fragment {
+public class PhotoTabFragment extends Fragment {
 
-    private VideoViewModel mViewModel;
+    private PhotoTabViewModel mViewModel;
 
-    public static VideoFragment newInstance() {
-        return new VideoFragment();
+    public static PhotoTabFragment newInstance() {
+        return new PhotoTabFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.video_fragment, container, false);
+        return inflater.inflate(R.layout.photo_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(VideoViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(PhotoTabViewModel.class);
         // TODO: Use the ViewModel
     }
 

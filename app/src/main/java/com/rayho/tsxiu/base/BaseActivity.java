@@ -4,6 +4,8 @@ import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -23,7 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private TextView mTvTitle;//中间的主标题
     private TextView mTvSubTitle;//toolbar右边的标题
     private ImageView mIvRightImage;//toolbar右边的图标
-    View mRootView;
+    private View mRootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         afterSetContentView();
     }
+
 
     @Override
     protected void onStart() {

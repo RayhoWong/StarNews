@@ -1,6 +1,7 @@
 package com.rayho.tsxiu.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
