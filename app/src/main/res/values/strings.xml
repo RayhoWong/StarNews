@@ -4,6 +4,8 @@
     <string name="title_photo">美图</string>
     <string name="title_video">视频</string>
     <string name="title_mine">我的</string>
+    <string name="search_content">即刻搜索内容,打开新视界...</string>
+    <string name="search_scan">扫描</string>
 
     <string-array name="BottomNavigationNames">
         <item>首页</item>

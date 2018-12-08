@@ -27,8 +27,8 @@ public class NewsTabFragment extends Fragment {
     @BindView(R.id.container)
     CoordinatorLayout container;
     private Unbinder unbinder;
-    @BindView(R.id.toolbar_news)
-    Toolbar mToolbar;
+   /* @BindView(R.id.toolbar_news)
+    Toolbar mToolbar;*/
     private NewsTabViewModel mViewModel;
 
     public static NewsTabFragment newInstance() {
@@ -41,7 +41,7 @@ public class NewsTabFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.news_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initToolbar();
+//        initToolbar();
         return view;
     }
 
@@ -60,7 +60,7 @@ public class NewsTabFragment extends Fragment {
         }
     }
 
-    private void initToolbar() {
+   /* private void initToolbar() {
         mToolbar.setTitle("头条");
         mToolbar.setLogo(R.mipmap.ic_launcher);
         mToolbar.inflateMenu(R.menu.setting_menu);
@@ -92,6 +92,6 @@ public class NewsTabFragment extends Fragment {
             }
         });
 
-    }
+    }*/
 
 }
