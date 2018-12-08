@@ -1,34 +1,36 @@
 package com.rayho.tsxiu.module_news;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.rayho.tsxiu.R;
-import com.rayho.tsxiu.activity.TestActivity;
-import com.rayho.tsxiu.utils.SnackbarUtil;
 import com.rayho.tsxiu.utils.ToastUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class NewsTabFragment extends Fragment {
 
     @BindView(R.id.container)
     CoordinatorLayout container;
+    @BindView(R.id.ll_search)
+    LinearLayout mllSearch;
+    @BindView(R.id.ll_scan)
+    LinearLayout mllScan;
     private Unbinder unbinder;
-   /* @BindView(R.id.toolbar_news)
-    Toolbar mToolbar;*/
+    /* @BindView(R.id.toolbar_news)
+     Toolbar mToolbar;*/
     private NewsTabViewModel mViewModel;
 
     public static NewsTabFragment newInstance() {
@@ -57,6 +59,21 @@ public class NewsTabFragment extends Fragment {
         super.onDestroyView();
         if (unbinder != null) {
             unbinder.unbind();
+        }
+    }
+
+    @OnClick({R.id.ll_search, R.id.ll_scan})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_search:
+                ToastUtil util = new ToastUtil(getActivity(),"search");
+                util.show();
+                break;
+            case R.id.ll_scan:
+                ToastUtil util2 = new ToastUtil(getActivity(),"scan");
+                util2.show();
+//                util2.show(Toast.LENGTH_SHORT);
+                break;
         }
     }
 
