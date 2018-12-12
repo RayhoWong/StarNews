@@ -37,9 +37,10 @@ public abstract class LazyLoadFragment extends Fragment {
         return view;
     }
 
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         isViewCreated = true;
         lazyLoad();
     }
@@ -58,6 +59,11 @@ public abstract class LazyLoadFragment extends Fragment {
      */
     public abstract int getLayoutId();
 
+    /**
+     *
+     * 通过判断setUserVisibleHint的isVisibleToUser，判断界面是否可见
+     * @param isVisibleToUser
+     */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

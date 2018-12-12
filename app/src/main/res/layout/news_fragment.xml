@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -18,7 +19,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="30dp"
             android:background="@drawable/bg_search_layout"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -70,16 +70,32 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
-        <!-- <androidx.appcompat.widget.Toolbar
-             android:id="@+id/toolbar_news"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:minHeight="?attr/actionBarSize"
-             app:popupTheme="@style/ToolbarPopupTheme">
-         </androidx.appcompat.widget.Toolbar>-->
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="bottom"
+            app:tabIndicatorHeight="3dp"
+            app:tabPaddingTop="-5dp"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabTextColor="@android:color/black"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="scrollable"
+            app:tabGravity="fill"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </androidx.viewpager.widget.ViewPager>
+
+
+   <!-- <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -167,6 +183,6 @@
                 android:padding="50dp"
                 android:text="f" />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

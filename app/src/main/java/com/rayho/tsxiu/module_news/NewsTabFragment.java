@@ -5,16 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.utils.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,10 +35,16 @@ public class NewsTabFragment extends Fragment {
     LinearLayout mllSearch;
     @BindView(R.id.ll_scan)
     LinearLayout mllScan;
+    @BindView(R.id.tablayout)
+    TabLayout mTabLayout;
+    @BindView(R.id.viewpager)
+    ViewPager mViewPager;
+
     private Unbinder unbinder;
-    /* @BindView(R.id.toolbar_news)
-     Toolbar mToolbar;*/
     private NewsTabViewModel mViewModel;
+    private List<Fragment> fragments;
+    private String[] titles;
+
 
     public static NewsTabFragment newInstance() {
         return new NewsTabFragment();
@@ -52,8 +65,63 @@ public class NewsTabFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewsTabViewModel.class);
         // TODO: Use the ViewModel
+        initView();
     }
 
+    private void initView(){
+        titles = new String[]{"社会","科技","娱乐","体育","文化","视频","金融"};
+        fragments = new ArrayList<>();
+        for(int i=0;i<titles.length;i++){
+            fragments.add(ContentFragment.newInstance(titles[i]));
+        }
+        mViewPager.setAdapter(new ContentAdapter(getChildFragmentManager()));
+        //除当前页面的预加载页面数(保证切换页面时 不会重新创建)
+        mViewPager.setOffscreenPageLimit(titles.length - 1);
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+
+    class ContentAdapter extends FragmentPagerAdapter {
+        public ContentAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles[position];
+        }
+    }
+
+
+    @OnClick({R.id.ll_search, R.id.ll_scan})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_search:
+                ToastUtil util = new ToastUtil(getActivity(), "search");
+                util.show();
+                break;
+            case R.id.ll_scan:
+                ToastUtil util2 = new ToastUtil(getActivity(), "scan");
+                util2.show();
+//                util2.show(Toast.LENGTH_SHORT);
+                break;
+        }
+    }
+
+    /**
+     * Butterknife解绑
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -61,54 +129,4 @@ public class NewsTabFragment extends Fragment {
             unbinder.unbind();
         }
     }
-
-    @OnClick({R.id.ll_search, R.id.ll_scan})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.ll_search:
-                ToastUtil util = new ToastUtil(getActivity(),"search");
-                util.show();
-                break;
-            case R.id.ll_scan:
-                ToastUtil util2 = new ToastUtil(getActivity(),"scan");
-                util2.show();
-//                util2.show(Toast.LENGTH_SHORT);
-                break;
-        }
-    }
-
-   /* private void initToolbar() {
-        mToolbar.setTitle("头条");
-        mToolbar.setLogo(R.mipmap.ic_launcher);
-        mToolbar.inflateMenu(R.menu.setting_menu);
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.search:
-                        Intent intent = new Intent(getActivity(), TestActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.favor:
-                        SnackbarUtil.showSnackbarColorAction(getActivity(), container,
-                                "ni hao a", "press", R.color.colorAccent, 2000,
-                                R.color.colorPrimary, R.color.colorPrimary,
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        ToastUtil toastUtil = new ToastUtil(getActivity(), "testtest");
-                                        toastUtil.show();
-//                                       ActivityUtils.startActivity(TestActivity.class);
-                                    }
-                                });
-                        break;
-                    case R.id.like:
-                        break;
-                }
-                return false;
-            }
-        });
-
-    }*/
-
 }
