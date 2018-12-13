@@ -54,7 +54,6 @@ public class MainActivity extends BaseActivity {
         initBottomNavigationBar();
         initFragment();
 
-        listener = new ContentFragment();
     }
 
 
