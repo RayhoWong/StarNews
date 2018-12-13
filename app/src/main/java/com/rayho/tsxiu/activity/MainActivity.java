@@ -2,13 +2,16 @@ package com.rayho.tsxiu.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseActivity;
+import com.rayho.tsxiu.base.listener.OnTabReselectedListener;
 import com.rayho.tsxiu.module_mine.MineTabFragment;
 import com.rayho.tsxiu.module_news.NewsTabFragment;
+import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.module_photo.PhotoTabFragment;
 import com.rayho.tsxiu.module_video.VideoTabFragment;
 
@@ -16,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
 
@@ -26,14 +30,16 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar mBottomNavigationBar;
 
-    Fragment mFragment;//当前显示的fragment
-    Fragment newsTabFragment;
-    Fragment photoTabFragment;
-    Fragment mineTabFragment;
-    Fragment videoTabFragment;
+    private Fragment mFragment;//当前显示的fragment
+    private Fragment newsTabFragment;
+    private Fragment photoTabFragment;
+    private Fragment mineTabFragment;
+    private Fragment videoTabFragment;
 
-    String[] titles;
-    int lastSelectedPosition = 0;
+    private String[] titles;
+    private int lastSelectedPosition = 0;
+
+    private OnTabReselectedListener listener;
 
 
     @Override
@@ -47,6 +53,8 @@ public class MainActivity extends BaseActivity {
         initToolbar();
         initBottomNavigationBar();
         initFragment();
+
+        listener = new ContentFragment();
     }
 
 
@@ -97,6 +105,7 @@ public class MainActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         //如果用以下这种做法则不保存状态，再次进来的话会显示默认tab
         //总是执行这句代码来调用父类去保存视图层的状态
+        //解决Fragment重叠的问题
         //super.onSaveInstanceState(outState);
     }
 
@@ -135,6 +144,7 @@ public class MainActivity extends BaseActivity {
             public void onTabSelected(int position) {
                 switch (position){
                     case 0:
+
                         switchFragment(newsTabFragment,"news");
                         break;
                     case 1:
@@ -154,12 +164,30 @@ public class MainActivity extends BaseActivity {
 
             }
 
+            /**
+             * 再次点击当前选中的Tab时，当前显示Fragment重新加载数据
+             * @param position
+             */
             @Override
             public void onTabReselected(int position) {
+                if(position == 0){
+                    Timber.tag("MAINMAIN");
+                    Timber.d("NesTabFragment is called.............");
+                    listener.updateData();
+                }
 
             }
         });
     }
+
+    /**
+     * 获取当前显示的ContentFragment实例
+     * @param listener
+     */
+    public void setOnTabReselectedListener(OnTabReselectedListener listener){
+        this.listener = listener;
+    }
+
 
     private void switchFragment(Fragment fragment,String tag){
         FragmentManager fm = getSupportFragmentManager();
@@ -177,5 +205,4 @@ public class MainActivity extends BaseActivity {
             mFragment = fragment;
         }
     }
-
 }

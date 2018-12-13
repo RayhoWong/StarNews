@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.activity.MainActivity;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.utils.ToastUtil;
 
@@ -26,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 public class NewsTabFragment extends Fragment {
 
@@ -45,6 +47,9 @@ public class NewsTabFragment extends Fragment {
     private List<Fragment> fragments;
     private String[] titles;
 
+    private ContentFragment mFragment;//当前显示的fragment
+    private MainActivity mActivity;//所依赖的activity
+
 
     public static NewsTabFragment newInstance() {
         return new NewsTabFragment();
@@ -63,6 +68,8 @@ public class NewsTabFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mActivity = (MainActivity) getActivity();
         mViewModel = ViewModelProviders.of(this).get(NewsTabViewModel.class);
         // TODO: Use the ViewModel
         initView();
@@ -100,6 +107,21 @@ public class NewsTabFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
             return titles[position];
+        }
+
+        /**
+         * 滑动后当前显示的Fragment
+         * @param container
+         * @param position
+         * @param object 当前显示的Fragment实例
+         */
+        @Override
+        public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            super.setPrimaryItem(container, position, object);
+            Timber.d("CALLEDEDED");
+            mFragment = (ContentFragment) object;
+            //得到当前的fragment
+            mActivity.setOnTabReselectedListener(mFragment);
         }
     }
 

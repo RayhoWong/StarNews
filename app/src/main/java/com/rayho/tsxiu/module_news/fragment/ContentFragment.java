@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.LazyLoadFragment;
+import com.rayho.tsxiu.base.listener.OnTabReselectedListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +19,7 @@ import timber.log.Timber;
 /**
  * 新闻列表界面(根据分类id，显示不同的新闻)
  */
-public class ContentFragment extends LazyLoadFragment {
+public class ContentFragment extends LazyLoadFragment implements OnTabReselectedListener {
 
     @BindView(R.id.tv_tag)
     TextView mTvTag;
@@ -53,6 +54,15 @@ public class ContentFragment extends LazyLoadFragment {
     @Override
     public int getLayoutId() {
         return R.layout.content_fragment;
+    }
+
+
+    public void updateData(){
+        if(mTvTag != null){
+            mTvTag.setText("updateData!!!");
+        }else {
+            Timber.d("textview = null");
+        }
     }
 
 
