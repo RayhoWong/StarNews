@@ -2,7 +2,6 @@ package com.rayho.tsxiu.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -11,7 +10,6 @@ import com.rayho.tsxiu.base.BaseActivity;
 import com.rayho.tsxiu.base.listener.OnTabReselectedListener;
 import com.rayho.tsxiu.module_mine.MineTabFragment;
 import com.rayho.tsxiu.module_news.NewsTabFragment;
-import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.module_photo.PhotoTabFragment;
 import com.rayho.tsxiu.module_video.VideoTabFragment;
 
@@ -143,7 +141,6 @@ public class MainActivity extends BaseActivity {
             public void onTabSelected(int position) {
                 switch (position){
                     case 0:
-
                         switchFragment(newsTabFragment,"news");
                         break;
                     case 1:
@@ -164,7 +161,7 @@ public class MainActivity extends BaseActivity {
             }
 
             /**
-             * 再次点击当前选中的Tab时，当前显示Fragment重新加载数据
+             * 再次点击首页Tab时，当前显示Fragment重新加载数据
              * @param position
              */
             @Override
