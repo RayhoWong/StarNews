@@ -1,11 +1,13 @@
 package com.rayho.tsxiu.module_news;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.goach.tabdemo.fragment.ChannelActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.activity.MainActivity;
@@ -49,6 +51,7 @@ public class NewsTabFragment extends Fragment {
 
     private ContentFragment mFragment;//当前显示的fragment
     private MainActivity mActivity;//所依赖的activity
+
 
 
     public static NewsTabFragment newInstance() {
@@ -134,9 +137,12 @@ public class NewsTabFragment extends Fragment {
                 util.show();
                 break;
             case R.id.ll_scan:
-                ToastUtil util2 = new ToastUtil(getActivity(), "scan");
-                util2.show();
+//                ToastUtil util2 = new ToastUtil(getActivity(), "scan");
+//                util2.show();
+//                mActivity.startActivity(new Intent(mActivity, com.goach.tabdemo.activity.MainActivity.class));
 //                util2.show(Toast.LENGTH_SHORT);
+                  mActivity.startActivity(new Intent(mActivity, ChannelActivity.class));
+
                 break;
         }
     }
