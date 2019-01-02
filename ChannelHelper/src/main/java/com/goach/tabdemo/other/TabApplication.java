@@ -1,4 +1,4 @@
-package com.goach.tabdemo;
+package com.goach.tabdemo.other;
 
 import android.app.Application;
 import android.content.Context;

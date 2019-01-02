@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
-import com.goach.tabdemo.TabApplication;
+import com.goach.tabdemo.other.TabApplication;
 
 /**
  * Created by 钟光新 on 2016/9/10 0010.

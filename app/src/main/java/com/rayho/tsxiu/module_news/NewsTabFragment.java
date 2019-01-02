@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.goach.tabdemo.fragment.ChannelActivity;
+import com.goach.tabdemo.activity.ChannelActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.activity.MainActivity;

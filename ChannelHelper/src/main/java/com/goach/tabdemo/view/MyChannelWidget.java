@@ -1,4 +1,4 @@
-package com.goach.tabdemo.activity;
+package com.goach.tabdemo.view;
 
 import android.graphics.Color;
 

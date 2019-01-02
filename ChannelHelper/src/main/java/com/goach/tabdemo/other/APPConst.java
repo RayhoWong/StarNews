@@ -1,4 +1,4 @@
-package com.goach.tabdemo;
+package com.goach.tabdemo.other;
 
 /**
  * Created by 钟光新 on 2016/10/16 0016.

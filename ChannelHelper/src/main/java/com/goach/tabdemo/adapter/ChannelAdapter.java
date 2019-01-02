@@ -14,18 +14,18 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.goach.tabdemo.APPConst;
+import com.goach.tabdemo.other.APPConst;
 import com.goach.tabdemo.R;
-import com.goach.tabdemo.activity.MyChannelHeaderWidget;
-import com.goach.tabdemo.activity.MyChannelWidget;
-import com.goach.tabdemo.activity.RecChannelHeaderWidget;
-import com.goach.tabdemo.activity.RecChannelWidget;
+import com.goach.tabdemo.view.MyChannelHeaderWidget;
+import com.goach.tabdemo.view.MyChannelWidget;
+import com.goach.tabdemo.view.RecChannelHeaderWidget;
+import com.goach.tabdemo.view.RecChannelWidget;
 import com.goach.tabdemo.base.EditModeHandler;
 import com.goach.tabdemo.base.IChannelType;
 import com.goach.tabdemo.base.ItemDragListener;
 import com.goach.tabdemo.base.ItemDragVHListener;
 import com.goach.tabdemo.bean.ChannelBean;
-import com.goach.tabdemo.view.helper.ItemDragHelperCallback;
+import com.goach.tabdemo.helper.ItemDragHelperCallback;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import java.util.List;
@@ -100,7 +100,8 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
             return IChannelType.TYPE_MY_CHANNEL_HEADER;
         if(position>=mMyHeaderCount&&position<mMyChannelItems.size()+mMyHeaderCount)
             return IChannelType.TYPE_MY_CHANNEL;
-        if(position>=mMyChannelItems.size()+mMyHeaderCount&&position<mMyChannelItems.size()+mMyHeaderCount+mRecHeaderCount)
+        if(position>=mMyChannelItems.size()+mMyHeaderCount&&position<mMyChannelItems.size()
+                +mMyHeaderCount+mRecHeaderCount)
             return IChannelType.TYPE_REC_CHANNEL_HEADER;
         return IChannelType.TYPE_REC_CHANNEL;
     }

@@ -1,4 +1,4 @@
-package com.goach.tabdemo.view.helper;
+package com.goach.tabdemo.helper;
 
 
 import com.goach.tabdemo.base.ItemDragListener;
