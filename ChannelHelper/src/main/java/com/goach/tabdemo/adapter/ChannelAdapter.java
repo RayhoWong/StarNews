@@ -313,6 +313,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
         mMyChannelItems.add(item);
         return position;
     }
+
     private void startAnimation(RecyclerView recyclerView, final View currentView, float targetX, float targetY) {
         final ViewGroup viewGroup = (ViewGroup) recyclerView.getParent();
         final ImageView mirrorView = addMirrorView(viewGroup, recyclerView, currentView);
@@ -337,6 +338,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
             }
         });
     }
+
     private ImageView addMirrorView(ViewGroup parent, RecyclerView recyclerView, View view) {
 /**
  * 我们要获取cache首先要通过setDrawingCacheEnable方法开启cache，然后再调用getDrawingCache方法就可以获得view的cache图片了。

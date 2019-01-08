@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="35dp"
-    android:gravity="center_vertical">
+    android:layout_height="45dp"
+    android:gravity="center_vertical"
+    android:layout_marginLeft="5dp"
+    android:layout_marginBottom="5dp">
+
     <TextView
         android:id="@+id/id_channel_title"
         android:layout_width="match_parent"

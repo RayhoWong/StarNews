@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.goach.tabdemo.other.APPConst;
 import com.goach.tabdemo.R;
 import com.goach.tabdemo.adapter.ChannelAdapter;
 import com.goach.tabdemo.base.IChannelType;
 import com.goach.tabdemo.bean.ChannelBean;
+import com.goach.tabdemo.other.APPConst;
 import com.goach.tabdemo.util.GridItemDecoration;
 
 import java.util.ArrayList;
