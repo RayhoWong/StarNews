@@ -3,4 +3,6 @@
     <string name="channel_my_header">我的频道</string>
     <string name="my_header_tip">点击进入频道</string>
     <string name="edit_mode">编辑</string>
+    <string name="channel_rec">频道推荐</string>
+    <string name="add_channel">点击添加频道</string>
 </resources>

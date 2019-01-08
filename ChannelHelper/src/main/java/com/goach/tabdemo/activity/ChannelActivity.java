@@ -8,8 +8,6 @@ import com.goach.tabdemo.R;
 import com.goach.tabdemo.adapter.ChannelAdapter;
 import com.goach.tabdemo.base.IChannelType;
 import com.goach.tabdemo.bean.ChannelBean;
-import com.goach.tabdemo.other.APPConst;
-import com.goach.tabdemo.util.GridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
     private ImageView mIvClose;
     private RecyclerView mRecyclerView;
     private ChannelAdapter mRecyclerAdapter;
-    private String[] myStrs = new String[]{"热门","关注","技术","科技","商业","互联网","涨知识","时尚"};
+    private String[] myStrs = new String[]{"热门","关注","技术","科技","商业","互联网","涨知识","时尚","我麻烦德萨"};
     private String[] recStrs = new String[]{"设计","天文","美食","星座","历史","消费维权","体育","明星八卦"};
     private List<ChannelBean> mMyChannelList;
     private List<ChannelBean> mRecChannelList ;
@@ -70,12 +68,11 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
             }
         });
         mRecyclerView.setLayoutManager(gridLayout);
-//        mRecyclerView.addItemDecoration(new GridItemDecoration(APPConst.ITEM_SPACE));
     }
 
     private void initData(){
         mMyChannelList = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             ChannelBean channelBean = new ChannelBean();
             channelBean.setTabName(myStrs[i]);
             channelBean.setTabType(i==0?0:i==1?1:2);
