@@ -65,7 +65,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         }
     }
 
-
     @Override
     public void loadData() {
         mViewModel = ViewModelProviders.of(this).get(ContentViewModel.class);

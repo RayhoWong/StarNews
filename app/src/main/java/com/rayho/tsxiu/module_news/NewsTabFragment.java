@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.goach.tabdemo.activity.ChannelActivity;
@@ -43,6 +44,8 @@ public class NewsTabFragment extends Fragment {
     TabLayout mTabLayout;
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
+    @BindView(R.id.channel_menu)
+    ImageView mIvMenu;
 
     private Unbinder unbinder;
     private NewsTabViewModel mViewModel;
@@ -51,7 +54,6 @@ public class NewsTabFragment extends Fragment {
 
     private ContentFragment mFragment;//当前显示的fragment
     private MainActivity mActivity;//所依赖的activity
-
 
 
     public static NewsTabFragment newInstance() {
@@ -78,10 +80,10 @@ public class NewsTabFragment extends Fragment {
         initView();
     }
 
-    private void initView(){
-        titles = new String[]{"社会","科技","娱乐","体育","文化","视频","金融"};
+    private void initView() {
+        titles = new String[]{"社会", "科技", "娱乐", "体育", "文化", "视频", "金融"};
         fragments = new ArrayList<>();
-        for(int i=0;i<titles.length;i++){
+        for (int i = 0; i < titles.length; i++) {
             fragments.add(ContentFragment.newInstance(titles[i]));
         }
         mViewPager.setAdapter(new ContentAdapter(getChildFragmentManager()));
@@ -91,7 +93,7 @@ public class NewsTabFragment extends Fragment {
     }
 
 
-    class ContentAdapter extends FragmentPagerAdapter {
+    private class ContentAdapter extends FragmentPagerAdapter {
         public ContentAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -114,9 +116,10 @@ public class NewsTabFragment extends Fragment {
 
         /**
          * 滑动后当前显示的Fragment
+         *
          * @param container
          * @param position
-         * @param object 当前显示的Fragment实例
+         * @param object    当前显示的Fragment实例
          */
         @Override
         public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
@@ -129,7 +132,7 @@ public class NewsTabFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.ll_search, R.id.ll_scan})
+    @OnClick({R.id.ll_search, R.id.ll_scan,R.id.channel_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_search:
@@ -137,12 +140,9 @@ public class NewsTabFragment extends Fragment {
                 util.show();
                 break;
             case R.id.ll_scan:
-//                ToastUtil util2 = new ToastUtil(getActivity(), "scan");
-//                util2.show();
-//                mActivity.startActivity(new Intent(mActivity, com.goach.tabdemo.activity.MainActivity.class));
-//                util2.show(Toast.LENGTH_SHORT);
-                  mActivity.startActivity(new Intent(mActivity, ChannelActivity.class));
-
+                break;
+            case R.id.channel_menu:
+                mActivity.startActivity(new Intent(mActivity, ChannelActivity.class));
                 break;
         }
     }
