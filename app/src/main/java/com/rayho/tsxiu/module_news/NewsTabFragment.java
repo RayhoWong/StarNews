@@ -12,6 +12,7 @@ import com.goach.tabdemo.activity.ChannelActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.activity.MainActivity;
+import com.rayho.tsxiu.activity.TestActivity;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.utils.ToastUtil;
 
@@ -136,8 +137,7 @@ public class NewsTabFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_search:
-                ToastUtil util = new ToastUtil(getActivity(), "search");
-                util.show();
+                mActivity.startActivity(new Intent(mActivity,TestActivity.class));
                 break;
             case R.id.ll_scan:
                 break;

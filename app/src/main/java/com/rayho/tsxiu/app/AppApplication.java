@@ -21,10 +21,10 @@ public class AppApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         //设置log自动在apk为debug版本时打开，在release版本时关闭
         TimberUtil.setLogAuto();
         //AndroidUtilCode的初始化
         Utils.init(this);
     }
+
 }

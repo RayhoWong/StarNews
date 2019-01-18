@@ -68,4 +68,8 @@ dependencies {
     //好用的BottomNavigation
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     implementation project(':ChannelHelper')
+    //lottie动画
+    implementation 'com.airbnb.android:lottie:2.8.0'
+    //下拉刷新上拉加载库(好用)
+    implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
 }

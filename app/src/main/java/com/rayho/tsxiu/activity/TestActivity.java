@@ -2,20 +2,38 @@ package com.rayho.tsxiu.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.util.Utils;
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseActivity;
-import com.rayho.tsxiu.ui.CommonDialog;
+import com.rayho.tsxiu.ui.MyRefreshLottieFooter;
+import com.rayho.tsxiu.ui.MyRefreshLottieHeader;
+import com.rayho.tsxiu.utils.RxTimer;
 import com.rayho.tsxiu.utils.StatusBarUtil;
-import com.rayho.tsxiu.utils.ToastUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class TestActivity extends BaseActivity {
+
+    @BindView(R.id.rcv)
+    RecyclerView mRcv;
+    @BindView(R.id.twi_refreshlayout)
+    TwinklingRefreshLayout mTwiRefreshlayout;
+
+    private List<String> data;
+    private TestAdapter adapter;
 
     @Override
     public int getLayoutId() {
@@ -27,8 +45,6 @@ public class TestActivity extends BaseActivity {
         StatusBarUtil.setStatusBarTranslucent(this);
         //tag为类名
         Timber.d("hahaha");
-
-
         setToolbarTitle("设置");
 //        setToolbarSubTitle("哈哈哈");
         setRightImage(R.mipmap.favor);
@@ -38,34 +54,91 @@ public class TestActivity extends BaseActivity {
                 Toast.makeText(TestActivity.this,"我被艹了",Toast.LENGTH_SHORT).show();
             }
         });*/
-        getRightImage().setOnClickListener(new View.OnClickListener() {
+/*        getRightImage().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(TestActivity.this,"我被收藏了",Toast.LENGTH_SHORT).show();
-//                ToastUtil toast = new ToastUtil(TestActivity.this,R.layout.toast,"hahah");
-//                toast.showAtCenter();
-//                toast.showAtTop();
-//                toast.show(3000);
-//                openDialog();
                 CommonDialog dialog = new CommonDialog(TestActivity.this);
                 dialog.setTitle("test")
-                      .setMessage("hahahha发生的发生的发发送到是发生的发生的发" +
-                              "水电费的说法是" +
-                              "胜多负少的水电费水电费是sfsfsdssfs发生放水电费水电费水电费hahahahah")
+                        .setMessage("hahahha发生的发生的发发送到是发生的发生的发" +
+                                "水电费的说法是" +
+                                "胜多负少的水电费水电费是sfsfsdssfs发生放水电费水电费水电费hahahahah")
 //                      .setImageResId(R.mipmap.ic_launcher)
-                      .setOnClickBottomListener(new CommonDialog.OnClickBottomListener() {
-                          @Override
-                          public void onPositiveClick() {
-                              ToastUtil util = new ToastUtil(TestActivity.this,"haha");
-                              util.show();
-                          }
-                      })
-                      .show();
+                        .setOnClickBottomListener(new CommonDialog.OnClickBottomListener() {
+                            @Override
+                            public void onPositiveClick() {
+                                ToastUtil util = new ToastUtil(TestActivity.this, "haha");
+                                util.show();
+                            }
+                        })
+                        .show();
             }
+        });*/
+        initRefreshLayout();
+    }
+
+    private void initRefreshLayout() {
+        mTwiRefreshlayout.setHeaderHeight(60);
+        mTwiRefreshlayout.setBottomHeight(45);
+        mTwiRefreshlayout.setHeaderView(new MyRefreshLottieHeader(this));
+        mTwiRefreshlayout.setBottomView(new MyRefreshLottieFooter(this));
+        mTwiRefreshlayout.setEnableRefresh(true);
+        mTwiRefreshlayout.setEnableLoadmore(true);
+        mTwiRefreshlayout.setEnableOverScroll(true);
+        mTwiRefreshlayout.startRefresh();
+        mTwiRefreshlayout.setAutoLoadMore(true);
+        mTwiRefreshlayout.setOnRefreshListener(new RefreshListenerAdapter() {
+            @Override
+            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
+                super.onRefresh(refreshLayout);
+                setTimer(3000, new RxTimer.RxAction() {
+                    @Override
+                    public void action() {
+                        initRcv();
+                        refreshLayout.finishRefreshing();
+                    }
+                });
+            }
+
+            @Override
+            public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
+                super.onLoadMore(refreshLayout);
+                setTimer(2000, new RxTimer.RxAction() {
+                    @Override
+                    public void action() {
+                        for (int i=0;i<3;i++){
+                            data.add("NEW HELLO");
+                        }
+                        adapter.notifyDataSetChanged();
+                        refreshLayout.finishLoadmore();
+                    }
+                });
+            }
+
         });
     }
 
-    private void openDialog(){
+    private void initRcv() {
+        initData();
+        mRcv.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new TestAdapter(data);
+        mRcv.setAdapter(adapter);
+    }
+
+    private void initData() {
+        data = new ArrayList<>();
+        for (int i = 0; i < 16; i++) {
+            data.add("Hello " + i);
+        }
+    }
+
+    private void setTimer(long milliSeconds, RxTimer.RxAction rxAction) {
+        RxTimer rxTimer = new RxTimer();
+        rxTimer.timer(milliSeconds, rxAction);
+
+    }
+
+
+    private void openDialog() {
 //        MaterialDialog(this)
 //                .title(R.string.your_title)
 //                .message(R.string.your_message)
@@ -79,7 +152,7 @@ public class TestActivity extends BaseActivity {
                 .neutralText("更多信息")
                 .widgetColor(Color.BLUE)//不再提醒的checkbox 颜色
                 //CheckBox
-                .checkBoxPrompt("不再提醒", false, new CompoundButton.OnCheckedChangeListener(){
+                .checkBoxPrompt("不再提醒", false, new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                         if (b) {
@@ -116,7 +189,6 @@ public class TestActivity extends BaseActivity {
 //                })
                 .show();
     }
-
 
 
 }
