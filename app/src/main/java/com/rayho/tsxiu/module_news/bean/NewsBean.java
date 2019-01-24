@@ -450,7 +450,71 @@ public class NewsBean {
             private UserBean user;
             private int user_digg;
             private int version;
+            private String brand_info;
+            private String cell_ui_type;
+            private List<Object> comments;
+            private String community_info;
+            private int gallary_flag;
+            private int gallary_style;
+            private String preload_web_content;
 
+
+
+            public String getPreload_web_content() {
+                return preload_web_content;
+            }
+
+            public void setPreload_web_content(String preload_web_content) {
+                this.preload_web_content = preload_web_content;
+            }
+
+            public int getGallary_flag() {
+                return gallary_flag;
+            }
+
+            public void setGallary_flag(int gallary_flag) {
+                this.gallary_flag = gallary_flag;
+            }
+
+            public int getGallary_style() {
+                return gallary_style;
+            }
+
+            public void setGallary_style(int gallary_style) {
+                this.gallary_style = gallary_style;
+            }
+
+            public String getBrand_info() {
+                return brand_info;
+            }
+
+            public void setBrand_info(String brand_info) {
+                this.brand_info = brand_info;
+            }
+
+            public String getCell_ui_type() {
+                return cell_ui_type;
+            }
+
+            public void setCell_ui_type(String cell_ui_type) {
+                this.cell_ui_type = cell_ui_type;
+            }
+
+            public List<Object> getComments() {
+                return comments;
+            }
+
+            public void setComments(List<Object> comments) {
+                this.comments = comments;
+            }
+
+            public String getCommunity_info() {
+                return community_info;
+            }
+
+            public void setCommunity_info(String community_info) {
+                this.community_info = community_info;
+            }
 
             public int getFollow() {
                 return follow;
