@@ -340,10 +340,16 @@ public class NewsBean {
             private int cell_layout_style;
             private int cell_type;
             private int comment_count;
+            private String content;
             private String content_decoration;
+            private String content_rich_span;
+            private int create_time;
             private ControlPanelBean control_panel;
             private long cursor;
+            private int default_text_line;
+            private List<DetailCoverListBean> detail_cover_list;
             private int digg_count;
+            private String digg_icon_key;
             private String display_url;
             private ForwardInfoBean forward_info;
             private long group_id;
@@ -410,7 +416,322 @@ public class NewsBean {
             private VideoDetailInfoBean video_detail_info;
             private int video_duration;
             private String video_id;
-            private Double video_proportion_article;
+            private Double video_proportion_article;//"video_proportion_article":1.77
+            private int gallary_image_count;
+            private int preload_web;
+            private String article_alt_url;
+            private int natant_level;
+            private RawAdDataBean raw_ad_data;
+            private int follow;
+            private int follow_button_style;
+            private Object forum;
+            private List<Object> friend_digg_list;
+            private int has_edit;
+            private int inner_ui_flag;
+            private int max_text_line;
+            private PositionBean position;
+            private int preload;
+            private List<Object> product_list;
+            private RepostParamsBean repost_params;
+            private String rich_content;
+            private String schema;
+            private ShareBean share;
+            /**
+             * thread_id : 1623500562792461
+             * thread_id_str : 1623500562792461
+             */
+            private long thread_id;
+            private String thread_id_str;
+            private List<ThumbImageListBean> thumb_image_list;
+            private String tiny_toutiao_url;
+            private List<UgcCutImageList> ugc_cut_image_list;
+            private List<UgcU13CutImageListBean> ugc_u13_cut_image_list;
+            private int ui_type;
+            private UserBean user;
+            private int user_digg;
+            private int version;
+
+
+            public int getFollow() {
+                return follow;
+            }
+
+            public void setFollow(int follow) {
+                this.follow = follow;
+            }
+
+            public int getFollow_button_style() {
+                return follow_button_style;
+            }
+
+            public void setFollow_button_style(int follow_button_style) {
+                this.follow_button_style = follow_button_style;
+            }
+
+            public Object getForum() {
+                return forum;
+            }
+
+            public void setForum(Object forum) {
+                this.forum = forum;
+            }
+
+            public List<Object> getFriend_digg_list() {
+                return friend_digg_list;
+            }
+
+            public void setFriend_digg_list(List<Object> friend_digg_list) {
+                this.friend_digg_list = friend_digg_list;
+            }
+
+            public int getHas_edit() {
+                return has_edit;
+            }
+
+            public void setHas_edit(int has_edit) {
+                this.has_edit = has_edit;
+            }
+
+            public int getInner_ui_flag() {
+                return inner_ui_flag;
+            }
+
+            public void setInner_ui_flag(int inner_ui_flag) {
+                this.inner_ui_flag = inner_ui_flag;
+            }
+
+            public int getMax_text_line() {
+                return max_text_line;
+            }
+
+            public void setMax_text_line(int max_text_line) {
+                this.max_text_line = max_text_line;
+            }
+
+            public PositionBean getPosition() {
+                return position;
+            }
+
+            public void setPosition(PositionBean position) {
+                this.position = position;
+            }
+
+            public int getPreload() {
+                return preload;
+            }
+
+            public void setPreload(int preload) {
+                this.preload = preload;
+            }
+
+            public List<Object> getProduct_list() {
+                return product_list;
+            }
+
+            public void setProduct_list(List<Object> product_list) {
+                this.product_list = product_list;
+            }
+
+            public RepostParamsBean getRepost_params() {
+                return repost_params;
+            }
+
+            public void setRepost_params(RepostParamsBean repost_params) {
+                this.repost_params = repost_params;
+            }
+
+            public String getRich_content() {
+                return rich_content;
+            }
+
+            public void setRich_content(String rich_content) {
+                this.rich_content = rich_content;
+            }
+
+            public String getSchema() {
+                return schema;
+            }
+
+            public void setSchema(String schema) {
+                this.schema = schema;
+            }
+
+            public ShareBean getShare() {
+                return share;
+            }
+
+            public void setShare(ShareBean share) {
+                this.share = share;
+            }
+
+            public List<ThumbImageListBean> getThumb_image_list() {
+                return thumb_image_list;
+            }
+
+            public void setThumb_image_list(List<ThumbImageListBean> thumb_image_list) {
+                this.thumb_image_list = thumb_image_list;
+            }
+
+            public String getTiny_toutiao_url() {
+                return tiny_toutiao_url;
+            }
+
+            public void setTiny_toutiao_url(String tiny_toutiao_url) {
+                this.tiny_toutiao_url = tiny_toutiao_url;
+            }
+
+            public List<UgcCutImageList> getUgc_cut_image_list() {
+                return ugc_cut_image_list;
+            }
+
+            public void setUgc_cut_image_list(List<UgcCutImageList> ugc_cut_image_list) {
+                this.ugc_cut_image_list = ugc_cut_image_list;
+            }
+
+            public List<UgcU13CutImageListBean> getUgc_u13_cut_image_list() {
+                return ugc_u13_cut_image_list;
+            }
+
+            public void setUgc_u13_cut_image_list(List<UgcU13CutImageListBean> ugc_u13_cut_image_list) {
+                this.ugc_u13_cut_image_list = ugc_u13_cut_image_list;
+            }
+
+            public int getUi_type() {
+                return ui_type;
+            }
+
+            public void setUi_type(int ui_type) {
+                this.ui_type = ui_type;
+            }
+
+            public UserBean getUser() {
+                return user;
+            }
+
+            public void setUser(UserBean user) {
+                this.user = user;
+            }
+
+            public int getUser_digg() {
+                return user_digg;
+            }
+
+            public void setUser_digg(int user_digg) {
+                this.user_digg = user_digg;
+            }
+
+            public int getVersion() {
+                return version;
+            }
+
+            public void setVersion(int version) {
+                this.version = version;
+            }
+
+
+            public long getThread_id() {
+                return thread_id;
+            }
+
+            public void setThread_id(long thread_id) {
+                this.thread_id = thread_id;
+            }
+
+            public String getThread_id_str() {
+                return thread_id_str;
+            }
+
+            public void setThread_id_str(String thread_id_str) {
+                this.thread_id_str = thread_id_str;
+            }
+
+            public String getDigg_icon_key() {
+                return digg_icon_key;
+            }
+
+            public void setDigg_icon_key(String digg_icon_key) {
+                this.digg_icon_key = digg_icon_key;
+            }
+
+            public List<DetailCoverListBean> getDetail_cover_list() {
+                return detail_cover_list;
+            }
+
+            public void setDetail_cover_list(List<DetailCoverListBean> detail_cover_list) {
+                this.detail_cover_list = detail_cover_list;
+            }
+
+            public int getDefault_text_line() {
+                return default_text_line;
+            }
+
+            public void setDefault_text_line(int default_text_line) {
+                this.default_text_line = default_text_line;
+            }
+
+            public int getCreate_time() {
+                return create_time;
+            }
+
+            public void setCreate_time(int create_time) {
+                this.create_time = create_time;
+            }
+
+            public String getContent_rich_span() {
+                return content_rich_span;
+            }
+
+            public void setContent_rich_span(String content_rich_span) {
+                this.content_rich_span = content_rich_span;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public int getGallary_image_count() {
+                return gallary_image_count;
+            }
+
+            public void setGallary_image_count(int gallary_image_count) {
+                this.gallary_image_count = gallary_image_count;
+            }
+
+            public int getPreload_web() {
+                return preload_web;
+            }
+
+            public void setPreload_web(int preload_web) {
+                this.preload_web = preload_web;
+            }
+
+            public String getArticle_alt_url() {
+                return article_alt_url;
+            }
+
+            public void setArticle_alt_url(String article_alt_url) {
+                this.article_alt_url = article_alt_url;
+            }
+
+            public int getNatant_level() {
+                return natant_level;
+            }
+
+            public void setNatant_level(int natant_level) {
+                this.natant_level = natant_level;
+            }
+
+            public RawAdDataBean getRaw_ad_data() {
+                return raw_ad_data;
+            }
+
+            public void setRaw_ad_data(RawAdDataBean raw_ad_data) {
+                this.raw_ad_data = raw_ad_data;
+            }
 
 
             public int getVideo_duration() {
@@ -1191,12 +1512,21 @@ public class NewsBean {
 
             public static class LogPbBean {
                 /**
+                 * group_source : "5"
                  * impr_id : 201901241411480100080590389837FA3
                  * is_following : 0
                  */
-
+                private String group_source;
                 private String impr_id;
                 private String is_following;
+
+                public String getGroup_source() {
+                    return group_source;
+                }
+
+                public void setGroup_source(String group_source) {
+                    this.group_source = group_source;
+                }
 
                 public String getImpr_id() {
                     return impr_id;
@@ -1333,8 +1663,8 @@ public class NewsBean {
                  * weixin_cover_image : {"height":981,"uri":"large/tos-cn-i-0000/a8da58e2-1f2d-11e9-88d4-ac1f6b0ace98","url":"http://p1-tt.bytecdn.cn/large/tos-cn-i-0000/a8da58e2-1f2d-11e9-88d4-ac1f6b0ace98","url_list":[{"url":"http://p1-tt.bytecdn.cn/large/tos-cn-i-0000/a8da58e2-1f2d-11e9-88d4-ac1f6b0ace98"},{"url":"http://p9-tt.bytecdn.cn/large/tos-cn-i-0000/a8da58e2-1f2d-11e9-88d4-ac1f6b0ace98"},{"url":"http://p1-tt.bytecdn.cn/large/tos-cn-i-0000/a8da58e2-1f2d-11e9-88d4-ac1f6b0ace98"}],"width":800}
                  */
 
-                private Object cover_image;
-                private Object description;
+                private String cover_image;
+                private String description;
                 private int on_suppress;
                 private ShareTypeBean share_type;
                 private String share_url;
@@ -1342,19 +1672,19 @@ public class NewsBean {
                 private int token_type;
                 private WeixinCoverImageBean weixin_cover_image;
 
-                public Object getCover_image() {
+                public String getCover_image() {
                     return cover_image;
                 }
 
-                public void setCover_image(Object cover_image) {
+                public void setCover_image(String cover_image) {
                     this.cover_image = cover_image;
                 }
 
-                public Object getDescription() {
+                public String getDescription() {
                     return description;
                 }
 
-                public void setDescription(Object description) {
+                public void setDescription(String description) {
                     this.description = description;
                 }
 
@@ -1561,11 +1891,12 @@ public class NewsBean {
                  * name : 央视快评
                  * schema : sslocal://profile?uid=99138739220&refer=video
                  * user_auth_info : {"auth_type":"0","auth_info":"央视快评官方账号"}
+                 * user_decoration :{"url":"http://sf3-ttcdn-tos.pstatp.com/img/web-union/
+                 * d5ddef97c61348a482d04d10249cc943~noop.image"}
                  * user_id : 99138739220
                  * user_verified : true
                  * verified_content : 央视快评官方账号
                  */
-
                 private String avatar_url;
                 private String description;
                 private boolean follow;
@@ -1574,9 +1905,11 @@ public class NewsBean {
                 private String name;
                 private String schema;
                 private String user_auth_info;
+                private String user_decoration;
                 private long user_id;
                 private boolean user_verified;
                 private String verified_content;
+
 
                 public String getAvatar_url() {
                     return avatar_url;
@@ -1642,6 +1975,14 @@ public class NewsBean {
                     this.user_auth_info = user_auth_info;
                 }
 
+                public String getUser_decoration() {
+                    return user_decoration;
+                }
+
+                public void setUser_decoration(String user_decoration) {
+                    this.user_decoration = user_decoration;
+                }
+
                 public long getUser_id() {
                     return user_id;
                 }
@@ -1665,6 +2006,7 @@ public class NewsBean {
                 public void setVerified_content(String verified_content) {
                     this.verified_content = verified_content;
                 }
+
             }
 
             public static class ActionListBean {
@@ -1757,6 +2099,104 @@ public class NewsBean {
                 }
             }
 
+            public static class DetailCoverListBean {
+                /**
+                 * image_list": [
+                 * {
+                 * "height": 356,
+                 * "uri": "list/pgc-image/5b7b929935754286a5210b59a775da2e",
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp",
+                 * "url_list": [{
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }, {
+                 * "url": "http://p3-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }, {
+                 * "url": "http://p3-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }],
+                 * "width": 633    * 	},
+                 * <p>
+                 * {
+                 * "height": 380,
+                 * "uri": "list/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e",
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp",
+                 * "url_list": [{
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }, {
+                 * "url": "http://p9-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }, {
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }],
+                 * "width": 676 }
+                 * ]
+                 */
+                private int height;
+                private int type;
+                private String uri;
+                private String url;
+                private int width;
+                private List<UrlListBean> url_list;
+
+                public int getHeight() {
+                    return height;
+                }
+
+                public void setHeight(int height) {
+                    this.height = height;
+                }
+
+                public int getType() {
+                    return type;
+                }
+
+                public void setType(int type) {
+                    this.type = type;
+                }
+
+                public String getUri() {
+                    return uri;
+                }
+
+                public void setUri(String uri) {
+                    this.uri = uri;
+                }
+
+                public String getUrl() {
+                    return url;
+                }
+
+                public void setUrl(String url) {
+                    this.url = url;
+                }
+
+                public int getWidth() {
+                    return width;
+                }
+
+                public void setWidth(int width) {
+                    this.width = width;
+                }
+
+                public List<UrlListBean> getUrl_list() {
+                    return url_list;
+                }
+
+                public void setUrl_list(List<UrlListBean> url_list) {
+                    this.url_list = url_list;
+                }
+
+                public static class UrlListBean {
+                    private String url;
+
+                    public String getUrl() {
+                        return url;
+                    }
+
+                    public void setUrl(String url) {
+                        this.url = url;
+                    }
+                }
+            }
+
             public static class ImageListBean {
                 /**
                  * image_list": [
@@ -1788,6 +2228,7 @@ public class NewsBean {
                  * ]
                  */
                 private int height;
+                private int type;
                 private String uri;
                 private String url;
                 private int width;
@@ -1799,6 +2240,14 @@ public class NewsBean {
 
                 public void setHeight(int height) {
                     this.height = height;
+                }
+
+                public int getType() {
+                    return type;
+                }
+
+                public void setType(int type) {
+                    this.type = type;
                 }
 
                 public String getUri() {
@@ -1851,6 +2300,7 @@ public class NewsBean {
                  * image_list": [
                  * {
                  * "height": 356,
+                 * "type" : 1,
                  * "uri": "list/pgc-image/5b7b929935754286a5210b59a775da2e",
                  * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp",
                  * "url_list": [{
@@ -1877,6 +2327,7 @@ public class NewsBean {
                  * ]
                  */
                 private int height;
+                private int type;
                 private String uri;
                 private String url;
                 private int width;
@@ -1888,6 +2339,14 @@ public class NewsBean {
 
                 public void setHeight(int height) {
                     this.height = height;
+                }
+
+                public int getType() {
+                    return type;
+                }
+
+                public void setType(int type) {
+                    this.type = type;
                 }
 
                 public String getUri() {
@@ -1951,6 +2410,7 @@ public class NewsBean {
                  * "width": 633    * 	}
                  */
                 private int height;
+                private int type;
                 private String uri;
                 private String url;
                 private int width;
@@ -1962,6 +2422,14 @@ public class NewsBean {
 
                 public void setHeight(int height) {
                     this.height = height;
+                }
+
+                public int getType() {
+                    return type;
+                }
+
+                public void setType(int type) {
+                    this.type = type;
                 }
 
                 public String getUri() {
@@ -2187,6 +2655,1031 @@ public class NewsBean {
                     }
                 }
             }
+
+            public static class RawAdDataBean {
+                /**
+                 * "ab_extra": {},
+                 * "alert_text": "确认拨打020-83528909？",
+                 * "button_icon": 0,
+                 * "button_text": "立即拨打",
+                 * "dial_action_type": 3,
+                 * "dislike": [{
+                 * "name": "为什么看到此广告",
+                 * "open_url": "sslocal://webview?url=https://i.snssdk.com/api/ad/feedback/privacy/page?type=ad_dislike&hide_more=1&title=为什么看到此广告"
+                 * }],
+                 * "display_type": 2,
+                 * "expire_seconds": 305473189,
+                 * "id": 1612635960406077,
+                 * "instance_phone_id": 0,
+                 * "intercept_flag": 2,
+                 * "log_extra": "{"ad_price":"XEms7f_3PaRcSazt__c9pPF14Am3Lu9ytzOcXg","convert_component_suspend":0,
+                 * "convert_id":0,"external_action":2,"orit":1,"req_id":"201901242017480100150162326329463",
+                 * "rit":1}",
+                 * "phone_key": "",
+                 * "phone_number": "020-83528909",
+                 * "sub_title": "领种植体,省钱种好牙",
+                 * "type": "action",
+                 * "web_title": "广大口腔医院"
+                 */
+                private AbExtraBean ab_extra;
+                private String alert_text;
+                private int button_icon;
+                private String button_text;
+                private int dial_action_type;
+                private List<DislikeBean> dislike;
+                private int display_type;
+                private int expire_seconds;
+                private long id;
+                private int instance_phone_id;
+                private int intercept_flag;
+                private LogExtraBean log_extra;
+                private String phone_key;
+                private String phone_number;
+                private String sub_title;
+                private String type;
+                private String web_title;
+
+                public AbExtraBean getAb_extra() {
+                    return ab_extra;
+                }
+
+                public void setAb_extra(AbExtraBean ab_extra) {
+                    this.ab_extra = ab_extra;
+                }
+
+                public String getAlert_text() {
+                    return alert_text;
+                }
+
+                public void setAlert_text(String alert_text) {
+                    this.alert_text = alert_text;
+                }
+
+                public int getButton_icon() {
+                    return button_icon;
+                }
+
+                public void setButton_icon(int button_icon) {
+                    this.button_icon = button_icon;
+                }
+
+                public String getButton_text() {
+                    return button_text;
+                }
+
+                public void setButton_text(String button_text) {
+                    this.button_text = button_text;
+                }
+
+                public int getDial_action_type() {
+                    return dial_action_type;
+                }
+
+                public void setDial_action_type(int dial_action_type) {
+                    this.dial_action_type = dial_action_type;
+                }
+
+                public List<DislikeBean> getDislike() {
+                    return dislike;
+                }
+
+                public void setDislike(List<DislikeBean> dislike) {
+                    this.dislike = dislike;
+                }
+
+                public int getDisplay_type() {
+                    return display_type;
+                }
+
+                public void setDisplay_type(int display_type) {
+                    this.display_type = display_type;
+                }
+
+                public int getExpire_seconds() {
+                    return expire_seconds;
+                }
+
+                public void setExpire_seconds(int expire_seconds) {
+                    this.expire_seconds = expire_seconds;
+                }
+
+                public long getId() {
+                    return id;
+                }
+
+                public void setId(long id) {
+                    this.id = id;
+                }
+
+                public int getInstance_phone_id() {
+                    return instance_phone_id;
+                }
+
+                public void setInstance_phone_id(int instance_phone_id) {
+                    this.instance_phone_id = instance_phone_id;
+                }
+
+                public int getIntercept_flag() {
+                    return intercept_flag;
+                }
+
+                public void setIntercept_flag(int intercept_flag) {
+                    this.intercept_flag = intercept_flag;
+                }
+
+                public LogExtraBean getLog_extra() {
+                    return log_extra;
+                }
+
+                public void setLog_extra(LogExtraBean log_extra) {
+                    this.log_extra = log_extra;
+                }
+
+                public String getPhone_key() {
+                    return phone_key;
+                }
+
+                public void setPhone_key(String phone_key) {
+                    this.phone_key = phone_key;
+                }
+
+                public String getPhone_number() {
+                    return phone_number;
+                }
+
+                public void setPhone_number(String phone_number) {
+                    this.phone_number = phone_number;
+                }
+
+                public String getSub_title() {
+                    return sub_title;
+                }
+
+                public void setSub_title(String sub_title) {
+                    this.sub_title = sub_title;
+                }
+
+                public String getType() {
+                    return type;
+                }
+
+                public void setType(String type) {
+                    this.type = type;
+                }
+
+                public String getWeb_title() {
+                    return web_title;
+                }
+
+                public void setWeb_title(String web_title) {
+                    this.web_title = web_title;
+                }
+
+
+                public static class LogExtraBean {
+                    private String ad_price;
+                    private int convert_component_suspend;
+                    private int convert_id;
+                    private int external_action;
+                    private int orit;
+                    private long req_id;
+                    private int rit;
+
+                    public String getAd_price() {
+                        return ad_price;
+                    }
+
+                    public void setAd_price(String ad_price) {
+                        this.ad_price = ad_price;
+                    }
+
+                    public int getConvert_component_suspend() {
+                        return convert_component_suspend;
+                    }
+
+                    public void setConvert_component_suspend(int convert_component_suspend) {
+                        this.convert_component_suspend = convert_component_suspend;
+                    }
+
+                    public int getConvert_id() {
+                        return convert_id;
+                    }
+
+                    public void setConvert_id(int convert_id) {
+                        this.convert_id = convert_id;
+                    }
+
+                    public int getExternal_action() {
+                        return external_action;
+                    }
+
+                    public void setExternal_action(int external_action) {
+                        this.external_action = external_action;
+                    }
+
+                    public int getOrit() {
+                        return orit;
+                    }
+
+                    public void setOrit(int orit) {
+                        this.orit = orit;
+                    }
+
+                    public long getReq_id() {
+                        return req_id;
+                    }
+
+                    public void setReq_id(long req_id) {
+                        this.req_id = req_id;
+                    }
+
+                    public int getRit() {
+                        return rit;
+                    }
+
+                    public void setRit(int rit) {
+                        this.rit = rit;
+                    }
+                }
+
+                public static class DislikeBean {
+                    private String name;
+                    private String open_url;
+
+                    public String getName() {
+                        return name;
+                    }
+
+                    public void setName(String name) {
+                        this.name = name;
+                    }
+
+                    public String getOpen_url() {
+                        return open_url;
+                    }
+
+                    public void setOpen_url(String open_url) {
+                        this.open_url = open_url;
+                    }
+                }
+
+                public static class AbExtraBean {
+                }
+            }
+
+            public static class ThumbImageListBean {
+                /**
+                 * image_list": [
+                 * {
+                 * "height": 356,
+                 * "type": 1,
+                 * "uri": "list/pgc-image/5b7b929935754286a5210b59a775da2e",
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp",
+                 * "url_list": [{
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }, {
+                 * "url": "http://p3-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }, {
+                 * "url": "http://p3-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }],
+                 * "width": 633    * 	},
+                 * <p>
+                 * {
+                 * "height": 380,
+                 * "uri": "list/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e",
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp",
+                 * "url_list": [{
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }, {
+                 * "url": "http://p9-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }, {
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }],
+                 * "width": 676 }
+                 * ]
+                 */
+                private int height;
+                private int type;
+                private String uri;
+                private String url;
+                private int width;
+                private List<UrlListBean> url_list;
+
+                public int getHeight() {
+                    return height;
+                }
+
+                public void setHeight(int height) {
+                    this.height = height;
+                }
+
+                public int getType() {
+                    return type;
+                }
+
+                public void setType(int type) {
+                    this.type = type;
+                }
+
+                public String getUri() {
+                    return uri;
+                }
+
+                public void setUri(String uri) {
+                    this.uri = uri;
+                }
+
+                public String getUrl() {
+                    return url;
+                }
+
+                public void setUrl(String url) {
+                    this.url = url;
+                }
+
+                public int getWidth() {
+                    return width;
+                }
+
+                public void setWidth(int width) {
+                    this.width = width;
+                }
+
+                public List<UrlListBean> getUrl_list() {
+                    return url_list;
+                }
+
+                public void setUrl_list(List<UrlListBean> url_list) {
+                    this.url_list = url_list;
+                }
+
+                public static class UrlListBean {
+                    private String url;
+
+                    public String getUrl() {
+                        return url;
+                    }
+
+                    public void setUrl(String url) {
+                        this.url = url;
+                    }
+                }
+            }
+
+            public static class UgcCutImageList {
+                /**
+                 * image_list": [
+                 * {
+                 * "height": 356,
+                 * "type": 1,
+                 * "uri": "list/pgc-image/5b7b929935754286a5210b59a775da2e",
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp",
+                 * "url_list": [{
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }, {
+                 * "url": "http://p3-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }, {
+                 * "url": "http://p3-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }],
+                 * "width": 633    * 	},
+                 * <p>
+                 * {
+                 * "height": 380,
+                 * "uri": "list/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e",
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp",
+                 * "url_list": [{
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }, {
+                 * "url": "http://p9-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }, {
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }],
+                 * "width": 676 }
+                 * ]
+                 */
+                private int height;
+                private int type;
+                private String uri;
+                private String url;
+                private int width;
+                private List<UrlListBean> url_list;
+
+                public int getHeight() {
+                    return height;
+                }
+
+                public void setHeight(int height) {
+                    this.height = height;
+                }
+
+                public int getType() {
+                    return type;
+                }
+
+                public void setType(int type) {
+                    this.type = type;
+                }
+
+                public String getUri() {
+                    return uri;
+                }
+
+                public void setUri(String uri) {
+                    this.uri = uri;
+                }
+
+                public String getUrl() {
+                    return url;
+                }
+
+                public void setUrl(String url) {
+                    this.url = url;
+                }
+
+                public int getWidth() {
+                    return width;
+                }
+
+                public void setWidth(int width) {
+                    this.width = width;
+                }
+
+                public List<UrlListBean> getUrl_list() {
+                    return url_list;
+                }
+
+                public void setUrl_list(List<UrlListBean> url_list) {
+                    this.url_list = url_list;
+                }
+
+                public static class UrlListBean {
+                    private String url;
+
+                    public String getUrl() {
+                        return url;
+                    }
+
+                    public void setUrl(String url) {
+                        this.url = url;
+                    }
+                }
+            }
+
+            public static class UgcU13CutImageListBean {
+                /**
+                 * image_list": [
+                 * {
+                 * "height": 356,
+                 * "type": 1,
+                 * "uri": "list/pgc-image/5b7b929935754286a5210b59a775da2e",
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp",
+                 * "url_list": [{
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }, {
+                 * "url": "http://p3-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }, {
+                 * "url": "http://p3-tt.bytecdn.cn/list/300x196/pgc-image/5b7b929935754286a5210b59a775da2e.webp"
+                 * }],
+                 * "width": 633    * 	},
+                 * <p>
+                 * {
+                 * "height": 380,
+                 * "uri": "list/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e",
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp",
+                 * "url_list": [{
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }, {
+                 * "url": "http://p9-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }, {
+                 * "url": "http://p1-tt.bytecdn.cn/list/300x196/pgc-image/6cbcd5c944ab4487ba3971c6cb76ac7e.webp"
+                 * }],
+                 * "width": 676 }
+                 * ]
+                 */
+                private int height;
+                private int type;
+                private String uri;
+                private String url;
+                private int width;
+                private List<UrlListBean> url_list;
+
+                public int getHeight() {
+                    return height;
+                }
+
+                public void setHeight(int height) {
+                    this.height = height;
+                }
+
+                public int getType() {
+                    return type;
+                }
+
+                public void setType(int type) {
+                    this.type = type;
+                }
+
+                public String getUri() {
+                    return uri;
+                }
+
+                public void setUri(String uri) {
+                    this.uri = uri;
+                }
+
+                public String getUrl() {
+                    return url;
+                }
+
+                public void setUrl(String url) {
+                    this.url = url;
+                }
+
+                public int getWidth() {
+                    return width;
+                }
+
+                public void setWidth(int width) {
+                    this.width = width;
+                }
+
+                public List<UrlListBean> getUrl_list() {
+                    return url_list;
+                }
+
+                public void setUrl_list(List<UrlListBean> url_list) {
+                    this.url_list = url_list;
+                }
+
+                public static class UrlListBean {
+                    private String url;
+
+                    public String getUrl() {
+                        return url;
+                    }
+
+                    public void setUrl(String url) {
+                        this.url = url;
+                    }
+                }
+            }
+
+            public static class UserBean {
+                /**
+                 * "avatar_url": "http://p1.pstatp.com/thumb/568100040a10b74b0b96",
+                 * "desc": "企业高管、CEO内部邮件曝光，你懂得！",
+                 * "id": 3611104546,
+                 * "is_blocked": 0,
+                 * "is_blocking": 0,
+                 * "is_followed": 0,
+                 * "is_following": 0,
+                 * "is_friend": 0,
+                 * "live_info_type": 1,
+                 * "medals": [],
+                 * "name": "CEO来信",
+                 * "remark_name": null,
+                 * "schema": "sslocal://profile?uid=3611104546&refer=dongtai",
+                 * "screen_name": "CEO来信",
+                 * "user_auth_info": "{"auth_type":"0","auth_info":"优质科技领域创作者","other_auth":{"interest":"优质科技领域创作者"}}",
+                 * "user_decoration": "",
+                 * "user_id": 3611104546,
+                 * "user_verified": 1,
+                 * "verified_content": "优质科技领域创作者"
+                 */
+                private String avatar_url;
+                private String desc;
+                private int id;
+                private int is_blocked;
+                private int is_blocking;
+                private int is_followed;
+                private int is_following;
+                private int is_friend;
+                private int live_info_type;
+                private List<Object> medals;
+                private String name;
+                private String remark_name;
+                private String schema;
+                private String screen_name;
+                private String user_auth_info;
+                private String user_decoration;
+                private int user_id;
+                private int user_verified;
+                private String verified_content;
+
+                public String getAvatar_url() {
+                    return avatar_url;
+                }
+
+                public void setAvatar_url(String avatar_url) {
+                    this.avatar_url = avatar_url;
+                }
+
+                public String getDesc() {
+                    return desc;
+                }
+
+                public void setDesc(String desc) {
+                    this.desc = desc;
+                }
+
+                public int getId() {
+                    return id;
+                }
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+
+                public int getIs_blocked() {
+                    return is_blocked;
+                }
+
+                public void setIs_blocked(int is_blocked) {
+                    this.is_blocked = is_blocked;
+                }
+
+                public int getIs_blocking() {
+                    return is_blocking;
+                }
+
+                public void setIs_blocking(int is_blocking) {
+                    this.is_blocking = is_blocking;
+                }
+
+                public int getIs_followed() {
+                    return is_followed;
+                }
+
+                public void setIs_followed(int is_followed) {
+                    this.is_followed = is_followed;
+                }
+
+                public int getIs_following() {
+                    return is_following;
+                }
+
+                public void setIs_following(int is_following) {
+                    this.is_following = is_following;
+                }
+
+                public int getIs_friend() {
+                    return is_friend;
+                }
+
+                public void setIs_friend(int is_friend) {
+                    this.is_friend = is_friend;
+                }
+
+                public int getLive_info_type() {
+                    return live_info_type;
+                }
+
+                public void setLive_info_type(int live_info_type) {
+                    this.live_info_type = live_info_type;
+                }
+
+                public List<Object> getMedals() {
+                    return medals;
+                }
+
+                public void setMedals(List<Object> medals) {
+                    this.medals = medals;
+                }
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public String getRemark_name() {
+                    return remark_name;
+                }
+
+                public void setRemark_name(String remark_name) {
+                    this.remark_name = remark_name;
+                }
+
+                public String getSchema() {
+                    return schema;
+                }
+
+                public void setSchema(String schema) {
+                    this.schema = schema;
+                }
+
+                public String getScreen_name() {
+                    return screen_name;
+                }
+
+                public void setScreen_name(String screen_name) {
+                    this.screen_name = screen_name;
+                }
+
+                public String getUser_auth_info() {
+                    return user_auth_info;
+                }
+
+                public void setUser_auth_info(String user_auth_info) {
+                    this.user_auth_info = user_auth_info;
+                }
+
+                public String getUser_decoration() {
+                    return user_decoration;
+                }
+
+                public void setUser_decoration(String user_decoration) {
+                    this.user_decoration = user_decoration;
+                }
+
+                public int getUser_id() {
+                    return user_id;
+                }
+
+                public void setUser_id(int user_id) {
+                    this.user_id = user_id;
+                }
+
+                public int getUser_verified() {
+                    return user_verified;
+                }
+
+                public void setUser_verified(int user_verified) {
+                    this.user_verified = user_verified;
+                }
+
+                public String getVerified_content() {
+                    return verified_content;
+                }
+
+                public void setVerified_content(String verified_content) {
+                    this.verified_content = verified_content;
+                }
+            }
+
+            public static class ShareBean {
+                /**
+                 * share_cover : {"uri":"","url_list":["http://p3-tt.bytecdn.cn/img/tos-cn-i-0022/0c7db41458d840479564a3b081da6a55~cs_172x120.jpeg"]}
+                 * share_desc : CEO来信发布了一条微头条，邀请你来看
+                 * share_title : 阿里CEO张勇谈优秀团队的标准：张勇：第一，团队必须要有它的特色，不能中庸，看上去什么都行，但是没有特点。你只要有特点，就可以用别的团队和别的人去补充它。人不怕有缺点，但就怕没特点。
+                 * 第二，团队需要学习能力。学习也是一种能力。今天互联网、数字经济处于最前沿，再怎么讲，最后没有能力也是扯淡。你还是要想到别人想不到的事情，做别人做不到的事情，这还是很重要。
+                 * 第三心要开阔，最终团队还是要成就别人。就像我们说的，让天下没有难做的生意是成就客户，让客户变得更好，而不只是成就自己，来证明自己我有多牛。（第一财经）
+                 * share_url : https://www.toutiao.com/ugc/share/wap/thread/1623500562792461/?app=&iid=58599215151&target_app=13
+                 * share_weibo_desc : null
+                 */
+
+                private ShareCoverBean share_cover;
+                private String share_desc;
+                private String share_title;
+                private String share_url;
+                private String share_weibo_desc;
+
+                public ShareCoverBean getShare_cover() {
+                    return share_cover;
+                }
+
+                public void setShare_cover(ShareCoverBean share_cover) {
+                    this.share_cover = share_cover;
+                }
+
+                public String getShare_desc() {
+                    return share_desc;
+                }
+
+                public void setShare_desc(String share_desc) {
+                    this.share_desc = share_desc;
+                }
+
+                public String getShare_title() {
+                    return share_title;
+                }
+
+                public void setShare_title(String share_title) {
+                    this.share_title = share_title;
+                }
+
+                public String getShare_url() {
+                    return share_url;
+                }
+
+                public void setShare_url(String share_url) {
+                    this.share_url = share_url;
+                }
+
+                public String getShare_weibo_desc() {
+                    return share_weibo_desc;
+                }
+
+                public void setShare_weibo_desc(String share_weibo_desc) {
+                    this.share_weibo_desc = share_weibo_desc;
+                }
+
+                public static class ShareCoverBean {
+                    /**
+                     * uri :
+                     * url_list : ["http://p3-tt.bytecdn.cn/img/tos-cn-i-0022/0c7db41458d840479564a3b081da6a55~cs_172x120.jpeg"]
+                     */
+
+                    private String uri;
+                    private List<String> url_list;
+
+                    public String getUri() {
+                        return uri;
+                    }
+
+                    public void setUri(String uri) {
+                        this.uri = uri;
+                    }
+
+                    public List<String> getUrl_list() {
+                        return url_list;
+                    }
+
+                    public void setUrl_list(List<String> url_list) {
+                        this.url_list = url_list;
+                    }
+                }
+            }
+
+            public static class RepostParamsBean {
+                /**
+                 * cover_url : null
+                 * fw_id : 1623500562792461
+                 * fw_id_type : 2
+                 * fw_native_schema : null
+                 * fw_share_url : null
+                 * fw_user_id : 3611104546
+                 * has_video : null
+                 * opt_id : 1623500562792461
+                 * opt_id_type : 2
+                 * repost_type : 212
+                 * schema :
+                 * title : null
+                 * title_rich_span : null
+                 */
+                private String cover_url;
+                private long fw_id;
+                private int fw_id_type;
+                private String fw_native_schema;
+                private String fw_share_url;
+                private long fw_user_id;
+                private boolean has_video;
+                private long opt_id;
+                private int opt_id_type;
+                private int repost_type;
+                private String schema;
+                private String title;
+                private String title_rich_span;
+
+                public String getCover_url() {
+                    return cover_url;
+                }
+
+                public void setCover_url(String cover_url) {
+                    this.cover_url = cover_url;
+                }
+
+                public long getFw_id() {
+                    return fw_id;
+                }
+
+                public void setFw_id(long fw_id) {
+                    this.fw_id = fw_id;
+                }
+
+                public int getFw_id_type() {
+                    return fw_id_type;
+                }
+
+                public void setFw_id_type(int fw_id_type) {
+                    this.fw_id_type = fw_id_type;
+                }
+
+                public String getFw_native_schema() {
+                    return fw_native_schema;
+                }
+
+                public void setFw_native_schema(String fw_native_schema) {
+                    this.fw_native_schema = fw_native_schema;
+                }
+
+                public String getFw_share_url() {
+                    return fw_share_url;
+                }
+
+                public void setFw_share_url(String fw_share_url) {
+                    this.fw_share_url = fw_share_url;
+                }
+
+                public long getFw_user_id() {
+                    return fw_user_id;
+                }
+
+                public void setFw_user_id(long fw_user_id) {
+                    this.fw_user_id = fw_user_id;
+                }
+
+                public boolean getHas_video() {
+                    return has_video;
+                }
+
+                public void setHas_video(boolean has_video) {
+                    this.has_video = has_video;
+                }
+
+                public long getOpt_id() {
+                    return opt_id;
+                }
+
+                public void setOpt_id(long opt_id) {
+                    this.opt_id = opt_id;
+                }
+
+                public int getOpt_id_type() {
+                    return opt_id_type;
+                }
+
+                public void setOpt_id_type(int opt_id_type) {
+                    this.opt_id_type = opt_id_type;
+                }
+
+                public int getRepost_type() {
+                    return repost_type;
+                }
+
+                public void setRepost_type(int repost_type) {
+                    this.repost_type = repost_type;
+                }
+
+                public String getSchema() {
+                    return schema;
+                }
+
+                public void setSchema(String schema) {
+                    this.schema = schema;
+                }
+
+                public String getTitle() {
+                    return title;
+                }
+
+                public void setTitle(String title) {
+                    this.title = title;
+                }
+
+                public String getTitle_rich_span() {
+                    return title_rich_span;
+                }
+
+                public void setTitle_rich_span(String title_rich_span) {
+                    this.title_rich_span = title_rich_span;
+                }
+            }
+
+            public static class PruductListBean {}
+
+            public static class PositionBean {
+                /**
+                 * "latitude": 0,
+                 * "longitude": 0,
+                 * "position": ""
+                 */
+                private int latitude;
+                private int longitude;
+                private String position;
+
+                public int getLatitude() {
+                    return latitude;
+                }
+
+                public void setLatitude(int latitude) {
+                    this.latitude = latitude;
+                }
+
+                public int getLongitude() {
+                    return longitude;
+                }
+
+                public void setLongitude(int longitude) {
+                    this.longitude = longitude;
+                }
+
+                public String getPosition() {
+                    return position;
+                }
+
+                public void setPosition(String position) {
+                    this.position = position;
+                }
+
+            }
+
+            public static class ForumBean {}
+
+            public static class FriendDiggListBean {}
+
         }
     }
 }
