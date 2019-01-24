@@ -72,4 +72,9 @@ dependencies {
     implementation 'com.airbnb.android:lottie:2.8.0'
     //下拉刷新上拉加载库(好用)
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    //图片变换的处理
+    implementation 'jp.wasabeef:glide-transformations:4.0.0'
 }
