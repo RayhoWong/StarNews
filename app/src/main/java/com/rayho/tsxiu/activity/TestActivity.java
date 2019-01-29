@@ -1,20 +1,24 @@
 package com.rayho.tsxiu.activity;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.blankj.utilcode.util.Utils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseActivity;
+import com.rayho.tsxiu.base.Constant;
+import com.rayho.tsxiu.http.api.NetObserver;
+import com.rayho.tsxiu.http.exception.ApiException;
+import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.module_news.retrofit.NewsLoader;
 import com.rayho.tsxiu.ui.MyRefreshLottieFooter;
 import com.rayho.tsxiu.ui.MyRefreshLottieHeader;
 import com.rayho.tsxiu.utils.RxTimer;
 import com.rayho.tsxiu.utils.StatusBarUtil;
+import com.rayho.tsxiu.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +26,6 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class TestActivity extends BaseActivity {
 
@@ -44,7 +46,6 @@ public class TestActivity extends BaseActivity {
     public void afterSetContentView() {
         StatusBarUtil.setStatusBarTranslucent(this);
         //tag为类名
-        Timber.d("hahaha");
         setToolbarTitle("设置");
 //        setToolbarSubTitle("哈哈哈");
         setRightImage(R.mipmap.favor);
@@ -73,8 +74,42 @@ public class TestActivity extends BaseActivity {
                         .show();
             }
         });*/
-        initRefreshLayout();
+//        initRefreshLayout();
+            getData();
     }
+
+
+    private void getData(){
+        String cid = "news_sports";
+        NewsLoader.getInstance().getNews(cid)
+                  .subscribe(new NetObserver<NewsBean>() {
+                      @Override
+                      public void onNext(NewsBean newsBean) {
+                        if(newsBean.retcode.equals("000000")){
+                            ToastUtil toastUtil = new ToastUtil(TestActivity.this,String.valueOf(newsBean.data.size())+"条数据");
+
+                            toastUtil.show();
+                        }
+                      }
+
+                      @Override
+                      public void onError(ApiException ex) {
+                          ToastUtil toastUtil = new ToastUtil(TestActivity.this,ex.getDisplayMessage());
+                          toastUtil.show();
+                      }
+                  });
+
+
+    }
+
+
+
+
+
+
+
+
+
 
     private void initRefreshLayout() {
         mTwiRefreshlayout.setHeaderHeight(60);

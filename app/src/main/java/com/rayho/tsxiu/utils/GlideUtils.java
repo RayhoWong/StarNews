@@ -39,7 +39,7 @@ public class GlideUtils {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(placeholderSoWhite) //占位图
-                .error(R.color.white)//错误图
+                .error(R.color.colorAccent)//错误图
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(context).load(url)
@@ -125,7 +125,7 @@ public class GlideUtils {
                 .circleCrop()//设置圆形
                 .placeholder(placeholderSoWhite)
                 .error(errorSoWhite)
-                .bitmapTransform(new RoundedCornersTransformation(45, 0, RoundedCornersTransformation.CornerType.ALL))
+                .bitmapTransform(new RoundedCornersTransformation(15, 0, RoundedCornersTransformation.CornerType.ALL))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(context).load(url).apply(options).into(imageView);

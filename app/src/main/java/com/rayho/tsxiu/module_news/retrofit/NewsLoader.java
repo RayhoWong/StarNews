@@ -1,18 +1,23 @@
-package com.rayho.tsxiu.http.api;
+package com.rayho.tsxiu.module_news.retrofit;
 
 
-public class RetrofitLoader{
-    private RetrofitApi helper;
+import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.utils.RxUtil;
 
-    public RetrofitLoader(){
-        helper = RetrofitServiceHelper.getInstance().create(RetrofitApi.class);
+import io.reactivex.Observable;
+
+public class NewsLoader {
+    private NewsApi helper;
+
+    public NewsLoader(){
+        helper = NewsServiceHelper.getInstance().create(NewsApi.class);
     }
 
     private static class SingleHolder{
-        private static RetrofitLoader loader = new RetrofitLoader();
+        private static NewsLoader loader = new NewsLoader();
     }
 
-    public static RetrofitLoader getInstance(){
+    public static NewsLoader getInstance(){
         return SingleHolder.loader;
     }
 
@@ -30,10 +35,11 @@ public class RetrofitLoader{
                      .compose(RxUtil.<MovieDetailBean>rxSchedulerHelper());
     }*/
 
-   /* public Observable<NewsBean> getNews(){
-        return helper.getNews()
+    public Observable<NewsBean> getNews(String id){
+        return helper.getNews(id)
                      .map(RxUtil.jsonTransform(NewsBean.class))
                      .onErrorResumeNext(RxUtil.<NewsBean>throwableFunc())
                      .compose(RxUtil.<NewsBean>rxSchedulerHelper());
-    }*/
+    }
+
 }

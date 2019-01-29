@@ -31,7 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 public class NewsTabFragment extends Fragment {
 
@@ -125,7 +124,6 @@ public class NewsTabFragment extends Fragment {
         @Override
         public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             super.setPrimaryItem(container, position, object);
-            Timber.d("CALLEDEDED");
             mFragment = (ContentFragment) object;
             //得到当前的fragment
             mActivity.setOnTabReselectedListener(mFragment);

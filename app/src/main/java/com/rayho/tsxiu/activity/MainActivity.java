@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
-import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
 
@@ -167,8 +166,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTabReselected(int position) {
                 if(position == 0){
-                    Timber.tag("MAINMAIN");
-                    Timber.d("NesTabFragment is called.............");
                     listener.updateData();
                 }
 

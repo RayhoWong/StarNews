@@ -49,8 +49,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     //超火的工具类大全
     implementation 'com.blankj:utilcode:1.21.2'
-    //日志库Timeber
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    //rxjava2.x
     implementation 'io.reactivex.rxjava2:rxjava:2.0.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     // Android 支持 Retrofit
@@ -77,4 +76,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //图片变换的处理
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
+    //强大的日志工具
+    implementation 'com.orhanobut:logger:2.2.0'
+
 }

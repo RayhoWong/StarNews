@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.http.exception.ExceptionEngine;
 
 import io.reactivex.Observable;
@@ -48,7 +50,7 @@ public class RxUtil {
             public T apply(@NonNull ResponseBody responseBody) throws Exception {
                 String content = responseBody.string();
                 //打印返回的json数据
-                Log.e("response", content);
+                Logger.json(content);
                 //                JSONObject jsonObject = new JSONObject(content);
                 //                int code = jsonObject.getInt("code");
                 //                String msg = jsonObject.getString("msg");
