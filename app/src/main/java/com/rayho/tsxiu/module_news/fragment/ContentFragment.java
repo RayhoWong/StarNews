@@ -16,6 +16,7 @@ import com.rayho.tsxiu.ui.MyRefreshLottieHeader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,41 +79,23 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         mViewModel = ViewModelProviders.of(this).get(ContentViewModel.class);
 //        mTvTag.setText(tag);
         initRefreshLayout();
-//        initNoPhoto();
-//        initSinglePhoto();
-//        initThreePhoto();
-        initMultiplePhoto();
+        initData();
     }
 
+    private void initData(){
+        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNSq3mtQzNc");
+        mImageUrlList.add("http://p3-tt.bytecdn.cn/large/pgc-image/RGPKNT23AJbl4b");
+        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTFFrcz02F");
+        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTgH29XGii");
+        mImageUrlList.add("http://p9-tt.bytecdn.cn/large/pgc-image/RGPKNTRLV9vvu");
 
-
-    private void initNoPhoto(){
         for(int i=0;i<10;i++){
             NewsBean.DataBean bean = new NewsBean.DataBean();
-            bean.title = i+"今日头条在东莞松山湖设立研发中心，大量职位开放！赶紧把简历扔过来吧。";
-            bean.commentCount = i+10;
-            bean.publishDateStr = i+"小时前";
-            mList.add(bean);
-        }
-        mRcv.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mAdapter = new NewsAdapter(mList,this);
-        mRcv.setAdapter(mAdapter);
-    }
-
-
-    private void initSinglePhoto(){
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNSq3mtQzNc");
-        mImageUrlList.add("http://p3-tt.bytecdn.cn/large/pgc-image/RGPKNT23AJbl4b");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTFFrcz02F");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTgH29XGii");
-        mImageUrlList.add("http://p9-tt.bytecdn.cn/large/pgc-image/RGPKNTRLV9vvu");
-
-        for(int i=0;i<5;i++){
-            NewsBean.DataBean bean = new NewsBean.DataBean();
             bean.title = "今日头条在东莞松山湖设立研发中心，大量职位开放，快点来投递简历吧。";
             bean.imageUrls = mImageUrlList;
-            bean.commentCount = i+10;
+            bean.commentCount = i+1;
             bean.publishDateStr = i+"小时前";
+            bean.type = new Random().nextInt(4);
             mList.add(bean);
         }
         mRcv.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -120,47 +103,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         mRcv.setAdapter(mAdapter);
     }
 
-
-    private void initThreePhoto(){
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNSq3mtQzNc");
-        mImageUrlList.add("http://p3-tt.bytecdn.cn/large/pgc-image/RGPKNT23AJbl4b");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTFFrcz02F");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTgH29XGii");
-        mImageUrlList.add("http://p9-tt.bytecdn.cn/large/pgc-image/RGPKNTRLV9vvu");
-
-        for(int i=0;i<5;i++){
-            NewsBean.DataBean bean = new NewsBean.DataBean();
-            bean.title = "今日头条在东莞松山湖设立研发中心，大量职位开放，快点来投递简历吧。";
-            bean.imageUrls = mImageUrlList;
-            bean.commentCount = i+10;
-            bean.publishDateStr = i+"小时前";
-            mList.add(bean);
-        }
-        mRcv.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mAdapter = new NewsAdapter(mList,this);
-        mRcv.setAdapter(mAdapter);
-    }
-
-
-    private void initMultiplePhoto(){
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNSq3mtQzNc");
-        mImageUrlList.add("http://p3-tt.bytecdn.cn/large/pgc-image/RGPKNT23AJbl4b");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTFFrcz02F");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTgH29XGii");
-        mImageUrlList.add("http://p9-tt.bytecdn.cn/large/pgc-image/RGPKNTRLV9vvu");
-
-        for(int i=0;i<5;i++){
-            NewsBean.DataBean bean = new NewsBean.DataBean();
-            bean.title = "今日头条在东莞松山湖设立研发中心，大量职位开放，快点来投递简历吧。";
-            bean.imageUrls = mImageUrlList;
-            bean.commentCount = i+10;
-            bean.publishDateStr = i+"小时前";
-            mList.add(bean);
-        }
-        mRcv.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mAdapter = new NewsAdapter(mList,this);
-        mRcv.setAdapter(mAdapter);
-    }
 
 
     private void initRefreshLayout() {

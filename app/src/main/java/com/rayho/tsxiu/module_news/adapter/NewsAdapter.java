@@ -1,52 +1,104 @@
 package com.rayho.tsxiu.module_news.adapter;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
-import com.rayho.tsxiu.utils.GlideUtils;
+import com.rayho.tsxiu.module_news.view.NewsMultiplePhoto;
+import com.rayho.tsxiu.module_news.view.NewsNoPhoto;
+import com.rayho.tsxiu.module_news.view.NewsSinglePhoto;
+import com.rayho.tsxiu.module_news.view.NewsThreePhoto;
 
 import java.util.List;
-import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * Created by Rayho on 2019/1/28
+ * 新闻界面
  **/
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
-    List<NewsBean.DataBean> mList;
-    ContentFragment mContext;
+    private List<NewsBean.DataBean> mList;
+    private ContentFragment mContext;
 
-
+    private NewsNoPhoto mNewsNoPhoto;//无图
+    private NewsSinglePhoto mNewsSinglePhoto;//单图
+    private NewsThreePhoto mNewsThreePhoto;//3张图
+    private NewsMultiplePhoto mNewsMultiplePhoto;//组图
 
     public NewsAdapter(List<NewsBean.DataBean> mList, ContentFragment mContext) {
         this.mList = mList;
         this.mContext = mContext;
     }
 
+    /**
+     * 判断每个item的类型（加载不同类型布局的方法）
+     * 根据新闻的type属性 返回不同的viewType
+     * @param position
+     * @return
+     */
+    @Override
+    public int getItemViewType(int position) {
+        switch (mList.get(position).type){
+            case 0:
+                return Constant.TYPE_NO_PHOTO;
+            case 1:
+                return Constant.TYPE_SINGLE_PHOTO;
+            case 2:
+                return Constant.TYPE_THREE_PHOTO;
+            case 3:
+                return Constant.TYPE_MULTIPLE_PHOTO;
+            default:
+                return super.getItemViewType(position);
+        }
+    }
+
+    /**
+     * 根据viewType创建不同的布局
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext.getContext()).inflate(R.layout.item_news_multiple_photo, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
+        if(viewType == Constant.TYPE_NO_PHOTO){
+            mNewsNoPhoto = new NewsNoPhoto(mContext);
+            return mNewsNoPhoto.onCreateViewHolder(parent,viewType);
+        }else if(viewType == Constant.TYPE_SINGLE_PHOTO){
+            mNewsSinglePhoto = new NewsSinglePhoto(mContext);
+            return mNewsSinglePhoto.onCreateViewHolder(parent,viewType);
+        }else if(viewType == Constant.TYPE_THREE_PHOTO){
+            mNewsThreePhoto = new NewsThreePhoto(mContext);
+            return mNewsThreePhoto.onCreateViewHolder(parent,viewType);
+        }else if(viewType == Constant.TYPE_MULTIPLE_PHOTO){
+            mNewsMultiplePhoto = new NewsMultiplePhoto(mContext);
+            return mNewsMultiplePhoto.onCreateViewHolder(parent,viewType);
+        }else {
+            return null;
+        }
     }
 
+    /**
+     * 根据返回holder的类型 绑定数据
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        bindNoPhoto(holder, position);
-//        bindSinglePhoto(holder,position);
-//        bindThreePhoto(holder, position);
-        bindMultiplePhoto(holder,position);
+        if(holder instanceof NewsNoPhoto.NoPhotoViewHolder){
+            mNewsNoPhoto.onBindViewHolder(holder,position,mList.get(position));
+        }else if(holder instanceof NewsSinglePhoto.SinglePhotoViewHolder){
+            mNewsSinglePhoto.onBindViewHolder(holder,position,mList.get(position));
+        }else if(holder instanceof NewsThreePhoto.ThreePhotoViewHolder){
+            mNewsThreePhoto.onBindViewHolder(holder,position,mList.get(position));
+        }else if(holder instanceof NewsMultiplePhoto.MultiplePhotoViewHolder){
+            mNewsMultiplePhoto.onBindViewHolder(holder,position,mList.get(position));
+        }
     }
 
     @Override
@@ -54,95 +106,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         return mList == null ? 0 : mList.size();
     }
 
-    /**
-     * 纯文字
-     *
-     * @param holder
-     * @param position
-     */
-    private void bindNoPhoto(MyViewHolder holder, int position) {
-        NewsBean.DataBean bean = mList.get(position);
-        holder.mTvTitle.setText(bean.title);
-        holder.mTvComments.setText(String.valueOf(bean.commentCount) + "评论");
-        holder.mTvTime.setText(bean.publishDateStr);
-    }
-
-    /**
-     * 单图
-     *
-     * @param holder
-     * @param position
-     */
-    private void bindSinglePhoto(MyViewHolder holder, int position) {
-        NewsBean.DataBean bean = mList.get(position);
-        holder.mTvTitle.setText(bean.title);
-        holder.mTvComments.setText(String.valueOf(bean.commentCount) + "评论");
-        holder.mTvTime.setText(bean.publishDateStr);
-//        GlideUtils.loadRoundCircleImage(
-//                mContext.getContext(),bean.imageUrls.get(position),holder.mIvCover);
-    }
-
-    /**
-     * @param holder
-     * @param position
-     */
-    private void bindThreePhoto(MyViewHolder holder, int position) {
-        NewsBean.DataBean bean = mList.get(position);
-        holder.mTvTitle.setText(bean.title);
-        holder.mTvComments.setText(String.valueOf(bean.commentCount) + "评论");
-        holder.mTvTime.setText(bean.publishDateStr);
-//        GlideUtils.loadRoundCircleImage(
-//                mContext.getContext(), bean.imageUrls.get(1), holder.mIv_1);
-//        GlideUtils.loadRoundCircleImage(
-//                mContext.getContext(), bean.imageUrls.get(2), holder.mIv_2);
-//        GlideUtils.loadRoundCircleImage(
-//                mContext.getContext(), bean.imageUrls.get(4), holder.mIv_3);
-    }
-
-    /**
-     *
-     * @param holder
-     * @param position
-     */
-    private void bindMultiplePhoto(MyViewHolder holder, int position) {
-        NewsBean.DataBean bean = mList.get(position);
-        holder.mTvTitle.setText(bean.title);
-        holder.mTvComments.setText(String.valueOf(bean.commentCount) + "评论");
-        holder.mTvTime.setText(bean.publishDateStr);
-        holder.mIvImageNums.setText(String.valueOf(bean.imageUrls.size())+"图");
-        GlideUtils.loadRoundCircleImage(
-                mContext.getContext(),bean.imageUrls.get(new Random().nextInt(5)),holder.mIvMiddle);
-    }
-
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_title)
-        TextView mTvTitle;
-        @BindView(R.id.tv_user)
-        TextView mTvUser;
-        @BindView(R.id.tv_comments)
-        TextView mTvComments;
-        @BindView(R.id.tv_time)
-        TextView mTvTime;
-        @BindView(R.id.iv_more)
-        ImageView mIvMore;
-
-//        @BindView(R.id.iv_cover)
-//        ImageView mIvCover;
-
-       /* @BindView(R.id.image_1)
-        ImageView mIv_1;
-        @BindView(R.id.image_2)
-        ImageView mIv_2;
-        @BindView(R.id.image_3)
-        ImageView mIv_3;*/
-
-        @BindView(R.id.iv_middle)
-        ImageView mIvMiddle;
-        @BindView(R.id.tv_image_nums)
-        TextView mIvImageNums;
-
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
