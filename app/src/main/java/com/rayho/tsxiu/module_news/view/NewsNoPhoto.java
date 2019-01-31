@@ -12,6 +12,7 @@ import com.rayho.tsxiu.module_news.NewsTypeUI;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
+import com.rayho.tsxiu.utils.DateUtils;
 
 import androidx.annotation.NonNull;
 import butterknife.BindView;
@@ -47,9 +48,7 @@ public class NewsNoPhoto implements NewsTypeUI {
             noPhotoViewHolder.mTvTitle.setText(dataBean.title);
         }
         noPhotoViewHolder.mTvComments.setText(String.valueOf(dataBean.commentCount) + "评论");
-        if (!TextUtils.isEmpty(dataBean.publishDateStr)) {
-            noPhotoViewHolder.mTvTime.setText(dataBean.publishDateStr);
-        }
+        noPhotoViewHolder.mTvTime.setText(DateUtils.convertTimeToFormat(dataBean.publishDate));
         noPhotoViewHolder.mIvMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

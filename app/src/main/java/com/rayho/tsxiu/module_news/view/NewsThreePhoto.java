@@ -12,6 +12,7 @@ import com.rayho.tsxiu.module_news.NewsTypeUI;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
+import com.rayho.tsxiu.utils.DateUtils;
 import com.rayho.tsxiu.utils.GlideUtils;
 
 import androidx.annotation.NonNull;
@@ -48,9 +49,7 @@ public class NewsThreePhoto implements NewsTypeUI {
             threePhotoViewHolder.mTvTitle.setText(dataBean.title);
         }
         threePhotoViewHolder.mTvComments.setText(String.valueOf(dataBean.commentCount) + "评论");
-        if (!TextUtils.isEmpty(dataBean.publishDateStr)) {
-            threePhotoViewHolder.mTvTime.setText(dataBean.publishDateStr);
-        }
+        threePhotoViewHolder.mTvTime.setText(DateUtils.convertTimeToFormat(dataBean.publishDate));
         if(dataBean.imageUrls != null && dataBean.imageUrls.size() >= 3){
             GlideUtils.loadRoundCircleImage(
                     mContext.getContext(), dataBean.imageUrls.get(0), threePhotoViewHolder.mIv_1);

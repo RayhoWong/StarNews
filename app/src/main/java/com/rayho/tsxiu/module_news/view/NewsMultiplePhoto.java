@@ -12,6 +12,7 @@ import com.rayho.tsxiu.module_news.NewsTypeUI;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
+import com.rayho.tsxiu.utils.DateUtils;
 import com.rayho.tsxiu.utils.GlideUtils;
 
 import java.util.Random;
@@ -50,12 +51,10 @@ public class NewsMultiplePhoto implements NewsTypeUI {
             multiplePhotoViewHolder.mTvTitle.setText(dataBean.title);
         }
         multiplePhotoViewHolder.mTvComments.setText(String.valueOf(dataBean.commentCount) + "评论");
-        if (!TextUtils.isEmpty(dataBean.publishDateStr)) {
-            multiplePhotoViewHolder.mTvTime.setText(dataBean.publishDateStr);
-        }
+        multiplePhotoViewHolder.mTvTime.setText(DateUtils.convertTimeToFormat(dataBean.publishDate));
         if (dataBean.imageUrls != null && dataBean.imageUrls.size() > 3) {
             multiplePhotoViewHolder.mIvImageNums.setText(String.valueOf(dataBean.imageUrls.size()) + "图");
-            GlideUtils.loadRoundCircleImage(
+            GlideUtils.loadImage(
                     mContext.getContext(), dataBean.imageUrls.get(0), multiplePhotoViewHolder.mIvMiddle);
         }
         multiplePhotoViewHolder.mIvMore.setOnClickListener(new View.OnClickListener() {

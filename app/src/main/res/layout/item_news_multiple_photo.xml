@@ -13,37 +13,37 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginRight="28dp"
         android:maxLines="30"
         android:textColor="@color/black"
         android:textSize="17sp" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="16dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
 
         <ImageView
             android:id="@+id/iv_middle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="165dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginRight="6dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/bg_multiple_image"
             android:paddingTop="3dp"
             android:paddingBottom="3dp">
 
             <ImageView
                 android:id="@+id/iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="7dp"
                 android:src="@mipmap/multiple_photo" />
@@ -54,18 +54,18 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_toRightOf="@id/iv"
                 android:text="12图"
                 android:textColor="@color/whitesmoke"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </RelativeLayout>
     </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
         android:layout_marginBottom="18dp"
         android:gravity="center_vertical">
 

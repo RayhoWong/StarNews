@@ -94,7 +94,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
             bean.title = "今日头条在东莞松山湖设立研发中心，大量职位开放，快点来投递简历吧。";
             bean.imageUrls = mImageUrlList;
             bean.commentCount = i+1;
-            bean.publishDateStr = i+"小时前";
+            bean.publishDate = 1548925892;
             bean.type = new Random().nextInt(4);
             mList.add(bean);
         }

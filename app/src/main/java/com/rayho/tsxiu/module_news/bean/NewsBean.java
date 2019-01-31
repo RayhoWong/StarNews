@@ -54,7 +54,7 @@ public class NewsBean {
         public String catPathKey;
         public String title;
         public String id;
-        public int publishDate;
+        public long publishDate;
         public int dislikeCount;
         public int commentCount;
         public int likeCount;
