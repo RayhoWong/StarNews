@@ -32,7 +32,7 @@ public class NewsThreePhoto implements NewsTypeUI {
 
     @Override
     public NewsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext.getContext()).inflate(R.layout.item_news_three_photo, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_three_photo, parent, false);
         ThreePhotoViewHolder holder = new ThreePhotoViewHolder(view);
         return holder;
     }
@@ -52,11 +52,11 @@ public class NewsThreePhoto implements NewsTypeUI {
         threePhotoViewHolder.mTvTime.setText(DateUtils.convertTimeToFormat(dataBean.publishDate));
         if(dataBean.imageUrls != null && dataBean.imageUrls.size() >= 3){
             GlideUtils.loadRoundCircleImage(
-                    mContext.getContext(), dataBean.imageUrls.get(0), threePhotoViewHolder.mIv_1);
+                    mContext.getActivity(), dataBean.imageUrls.get(0), threePhotoViewHolder.mIv_1);
             GlideUtils.loadRoundCircleImage(
-                    mContext.getContext(), dataBean.imageUrls.get(1), threePhotoViewHolder.mIv_2);
+                    mContext.getActivity(), dataBean.imageUrls.get(1), threePhotoViewHolder.mIv_2);
             GlideUtils.loadRoundCircleImage(
-                    mContext.getContext(), dataBean.imageUrls.get(3), threePhotoViewHolder.mIv_3);
+                    mContext.getActivity(), dataBean.imageUrls.get(3), threePhotoViewHolder.mIv_3);
         }
         threePhotoViewHolder.mIvMore.setOnClickListener(new View.OnClickListener() {
             @Override

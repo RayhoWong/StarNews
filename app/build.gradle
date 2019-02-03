@@ -63,7 +63,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     // 依赖以下两个库，会自动引用基础库与Android库(rx绑定生命周期)
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-navi:2.1.0'
     //好用的BottomNavigation
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     implementation project(':ChannelHelper')

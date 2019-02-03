@@ -32,7 +32,7 @@ public class NewsSinglePhoto implements NewsTypeUI {
 
     @Override
     public NewsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext.getContext()).inflate(R.layout.item_news_single_photo,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_single_photo,parent,false);
         SinglePhotoViewHolder holder = new SinglePhotoViewHolder(view);
         return holder;
     }
@@ -52,7 +52,7 @@ public class NewsSinglePhoto implements NewsTypeUI {
         singlePhotoViewHolder.mTvTime.setText(DateUtils.convertTimeToFormat(dataBean.publishDate));
         if(dataBean.imageUrls != null && dataBean.imageUrls.size() > 0)
         GlideUtils.loadRoundCircleImage(
-                mContext.getContext(),dataBean.imageUrls.get(0),singlePhotoViewHolder.mIvCover);
+                mContext.getActivity(),dataBean.imageUrls.get(0),singlePhotoViewHolder.mIvCover);
         singlePhotoViewHolder.mIvMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

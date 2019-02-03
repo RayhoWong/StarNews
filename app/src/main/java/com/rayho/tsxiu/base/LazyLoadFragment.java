@@ -5,9 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -15,7 +16,7 @@ import butterknife.Unbinder;
  * Created by Rayho on 2018/12/4
  * Fragment懒加载的封装
  **/
-public abstract class LazyLoadFragment extends Fragment {
+public abstract class LazyLoadFragment extends RxFragment {
     //当前页面是否可见
     private boolean isUiVisible;
     //标志view控件是否已经初始化完成，因为setUserVisibleHint是在onCreateView之前调用的，

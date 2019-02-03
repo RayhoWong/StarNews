@@ -6,7 +6,7 @@ import com.rayho.tsxiu.utils.RxUtil;
 
 import io.reactivex.Observable;
 
-public class NewsLoader {
+public class NewsLoader{
     private NewsApi helper;
 
     public NewsLoader(){

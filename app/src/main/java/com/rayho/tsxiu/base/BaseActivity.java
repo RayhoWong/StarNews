@@ -1,25 +1,22 @@
 package com.rayho.tsxiu.base;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-
-import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.rayho.tsxiu.R;
-import com.rayho.tsxiu.app.AppApplication;
 import com.rayho.tsxiu.utils.StatusBarUtil;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
 
     private Toolbar mToolbar;
     private TextView mTvTitle;//中间的主标题

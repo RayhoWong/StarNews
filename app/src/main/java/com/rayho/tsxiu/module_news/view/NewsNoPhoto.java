@@ -31,7 +31,7 @@ public class NewsNoPhoto implements NewsTypeUI {
 
     @Override
     public NewsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext.getContext()).inflate(R.layout.item_news_no_photo, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_no_photo, parent, false);
         NoPhotoViewHolder holder = new NoPhotoViewHolder(view);
         return holder;
     }

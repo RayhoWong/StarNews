@@ -20,7 +20,6 @@ import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -76,7 +75,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     @Override
     public void loadData() {
-        mViewModel = ViewModelProviders.of(this).get(ContentViewModel.class);
+//        mViewModel = ViewModelProviders.of(this).get(ContentViewModel.class);
 //        mTvTag.setText(tag);
         initRefreshLayout();
         initData();
@@ -98,7 +97,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
             bean.type = new Random().nextInt(4);
             mList.add(bean);
         }
-        mRcv.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mRcv.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new NewsAdapter(mList,this);
         mRcv.setAdapter(mAdapter);
     }

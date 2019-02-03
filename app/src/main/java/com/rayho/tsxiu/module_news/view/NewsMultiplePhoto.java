@@ -34,7 +34,7 @@ public class NewsMultiplePhoto implements NewsTypeUI {
 
     @Override
     public NewsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext.getContext()).inflate(R.layout.item_news_multiple_photo, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_multiple_photo, parent, false);
         MultiplePhotoViewHolder holder = new MultiplePhotoViewHolder(view);
         return holder;
     }
@@ -55,7 +55,7 @@ public class NewsMultiplePhoto implements NewsTypeUI {
         if (dataBean.imageUrls != null && dataBean.imageUrls.size() > 3) {
             multiplePhotoViewHolder.mIvImageNums.setText(String.valueOf(dataBean.imageUrls.size()) + "图");
             GlideUtils.loadImage(
-                    mContext.getContext(), dataBean.imageUrls.get(0), multiplePhotoViewHolder.mIvMiddle);
+                    mContext.getActivity(), dataBean.imageUrls.get(0), multiplePhotoViewHolder.mIvMiddle);
         }
         multiplePhotoViewHolder.mIvMore.setOnClickListener(new View.OnClickListener() {
             @Override
