@@ -20,7 +20,9 @@ android {
         debug {
             debuggable true
         }
-
+    }
+    dataBinding {
+        enabled = true
     }
 }
 

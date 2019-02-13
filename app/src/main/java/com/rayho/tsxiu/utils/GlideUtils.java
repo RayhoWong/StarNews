@@ -28,8 +28,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  * Created by Rayho on 2019/1/21
  **/
 public class GlideUtils {
-    private static final int placeholderSoWhite = R.color.white;
-    private static final int errorSoWhite = R.color.white;
+    private static final int placeholderSoWhite = R.color.whitesmoke;
+    private static final int errorSoWhite = R.color.whitesmoke;
     // public static final int soWhite = R.color.white;
 
     /*
@@ -39,7 +39,7 @@ public class GlideUtils {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(placeholderSoWhite) //占位图
-                .error(R.color.colorAccent)//错误图
+                .error(errorSoWhite)//错误图
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(context).load(url)
