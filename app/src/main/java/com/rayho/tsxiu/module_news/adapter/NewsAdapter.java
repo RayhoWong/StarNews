@@ -1,38 +1,37 @@
 package com.rayho.tsxiu.module_news.adapter;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
-import com.rayho.tsxiu.module_news.fragment.ContentFragment;
-import com.rayho.tsxiu.module_news.view.NewsMultiplePhoto;
-import com.rayho.tsxiu.module_news.view.NewsNoPhoto;
-import com.rayho.tsxiu.module_news.view.NewsSinglePhoto;
-import com.rayho.tsxiu.module_news.view.NewsThreePhoto;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Rayho on 2019/1/28
  * 新闻界面
  **/
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
-    private List<NewsBean.DataBean> mList;
-    private ContentFragment mContext;
+    private List<NewsBean.DataBean> list;
 
-    private NewsNoPhoto mNewsNoPhoto;//无图
+   /* private NewsNoPhoto mNewsNoPhoto;//无图
     private NewsSinglePhoto mNewsSinglePhoto;//单图
     private NewsThreePhoto mNewsThreePhoto;//3张图
-    private NewsMultiplePhoto mNewsMultiplePhoto;//组图
+    private NewsMultiplePhoto mNewsMultiplePhoto;//组图*/
 
-    public NewsAdapter(List<NewsBean.DataBean> mList, ContentFragment mContext) {
-        this.mList = mList;
-        this.mContext = mContext;
+    public NewsAdapter() {}
+
+    public void setNews(List<NewsBean.DataBean> list){
+        this.list = list;
     }
 
     /**
@@ -43,7 +42,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
      */
     @Override
     public int getItemViewType(int position) {
-        switch (mList.get(position).type){
+        switch (list.get(position).type){
             case 0:
                 return Constant.TYPE_NO_PHOTO;
             case 1:
@@ -66,7 +65,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType == Constant.TYPE_NO_PHOTO){
+        //////////////////////////普通写法(非databinding)//////////////////////////////////
+        /*if(viewType == Constant.TYPE_NO_PHOTO){
             mNewsNoPhoto = new NewsNoPhoto(mContext);
             return mNewsNoPhoto.onCreateViewHolder(parent,viewType);
         }else if(viewType == Constant.TYPE_SINGLE_PHOTO){
@@ -80,7 +80,33 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             return mNewsMultiplePhoto.onCreateViewHolder(parent,viewType);
         }else {
             return null;
+        }*/
+        ////////////////////////////////////////////////////////////////////
+        ViewDataBinding binding;
+        MyViewHolder holder = null;
+        switch (viewType){
+            case 0:
+                binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_news_no_photo,parent,false);
+                holder = new MyViewHolder(binding.getRoot());
+                holder.setBinding(binding);
+                return holder;
+            case 1:
+                binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_news_single_photo,parent,false);
+                holder = new MyViewHolder(binding.getRoot());
+                holder.setBinding(binding);
+                return holder;
+            case 2:
+                binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_news_three_photo,parent,false);
+                holder = new MyViewHolder(binding.getRoot());
+                holder.setBinding(binding);
+                return holder;
+            case 3:
+                binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_news_multiple_photo,parent,false);
+                holder = new MyViewHolder(binding.getRoot());
+                holder.setBinding(binding);
+                return holder;
         }
+        return holder;
     }
 
     /**
@@ -90,7 +116,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
      */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        if(holder instanceof NewsNoPhoto.NoPhotoViewHolder){
+        //////////////////////////普通写法(非databinding)//////////////////////////////////
+       /* if(holder instanceof NewsNoPhoto.NoPhotoViewHolder){
             mNewsNoPhoto.onBindViewHolder(holder,position,mList.get(position));
         }else if(holder instanceof NewsSinglePhoto.SinglePhotoViewHolder){
             mNewsSinglePhoto.onBindViewHolder(holder,position,mList.get(position));
@@ -98,18 +125,31 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             mNewsThreePhoto.onBindViewHolder(holder,position,mList.get(position));
         }else if(holder instanceof NewsMultiplePhoto.MultiplePhotoViewHolder){
             mNewsMultiplePhoto.onBindViewHolder(holder,position,mList.get(position));
-        }
+        }*/
+        ////////////////////////////////////////////////////////////////////
+        holder.getBinding().setVariable(BR.item,list.get(position));
+        holder.getBinding().executePendingBindings();//防止画面闪烁
     }
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size();
+        return list == null ? 0 : list.size();
     }
 
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+        private ViewDataBinding binding;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+        }
+
+        public ViewDataBinding getBinding() {
+            return binding;
+        }
+
+        public void setBinding(ViewDataBinding binding) {
+            this.binding = binding;
         }
     }
 }

@@ -11,6 +11,7 @@ import com.rayho.tsxiu.base.LazyLoadFragment;
 import com.rayho.tsxiu.base.listener.OnTabReselectedListener;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.module_news.viewmodel.ContentFtViewModel;
 import com.rayho.tsxiu.ui.MyRefreshLottieFooter;
 import com.rayho.tsxiu.ui.MyRefreshLottieHeader;
 
@@ -39,11 +40,9 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     private static final String TYPE_ID = "tag";
     private String tag;
-    private ContentViewModel mViewModel;
 
-    NewsAdapter mAdapter;
-    private List<NewsBean.DataBean> mList = new ArrayList<>();
-    private List<String> mImageUrlList = new ArrayList<>();
+    private NewsAdapter mAdapter;
+    private ContentFtViewModel contentFtViewModel;
 
 
     public static ContentFragment newInstance(String tag) {
@@ -76,30 +75,16 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     @Override
     public void loadData() {
-//        mViewModel = ViewModelProviders.of(this).get(ContentViewModel.class);
 //        mTvTag.setText(tag);
         initRefreshLayout();
         initData();
     }
 
     private void initData(){
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNSq3mtQzNc");
-        mImageUrlList.add("http://p3-tt.bytecdn.cn/large/pgc-image/RGPKNT23AJbl4b");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTFFrcz02F");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTgH29XGii");
-        mImageUrlList.add("http://p9-tt.bytecdn.cn/large/pgc-image/RGPKNTRLV9vvu");
-
-        for(int i=0;i<10;i++){
-            NewsBean.DataBean bean = new NewsBean.DataBean();
-            bean.title = "今日头条在东莞松山湖设立研发中心，大量职位开放，快点来投递简历吧。";
-            bean.imageUrls = mImageUrlList;
-            bean.commentCount = i+1;
-            bean.publishDate = 1548925892;
-            bean.type = new Random().nextInt(4);
-            mList.add(bean);
-        }
         mRcv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new NewsAdapter(mList,this);
+        mAdapter = new NewsAdapter();
+        contentFtViewModel = new ContentFtViewModel(mAdapter);
+        contentFtViewModel.getData();
         mRcv.setAdapter(mAdapter);
     }
 

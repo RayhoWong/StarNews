@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--给ImageView添加属性imageUrl方便在xml中找到-->
+    <declare-styleable name="ImageView">
+        <attr name="imageUrl" format="string"/>
+    </declare-styleable>
+</resources>
