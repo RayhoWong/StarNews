@@ -35,10 +35,10 @@
             <ImageView
                 android:id="@+id/iv_middle"
                 android:layout_width="match_parent"
-                android:layout_height="165dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                imageUrl="@{item.imageUrls[0]}"/>
+                android:layout_height="167dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                imageUrl_2="@{item.imageUrls[0]}"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"

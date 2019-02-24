@@ -16,18 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by Rayho on 2019/2/23
  * 使用DataBinding方式的基类adapter
  * 支持多类型布局 只需要在子类实现getItemViewType方法返回布局id
- *
  **/
-public class BaseDataBindingApater {}/*<T> extends RecyclerView.Adapter<BaseDataBindingApater.ItemViewHolder> {
+public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingApater.ItemViewHolder> {
 
-    public List<T> items = new ArrayList<>();
+    public List<Items> items = new ArrayList<>();
 
-    *//**
-     * 根据viewType创建不同的布局
-     * @param parent
-     * @param layout 子类的getItemView方法直接返回布局id
-     * @return
-     *//*
+    //相当于BaseViewModel 子类viewmodel实现该接口
+    public interface Items {
+        int getType();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return items.get(position).getType();
+    }
+
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int layout) {
         ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
@@ -45,46 +48,7 @@ public class BaseDataBindingApater {}/*<T> extends RecyclerView.Adapter<BaseData
         return items == null ? 0 : items.size();
     }
 
-
-    ///////////////////////item的操作方法/////////////////////////////////////
-    public List<T> getItems() {
-        return items;
-    }
-
-    public void setItem(T item) {
-        clearItems();
-        addItem(item);
-    }
-
-    public void setItems(List<T> items) {
-        clearItems();
-        addItems(items);
-    }
-
-    public void addItem(T item) {
-        items.add(item);
-    }
-
-    public void addItem(T item, int index) {
-        items.add(index, item);
-    }
-
-    public void addItems(List<T> items) {
-        this.items.addAll(items);
-    }
-
-    public void removeItem(T item) {
-        items.remove(item);
-    }
-
-    public void clearItems() {
-        items.clear();
-    }
-    ///////////////////////////////////////////////////////////////////////////////////
-
-
-
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
+    public static class ItemViewHolder extends RecyclerView.ViewHolder {
         private final ViewDataBinding binding;
 
         public ItemViewHolder(ViewDataBinding binding) {
@@ -92,9 +56,45 @@ public class BaseDataBindingApater {}/*<T> extends RecyclerView.Adapter<BaseData
             this.binding = binding;
         }
 
-        public void bindTo(T item) {
+        public void bindTo(Items item) {
             binding.setVariable(BR.item, item);
             binding.executePendingBindings();
         }
-    }*/
+    }
 
+    ///////////////////////item的操作方法/////////////////////////////////////
+    public List<Items> getItems() {
+        return items;
+    }
+
+    public void setItem(Items item) {
+        clearItems();
+        addItem(item);
+    }
+
+    public void setItems(List<Items> items) {
+        clearItems();
+        addItems(items);
+    }
+
+    public void addItem(Items item) {
+        items.add(item);
+    }
+
+    public void addItem(Items item, int index) {
+        items.add(index, item);
+    }
+
+    public void addItems(List<Items> items) {
+        this.items.addAll(items);
+    }
+
+    public void removeItem(Items item) {
+        items.remove(item);
+    }
+
+    public void clearItems() {
+        items.clear();
+    }
+    ///////////////////////////////////////////////////////////////////////////////////
+}

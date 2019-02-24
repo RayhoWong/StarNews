@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.module_news.viewmodel.NewsViewModel;
 
 import java.util.List;
 
@@ -126,8 +127,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         }else if(holder instanceof NewsMultiplePhoto.MultiplePhotoViewHolder){
             mNewsMultiplePhoto.onBindViewHolder(holder,position,mList.get(position));
         }*/
-        ////////////////////////////////////////////////////////////////////
-        holder.getBinding().setVariable(BR.item,list.get(position));
+        ///////////////////////////////////////////////////////////////////////////////////
+        NewsViewModel model = new NewsViewModel(list.get(position));
+        holder.getBinding().setVariable(BR.item,model);
         holder.getBinding().executePendingBindings();//防止画面闪烁
     }
 

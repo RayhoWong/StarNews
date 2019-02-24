@@ -67,7 +67,7 @@ public class GlideUtils {
                 .override(width, height)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        Glide.with(context).load(url).apply(options).into(imageView);
+        Glide.with(context).load(url).apply(options).transition(new DrawableTransitionOptions().withCrossFade()).into(imageView);
     }
 
     /**
@@ -88,7 +88,7 @@ public class GlideUtils {
                 .skipMemoryCache(true)//禁用掉Glide的内存缓存功能
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        Glide.with(context).load(url).apply(options).into(imageView);
+        Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
     }
 
     /**
@@ -102,7 +102,7 @@ public class GlideUtils {
                 .error(errorSoWhite)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        Glide.with(context).load(url).apply(options).into(imageView);
+        Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
     }
 
     /**
@@ -128,7 +128,7 @@ public class GlideUtils {
                 .bitmapTransform(new RoundedCornersTransformation(15, 0, RoundedCornersTransformation.CornerType.ALL))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        Glide.with(context).load(url).apply(options).into(imageView);
+        Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
     }
 
     /**
@@ -147,7 +147,7 @@ public class GlideUtils {
                 .bitmapTransform(new RoundedCornersTransformation(45, 0, type))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        Glide.with(context).load(url).apply(options).into(imageView);
+        Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
     }
 
     /**

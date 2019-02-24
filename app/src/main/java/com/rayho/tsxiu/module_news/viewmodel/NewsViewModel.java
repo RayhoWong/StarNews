@@ -1,17 +1,13 @@
 package com.rayho.tsxiu.module_news.viewmodel;
 
-import android.widget.ImageView;
-
 import com.rayho.tsxiu.BR;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.utils.DateUtils;
-import com.rayho.tsxiu.utils.GlideUtils;
 
 import java.util.List;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.BindingAdapter;
 
 /**
  * Created by Rayho on 2019/2/22
@@ -41,18 +37,7 @@ public class NewsViewModel extends BaseObservable {
         nums = String.valueOf(news.imageUrls.size()) + "图";
     }
 
-    /**
-     * 通过注解@BindingAdapter自定义imageUrl属性
-     * imageview在xml中可以使用该属性传值url给该方法加载图片
-     *
-     * @param view
-     * @param url
-     */
-    @BindingAdapter({"imageUrl"})
-    public static void loadImage(ImageView view, String url) {
-        GlideUtils.loadRoundCircleImage(
-                view.getContext(), url, view);
-    }
+
 
     @Bindable
     public String getTitle() {
