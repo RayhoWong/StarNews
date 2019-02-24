@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Rayho on 2019/1/30
  * 新闻组图(中间显示一张大图)
+ * 2.24更新 此类只做参考 无引用
  **/
 public class NewsMultiplePhoto implements NewsTypeUI {
     private ContentFragment mContext;
