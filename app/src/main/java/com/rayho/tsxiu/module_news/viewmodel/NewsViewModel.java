@@ -12,16 +12,16 @@ import androidx.databinding.Bindable;
 /**
  * Created by Rayho on 2019/2/22
  **/
-public class NewsViewModel extends BaseObservable {
+public class NewsViewModel extends BaseObservable{
 
     private NewsBean.DataBean news;
-
     private String title;
     private String user;
     private String commentCounts;
     private String time;
     private String nums;
     private List<String> imageUrls;
+
 
     public NewsViewModel(NewsBean.DataBean news) {
         this.news = news;
@@ -36,8 +36,6 @@ public class NewsViewModel extends BaseObservable {
         imageUrls = news.imageUrls;
         nums = String.valueOf(news.imageUrls.size()) + "图";
     }
-
-
 
     @Bindable
     public String getTitle() {

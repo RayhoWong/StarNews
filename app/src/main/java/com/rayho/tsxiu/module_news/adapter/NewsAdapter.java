@@ -22,12 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
  * 新闻界面
  **/
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
-    private List<NewsBean.DataBean> list;
 
-   /* private NewsNoPhoto mNewsNoPhoto;//无图
-    private NewsSinglePhoto mNewsSinglePhoto;//单图
-    private NewsThreePhoto mNewsThreePhoto;//3张图
-    private NewsMultiplePhoto mNewsMultiplePhoto;//组图*/
+    private List<NewsBean.DataBean> list;
 
     public NewsAdapter() {}
 
@@ -45,13 +41,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     public int getItemViewType(int position) {
         switch (list.get(position).type){
             case 0:
-                return Constant.TYPE_NO_PHOTO;
+                return Constant.TYPE_NO_PHOTO;//无图
             case 1:
-                return Constant.TYPE_SINGLE_PHOTO;
+                return Constant.TYPE_SINGLE_PHOTO;//单图
             case 2:
-                return Constant.TYPE_THREE_PHOTO;
+                return Constant.TYPE_THREE_PHOTO;//3张图
             case 3:
-                return Constant.TYPE_MULTIPLE_PHOTO;
+                return Constant.TYPE_MULTIPLE_PHOTO;//组图
             default:
                 return super.getItemViewType(position);
         }
@@ -66,23 +62,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //////////////////////////普通写法(非databinding)//////////////////////////////////
-        /*if(viewType == Constant.TYPE_NO_PHOTO){
-            mNewsNoPhoto = new NewsNoPhoto(mContext);
-            return mNewsNoPhoto.onCreateViewHolder(parent,viewType);
-        }else if(viewType == Constant.TYPE_SINGLE_PHOTO){
-            mNewsSinglePhoto = new NewsSinglePhoto(mContext);
-            return mNewsSinglePhoto.onCreateViewHolder(parent,viewType);
-        }else if(viewType == Constant.TYPE_THREE_PHOTO){
-            mNewsThreePhoto = new NewsThreePhoto(mContext);
-            return mNewsThreePhoto.onCreateViewHolder(parent,viewType);
-        }else if(viewType == Constant.TYPE_MULTIPLE_PHOTO){
-            mNewsMultiplePhoto = new NewsMultiplePhoto(mContext);
-            return mNewsMultiplePhoto.onCreateViewHolder(parent,viewType);
-        }else {
-            return null;
-        }*/
-        ////////////////////////////////////////////////////////////////////
         ViewDataBinding binding;
         MyViewHolder holder = null;
         switch (viewType){
@@ -117,17 +96,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
      */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        //////////////////////////普通写法(非databinding)//////////////////////////////////
-       /* if(holder instanceof NewsNoPhoto.NoPhotoViewHolder){
-            mNewsNoPhoto.onBindViewHolder(holder,position,mList.get(position));
-        }else if(holder instanceof NewsSinglePhoto.SinglePhotoViewHolder){
-            mNewsSinglePhoto.onBindViewHolder(holder,position,mList.get(position));
-        }else if(holder instanceof NewsThreePhoto.ThreePhotoViewHolder){
-            mNewsThreePhoto.onBindViewHolder(holder,position,mList.get(position));
-        }else if(holder instanceof NewsMultiplePhoto.MultiplePhotoViewHolder){
-            mNewsMultiplePhoto.onBindViewHolder(holder,position,mList.get(position));
-        }*/
-        ///////////////////////////////////////////////////////////////////////////////////
         NewsViewModel model = new NewsViewModel(list.get(position));
         holder.getBinding().setVariable(BR.item,model);
         holder.getBinding().executePendingBindings();//防止画面闪烁

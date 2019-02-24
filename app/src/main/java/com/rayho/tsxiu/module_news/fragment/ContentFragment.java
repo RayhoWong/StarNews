@@ -10,18 +10,12 @@ import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.LazyLoadFragment;
 import com.rayho.tsxiu.base.listener.OnTabReselectedListener;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
-import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.viewmodel.ContentFtViewModel;
 import com.rayho.tsxiu.ui.MyRefreshLottieFooter;
 import com.rayho.tsxiu.ui.MyRefreshLottieHeader;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -43,7 +37,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     private NewsAdapter mAdapter;
     private ContentFtViewModel contentFtViewModel;
-
 
     public static ContentFragment newInstance(String tag) {
         ContentFragment fragment = new ContentFragment();
@@ -87,8 +80,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         contentFtViewModel.getData();
         mRcv.setAdapter(mAdapter);
     }
-
-
 
     private void initRefreshLayout() {
         mTwiRefreshlayout.setHeaderHeight(60);

@@ -15,15 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by Rayho on 2019/2/23
  * 使用DataBinding方式的基类adapter
- * 支持多类型布局 只需要在子类实现getItemViewType方法返回布局id
+ * 支持单类型/多类型布局 只需要在子类实现getItemViewType方法返回布局id
+ * 子类adapter必须调用setItems方法给items赋值;
  **/
 public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingApater.ItemViewHolder> {
+    //相当于BaseViewModel 绑定的viewmodel必须实现该接口作为子类
+    public interface Items {
+        //返回布局Id
+        int getType();
+    }
 
     public List<Items> items = new ArrayList<>();
 
-    //相当于BaseViewModel 子类viewmodel实现该接口
-    public interface Items {
-        int getType();
+    public void setItems(List<Items> items) {
+        this.items = items;
     }
 
     @Override
@@ -62,35 +67,25 @@ public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingA
         }
     }
 
-    ///////////////////////item的操作方法/////////////////////////////////////
+    ///////////////////////items的操作方法/////////////////////////////////////////////
     public List<Items> getItems() {
         return items;
-    }
-
-    public void setItem(Items item) {
-        clearItems();
-        addItem(item);
-    }
-
-    public void setItems(List<Items> items) {
-        clearItems();
-        addItems(items);
     }
 
     public void addItem(Items item) {
         items.add(item);
     }
 
-    public void addItem(Items item, int index) {
-        items.add(index, item);
+    public void addItem(Items item, int position) {
+        items.add(position, item);
     }
 
     public void addItems(List<Items> items) {
         this.items.addAll(items);
     }
 
-    public void removeItem(Items item) {
-        items.remove(item);
+    public void removeItem(int position) {
+        items.remove(position);
     }
 
     public void clearItems() {
