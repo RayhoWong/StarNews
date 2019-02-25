@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 public class MyRefreshLottieFooter extends LinearLayout implements IBottomView {
 
     private LottieAnimationView mLottieAnimationView;
+
     private LinearLayout mLlFooter;
 
     public MyRefreshLottieFooter(Context context) {

@@ -4,9 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.Utils;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.module_news.viewmodel.NewsViewModel;
 
 import java.util.List;
@@ -25,7 +27,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
 
     private List<NewsBean.DataBean> list;
 
-    public NewsAdapter() {}
+    private ContentFragment mContext;
+
+    public NewsAdapter(ContentFragment mContext) {
+        this.mContext = mContext;
+    }
 
     public void setNews(List<NewsBean.DataBean> list){
         this.list = list;
@@ -99,6 +105,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         NewsViewModel model = new NewsViewModel(list.get(position));
         holder.getBinding().setVariable(BR.item,model);
         holder.getBinding().executePendingBindings();//防止画面闪烁
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        holder.itemView.findViewById(R.id.iv_more).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -121,5 +141,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         public void setBinding(ViewDataBinding binding) {
             this.binding = binding;
         }
+    }
+
+    /**
+     * 加载更多数据
+     * @param data
+     */
+    public void addItems(List<NewsBean.DataBean> data){
+        list.addAll(data);
+        notifyDataSetChanged();
     }
 }

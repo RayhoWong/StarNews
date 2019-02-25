@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable;
  * 利用rx的timer操作符做定时器
  **/
 public class RxTimer {
-    private Disposable mDisposable;
+    private static Disposable mDisposable;
     /**
      * 具体的操作
      */
@@ -24,7 +24,7 @@ public class RxTimer {
      * @param milliSeconds 间隔时间 单位：毫秒
      * @param rxAction 具体操作
      */
-    public void timer(final long milliSeconds, final RxAction rxAction){
+    public static void timer(final long milliSeconds, final RxAction rxAction){
         Observable.timer(milliSeconds, TimeUnit.MILLISECONDS)
                   .observeOn(AndroidSchedulers.mainThread())
                   .subscribe(new Observer<Long>() {

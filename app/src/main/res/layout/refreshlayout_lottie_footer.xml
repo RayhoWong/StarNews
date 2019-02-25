@@ -4,15 +4,17 @@
     android:id="@+id/ll_footer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/whitesmoke"
     android:gravity="center"
     android:orientation="vertical">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loading_footer"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
         app:lottie_fileName="loading_footer.json"
+        android:layout_marginTop="7dp"
         android:layout_marginBottom="15dp"
         app:lottie_loop="true"/>
 </LinearLayout>

@@ -79,5 +79,8 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
     //强大的日志工具
     implementation 'com.orhanobut:logger:2.2.0'
+    //好用的RxBus
+    implementation "com.blankj:rxbus:1.0"
+
 
 }

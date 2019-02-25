@@ -6,7 +6,7 @@ import androidx.databinding.BindingAdapter;
 
 /**
  * Created by Rayho on 2019/2/24
- * 加载图片
+ * 通过注解@BindingAdapter自定义属性加载图片 只适用于DataBinding
  **/
 public class ImageLoadHelper {
     /**

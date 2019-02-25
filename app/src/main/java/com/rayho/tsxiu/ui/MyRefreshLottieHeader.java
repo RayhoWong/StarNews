@@ -24,10 +24,19 @@ import androidx.annotation.NonNull;
 public class MyRefreshLottieHeader extends LinearLayout implements IHeaderView {
 
     private Context mContext;
+
     private LottieAnimationView mLottieAnimationView;
+
     private LinearLayout mLlHeader;
+
     private TextView mTvUpdateNumber;
+
     private int nums = 16;//后台返回更新数据的数量
+
+
+    public void setNums(int nums) {
+        this.nums = nums;
+    }
 
     public MyRefreshLottieHeader(Context context) {
         super(context);
@@ -72,9 +81,9 @@ public class MyRefreshLottieHeader extends LinearLayout implements IHeaderView {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone rt = RingtoneManager.getRingtone(mContext,uri);
         rt.play();
-        //延迟1秒提醒消失
+        //延迟2秒提醒消失
         RxTimer timer = new RxTimer();
-        timer.timer(1000, new RxTimer.RxAction() {
+        timer.timer(2000, new RxTimer.RxAction() {
             @Override
             public void action() {
                 //Header的收缩动画
@@ -83,9 +92,12 @@ public class MyRefreshLottieHeader extends LinearLayout implements IHeaderView {
         });
     }
 
+    /**
+     * 重置方法 onFinish后调用
+     */
     @Override
     public void reset() {
-        mLlHeader.setBackgroundResource(R.color.white);
+        mLlHeader.setBackgroundResource(R.color.whitesmoke);
         mTvUpdateNumber.setVisibility(GONE);
         mLottieAnimationView.setVisibility(VISIBLE);
     }
