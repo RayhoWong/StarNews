@@ -81,7 +81,7 @@ public class TestActivity extends BaseActivity {
 
     private void getData(){
         String cid = "news_sports";
-        NewsLoader.getInstance().getNews(cid)
+        NewsLoader.getInstance().getNews(cid,null)
                 //自动在onDestroy中取消订阅 避免内存泄漏
                 //一定要在subscribeOn方法之后调用
                   .compose(this.<NewsBean>bindToLifecycle())

@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.Utils;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
@@ -106,7 +105,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         holder.getBinding().setVariable(BR.item,model);
         holder.getBinding().executePendingBindings();//防止画面闪烁
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -118,7 +117,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             public void onClick(View v) {
 
             }
-        });
+        });*/
     }
 
     @Override
@@ -143,6 +142,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         }
     }
 
+
+    //////////////////////////////list的操作方法////////////////////////////////////////////
+
+    public List<NewsBean.DataBean> getList() {
+        return list;
+    }
+
     /**
      * 加载更多数据
      * @param data
@@ -151,4 +157,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         list.addAll(data);
         notifyDataSetChanged();
     }
+
+    public void addItem(NewsBean.DataBean item){
+        list.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void removeItem(int position){
+        list.remove(position);
+//        notifyDataSetChanged();
+        notifyItemRemoved(position);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 }

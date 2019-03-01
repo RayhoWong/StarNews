@@ -11,11 +11,20 @@
         android:id="@+id/twi_refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never">
         </androidx.recyclerview.widget.RecyclerView>
+
     </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+    <ViewStub
+        android:id="@+id/viewStub"
+        android:layout_width="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_height="match_parent"
+        android:layout="@layout/network_error"/>
 </RelativeLayout>

@@ -31,11 +31,10 @@ public class MyRefreshLottieHeader extends LinearLayout implements IHeaderView {
 
     private TextView mTvUpdateNumber;
 
-    private int nums = 16;//后台返回更新数据的数量
+    private String msg;//HEADER的提示信息
 
-
-    public void setNums(int nums) {
-        this.nums = nums;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public MyRefreshLottieHeader(Context context) {
@@ -76,7 +75,7 @@ public class MyRefreshLottieHeader extends LinearLayout implements IHeaderView {
         mLottieAnimationView.setVisibility(GONE);
         mLlHeader.setBackgroundResource(R.color.colorAccent);
         mTvUpdateNumber.setVisibility(VISIBLE);
-        mTvUpdateNumber.setText("星头条推荐引擎有" + nums + "条更新");
+        mTvUpdateNumber.setText(msg);
         //刷新成功播放系统提示音
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone rt = RingtoneManager.getRingtone(mContext,uri);

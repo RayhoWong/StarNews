@@ -16,6 +16,4 @@ public class Constant {
 
     public static int REFRESH_DATA = 0;//下拉刷新
     public static int LOAD_MORE_DATA = 1;//上拉加载
-
-
 }

@@ -38,7 +38,8 @@ public class NewsServiceHelper {
 //                                 .addHeaderParams("token","123456kobe")
 //                                 .build();
 //        builder.addInterceptor(interceptor);
-//        *
+
+
 //         *HttpLoggingInterceptor（添加日志拦截器）
 //         * 拦截器的主要作用在于显示网络传输的数据，在调试的时候，方便我们查看上传以及服务器返回的json内容
 //         步骤一：添加依赖 ‘com.squareup.okhttp3:logging-interceptor:3.8.1’
@@ -57,7 +58,6 @@ public class NewsServiceHelper {
         //设置缓存大小
         int cacheSize = 10*1024*1024;
         Cache cache = new Cache(cacheFile, cacheSize);*/
-
         //添加缓存拦截器
 /*        builder.addInterceptor(new CacheIntercepter());
         builder.addNetworkInterceptor(new CacheIntercepter());

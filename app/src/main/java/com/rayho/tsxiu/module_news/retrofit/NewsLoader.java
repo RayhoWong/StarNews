@@ -35,8 +35,8 @@ public class NewsLoader{
                      .compose(RxUtil.<MovieDetailBean>rxSchedulerHelper());
     }*/
 
-    public Observable<NewsBean> getNews(String id){
-        return helper.getNews(id)
+    public Observable<NewsBean> getNews(String id,String pageToken){
+        return helper.getNews(id,pageToken)
                      .map(RxUtil.jsonTransform(NewsBean.class))
                      .onErrorResumeNext(RxUtil.<NewsBean>throwableFunc())
                      .compose(RxUtil.<NewsBean>rxSchedulerHelper());

@@ -15,5 +15,5 @@ public interface NewsApi {
      * @return
      */
     @GET("news/toutiao?apikey=UVszcjmKFuxIOuo5qngQuUA1oWwTv45XPfso6g1LO9ISf9uqjBxvQicqbXpTIY95&")
-    Observable<ResponseBody> getNews(@Query("catid") String cid);
+    Observable<ResponseBody> getNews(@Query("catid") String cid , @Query("pageToken") String pageToken);
 }

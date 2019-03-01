@@ -34,7 +34,12 @@ public class NewsViewModel extends BaseObservable{
         commentCounts = String.valueOf(news.commentCount) + "评论";
         time = DateUtils.convertTimeToFormat(news.publishDate);
         imageUrls = news.imageUrls;
-        nums = String.valueOf(news.imageUrls.size()) + "图";
+        if(imageUrls == null || imageUrls.size() == 0){
+            nums = "";
+        }else {
+            nums = String.valueOf(news.imageUrls.size()) + " 图";
+        }
+
     }
 
     @Bindable

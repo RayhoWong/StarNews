@@ -3,10 +3,12 @@ package com.rayho.tsxiu.module_news.viewmodel;
 import com.blankj.rxbus.RxBus;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.module_news.retrofit.NewsLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import io.reactivex.Observable;
 
 /**
  * Created by Rayho on 2019/2/23
@@ -25,32 +27,43 @@ public class ContentFtViewModel {
         mAdapter = adapter;
     }
 
-    public void getNews(int refreshType){
-        mList = new ArrayList<>();
-        mImageUrlList = new ArrayList<>();
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNSq3mtQzNc");
-        mImageUrlList.add("http://p3-tt.bytecdn.cn/large/pgc-image/RGPKNT23AJbl4b");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTFFrcz02F");
-        mImageUrlList.add("http://p1-tt.bytecdn.cn/large/pgc-image/RGPKNTgH29XGii");
-        mImageUrlList.add("http://p9-tt.bytecdn.cn/large/pgc-image/RGPKNTRLV9vvu");
 
-        for(int i=0;i<10;i++){
-            NewsBean.DataBean bean = new NewsBean.DataBean();
-            bean.title = "今日头条在东莞松山湖设立研发中心，大量职位开放，快点来投递简历吧。";
-            bean.posterScreenName = "广州日报";
-            bean.imageUrls = mImageUrlList;
-            bean.commentCount = i+1;
-            bean.publishDate = 1548925892;
-            bean.type = new Random().nextInt(4);
-            mList.add(bean);
+    /**
+     * 返回NewsBean类型的Observable(已请求网络 得到数据)
+     * @param cid 类别id
+     * @param pageToken 分页id
+     * @return
+     */
+    public Observable<NewsBean> getNewsObservable(String cid,String pageToken){
+        return NewsLoader.getInstance().getNews(cid,pageToken);
+    }
+
+    /**
+     * 为adapter设置新闻数据
+     * @param list
+     * @param refreshType 获取数据的方式（下拉/上拉）
+     */
+    public void setNews(List<NewsBean.DataBean> list , int refreshType){
+        if(list != null && list.size() >= 0) mList = list;
+
+        for(NewsBean.DataBean news : mList){
+            if(news.imageUrls == null || news.imageUrls.size() == 0){
+                news.type = 0;//无图
+            }else if(news.imageUrls.size() == 1 || news.imageUrls.size() == 2){
+                news.type = 1;//单图
+            }else if(news.imageUrls.size() == 3){
+                news.type = 2;//三图
+            }else {
+                news.type = 3;//组图
+            }
         }
 
         switch (refreshType){
-            case 0:
+            case 0://下拉刷新
                 RxBus.getDefault().post(mList.size(),"updateNums");
                 mAdapter.setNews(mList);
                 break;
-            case 1:
+            case 1://上拉加载
                 for(int i=0;i<5;i++){
                     mList.remove(new Random().nextInt(mList.size()));
                 }
