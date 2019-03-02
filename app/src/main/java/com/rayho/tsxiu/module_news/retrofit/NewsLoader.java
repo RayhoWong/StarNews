@@ -1,6 +1,7 @@
 package com.rayho.tsxiu.module_news.retrofit;
 
 
+import com.rayho.tsxiu.module_news.bean.ChannelsBean;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.utils.RxUtil;
 
@@ -21,6 +22,7 @@ public class NewsLoader{
         return SingleHolder.loader;
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * 获取某部电影的详细信息
      * @return
@@ -34,12 +36,30 @@ public class NewsLoader{
                      //进行线程切换
                      .compose(RxUtil.<MovieDetailBean>rxSchedulerHelper());
     }*/
+//////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    /**
+     * 获取新闻的所有频道(类型)
+     * @return
+     */
+    public Observable<ChannelsBean> getChannels(){
+        return helper.getChannels()
+                .map(RxUtil.jsonTransform(ChannelsBean.class))
+                .onErrorResumeNext(RxUtil.<ChannelsBean>throwableFunc())
+                .compose(RxUtil.<ChannelsBean>rxSchedulerHelper());
+    }
+
+    /**
+     * 获取新闻
+     * @param id 新闻类型
+     * @param pageToken 分页值可以为null
+     * @return
+     */
     public Observable<NewsBean> getNews(String id,String pageToken){
         return helper.getNews(id,pageToken)
                      .map(RxUtil.jsonTransform(NewsBean.class))
                      .onErrorResumeNext(RxUtil.<NewsBean>throwableFunc())
                      .compose(RxUtil.<NewsBean>rxSchedulerHelper());
     }
-
 }

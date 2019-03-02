@@ -1,110 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/bg_search_layout"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="vm"
+            type="com.rayho.tsxiu.module_news.NewsTabViewModel"/>
 
-            <LinearLayout
-                android:id="@+id/ll_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+        <variable
+            name="presenter"
+            type="com.rayho.tsxiu.base.Presenter"/>
+    </data>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:src="@mipmap/search" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/search_content"
-                    android:textColor="@color/content_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="18dp"
-                android:background="@color/dark_grey" />
-
-            <LinearLayout
-                android:id="@+id/ll_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/scan" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@string/search_scan"
-                    android:textColor="@color/content_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tablayout"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@color/colorAccent"
-                app:tabIndicatorFullWidth="false"
-                app:tabIndicatorHeight="3dp"
-                app:tabMode="scrollable"
-                app:tabPaddingTop="-5dp"
-                app:tabSelectedTextColor="@color/colorAccent"
-                app:tabTextColor="@android:color/black" />
-
-            <ImageView
-                android:id="@+id/channel_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="13dp"
-                android:src="@mipmap/menu" />
-        </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_search_layout"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:onClick="@{(v) -> presenter.onClick(v)}">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:src="@mipmap/search" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/search_content"
+                        android:textColor="@color/content_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="18dp"
+                    android:background="@color/dark_grey" />
+
+                <LinearLayout
+                    android:id="@+id/ll_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:onClick="@{(v) -> presenter.onClick(v)}">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/scan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="@string/search_scan"
+                        android:textColor="@color/content_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tablayout"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/colorAccent"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabIndicatorHeight="3dp"
+                    app:tabMode="scrollable"
+                    app:tabPaddingTop="-5dp"
+                    app:tabSelectedTextColor="@color/colorAccent"
+                    app:tabTextColor="@android:color/black" />
+
+                <ImageView
+                    android:id="@+id/channel_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="13dp"
+                    android:src="@mipmap/menu"
+                    android:onClick="@{(v) -> presenter.onClick(v)}"/>
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

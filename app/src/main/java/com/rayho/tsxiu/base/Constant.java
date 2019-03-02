@@ -5,8 +5,9 @@ package com.rayho.tsxiu.base;
  * 常用的常量
  **/
 public class Constant {
-    //第三方平台提供头条新闻的主页
+    //第三方平台提供头条新闻的主页和APIKEY
     public static String IDATA_URL = "http://api01.idataapi.cn:8000/";
+    public static String API_KEY = "UVszcjmKFuxIOuo5qngQuUA1oWwTv45XPfso6g1LO9ISf9uqjBxvQicqbXpTIY95&";
 
     //新闻的界面类型
     public static int TYPE_NO_PHOTO = 0;//只有文字

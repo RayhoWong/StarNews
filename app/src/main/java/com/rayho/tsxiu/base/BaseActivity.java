@@ -30,7 +30,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         mRootView = View.inflate(this, R.layout.activity_base, null);
         addContent(getLayoutId());
         setContentView(mRootView);
-
+        //指定方向是竖屏 禁止所有activity横屏(手机旋转后重新创建生命周期)
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initToolBar();
         //默认6.0及以上改字体颜色(白色背景->深色字体)
         StatusBarUtil.changeStatusBarTextColor(this);

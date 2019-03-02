@@ -4,6 +4,11 @@
     <string name="title_photo">美图</string>
     <string name="title_video">视频</string>
     <string name="title_mine">我的</string>
+    <string name="channel_my_header">我的频道</string>
+    <string name="my_header_tip">点击进入频道</string>
+    <string name="edit_mode">编辑</string>
+    <string name="channel_rec">频道推荐</string>
+    <string name="add_channel">点击添加频道</string>
     <string name="search_content">即刻搜索内容,打开新视界...</string>
     <string name="search_scan">扫呀</string>
     <string name="no_network_tips">似乎出了点问题...</string>
@@ -19,4 +24,6 @@
         <item>视频</item>
         <item>我的</item>
     </string-array>
+
+
 </resources>

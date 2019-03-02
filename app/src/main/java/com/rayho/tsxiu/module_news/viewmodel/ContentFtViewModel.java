@@ -39,7 +39,7 @@ public class ContentFtViewModel {
     }
 
     /**
-     * 为adapter设置新闻数据
+     * 根据数据的获取方式 为adapter设置新闻数据
      * @param list
      * @param refreshType 获取数据的方式（下拉/上拉）
      */

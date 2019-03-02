@@ -1,13 +1,14 @@
-package com.goach.tabdemo.activity;
+package com.rayho.tsxiu.ui.channelhelper.activity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.goach.tabdemo.R;
-import com.goach.tabdemo.adapter.ChannelAdapter;
-import com.goach.tabdemo.base.IChannelType;
-import com.goach.tabdemo.bean.ChannelBean;
+import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.ui.channelhelper.adapter.ChannelAdapter;
+import com.rayho.tsxiu.ui.channelhelper.base.IChannelType;
+import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
+import com.rayho.tsxiu.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * Created by 钟光新 on 2016/9/10 0010.
+ * Created by rayho on 2019/3/2
  */
 public class ChannelActivity extends AppCompatActivity implements ChannelAdapter.ChannelItemClickListener {
     private ImageView mIvClose;
@@ -38,6 +39,9 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
 
         initView();
         initData();
+
+        ToastUtil toast = new ToastUtil(this,"haha");
+        toast.show();
 
         mIvClose.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,17 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.blankj.rxbus.RxBus;
-import com.blankj.utilcode.util.StringUtils;
 import com.google.android.material.button.MaterialButton;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.R;
-import com.rayho.tsxiu.activity.TestActivity;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.base.LazyLoadFragment;
 import com.rayho.tsxiu.base.Presenter;
@@ -53,6 +49,8 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     TwinklingRefreshLayout mTwiRefreshlayout;
     @BindView(R.id.viewStub)
     ViewStub mViewStub;
+    @BindView(R.id.rl)
+    RelativeLayout mRl;
 
     private MaterialButton mBtReload;
 
@@ -156,7 +154,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-
                 if (!NetworkUtils.isConnected(getActivity())) {
                     //判断是否有新闻缓存
                     if (!flag) {
@@ -181,7 +178,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                             }
                         });
                     }
-
                 } else {
                     //有网络 开启上拉加载和越界回弹
                     refreshLayout.setEnableLoadmore(true);
@@ -191,7 +187,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                     }
                     getNewsByRefresh();
                 }
-
             }
 
 
@@ -210,45 +205,36 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                             refreshLayout.setEnableOverScroll(false);
                         }
                     });
-
                 } else {
                     getNewsByLoadMore();
-
                 }
             }
         });
     }
 
     /**
-     * 显示网络错误布局
+     * 显示网络错误布局 支持重连
      *
      * @param flag 是否有缓存 true:有  false:无
      */
     private void isShowNetWorkErrorLayout(boolean flag) {
         if (!flag) {
             if (mViewStub.getVisibility() == View.GONE) {
+/*               * 当mViewStub.setVisibility(View.VISIBLE)后 得到加载进来的布局
+                 * 然后通过根布局mRl.findViewById()找到已加载布局的子控件view
+                 * 该做法避免找不到控件的空指针异常
+                 * 如果直接 布局子控件 = mViewStub.findViewById 报空指针异常*/
                 mViewStub.setVisibility(View.VISIBLE);//或者mViewStub.inflate();
-                View view = getActivity().findViewById(R.id.network_error);
-                mBtReload = view.findViewById(R.id.bt_reload);
+                mBtReload = mRl.findViewById(R.id.bt_reload);
                 mBtReload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mTwiRefreshlayout.startRefresh();
                     }
                 });
-            }else {
+            } else {
                 return;
             }
-//            if (mViewStub != null && mViewStub.getVisibility() != View.VISIBLE) {
-//                /**
-//                 * 当viewstub.inflate()后 得到加载的布局
-//                 * 然后通过findViewById() 找到该布局的view(必须在被加载布局中定义布局id)
-//                 * 最后通过view.findViewById()找到该布局下的控件
-//                 * 该做法避免找不到控件的空指针异常
-//                 * 如果直接 布局子控件 = viewstub.findViewById 报空指针异常
-//                 */
-//
-//            }
         } else {
             if (mViewStub.getVisibility() == View.VISIBLE) {
                 mViewStub.setVisibility(View.GONE);
@@ -264,18 +250,18 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
      */
     private void getNewsByRefresh() {
         contentFtViewModel
-                .getNewsObservable(cid,null)
+                .getNewsObservable(cid, null)
                 //自动在onDestroy中取消订阅 避免内存泄漏  一定要在subscribeOn方法之后调用
                 .compose(mContentFragment.<NewsBean>bindToLifecycle())
                 .subscribe(new NetObserver<NewsBean>() {
                     @Override
                     public void onNext(NewsBean newsBean) {
-                        if(ServerStatusCode.getStatusResponse(newsBean.retcode)
-                                .equals(getString(R.string.request_success))){
+                        if (ServerStatusCode.getStatusResponse(newsBean.retcode)
+                                .equals(getString(R.string.request_success))) {
                             if (newsBean.data != null) {
                                 List<NewsBean.DataBean> list = newsBean.data;
                                 contentFtViewModel.setNews(list, Constant.REFRESH_DATA);
-                                if( ! TextUtils.isEmpty(newsBean.pageToken)){
+                                if (!TextUtils.isEmpty(newsBean.pageToken)) {
                                     pageToken = newsBean.pageToken;
 //                                    Logger.d("=pageToken:"+pageToken);
                                 }
@@ -284,9 +270,9 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                                 flag = true;
                                 mTwiRefreshlayout.finishRefreshing();
                             }
-                        }else {
+                        } else {
                             ToastUtil toastUtil = new ToastUtil(getActivity(),
-                                    ServerStatusCode.getStatusResponse(newsBean.retcode) );
+                                    ServerStatusCode.getStatusResponse(newsBean.retcode));
                             toastUtil.show();
                             mTwiRefreshlayout.finishRefreshing();
                         }
@@ -303,28 +289,28 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     private void getNewsByLoadMore() {
         contentFtViewModel
-                .getNewsObservable(cid,pageToken)
+                .getNewsObservable(cid, pageToken)
                 //自动在onDestroy中取消订阅 避免内存泄漏  一定要在subscribeOn方法之后调用
                 .compose(mContentFragment.<NewsBean>bindToLifecycle())
                 .subscribe(new NetObserver<NewsBean>() {
                     @Override
                     public void onNext(NewsBean newsBean) {
-                        if(ServerStatusCode.getStatusResponse(newsBean.retcode)
-                                .equals(getString(R.string.request_success))){
+                        if (ServerStatusCode.getStatusResponse(newsBean.retcode)
+                                .equals(getString(R.string.request_success))) {
                             if (newsBean.data != null) {
                                 List<NewsBean.DataBean> list = newsBean.data;
                                 contentFtViewModel.setNews(list, Constant.LOAD_MORE_DATA);
-                                if( ! TextUtils.isEmpty(newsBean.pageToken)){
+                                if (!TextUtils.isEmpty(newsBean.pageToken)) {
                                     pageToken = newsBean.pageToken;
 //                                    Logger.d("=====pageToken:"+pageToken);
-                                }else {
+                                } else {
                                     pageToken = null;
                                 }
                                 mTwiRefreshlayout.finishLoadmore();
                             }
-                        }else {
+                        } else {
                             ToastUtil toastUtil = new ToastUtil(getActivity(),
-                                    ServerStatusCode.getStatusResponse(newsBean.retcode) );
+                                    ServerStatusCode.getStatusResponse(newsBean.retcode));
                             toastUtil.show();
                             mTwiRefreshlayout.finishLoadmore();
                         }
