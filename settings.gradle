@@ -1,1 +1,1 @@
-include ':app', ':ChannelHelper'
+include ':app'

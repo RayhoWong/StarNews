@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/iv_close"
-        android:src="@drawable/channel_close"
+        android:src="@mipmap/channel_close"
         android:layout_marginLeft="6dp"
         android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"

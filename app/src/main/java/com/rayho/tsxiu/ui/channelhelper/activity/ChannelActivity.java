@@ -30,7 +30,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
     private List<ChannelBean> mMyChannelList;
     private List<ChannelBean> mRecChannelList ;
 
-//    private NewsTabViewModel model;
+//    private NewsTabFtViewModel model;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

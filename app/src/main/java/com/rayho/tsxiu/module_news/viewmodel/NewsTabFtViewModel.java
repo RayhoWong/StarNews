@@ -1,4 +1,4 @@
-package com.rayho.tsxiu.module_news;
+package com.rayho.tsxiu.module_news.viewmodel;
 
 
 
@@ -7,9 +7,9 @@ import com.rayho.tsxiu.module_news.retrofit.NewsLoader;
 
 import io.reactivex.Observable;
 
-public class NewsTabViewModel{
+public class NewsTabFtViewModel {
 
-    public NewsTabViewModel() {
+    public NewsTabFtViewModel() {
     }
 
     public Observable<ChannelsBean> getChannelsObservable(){

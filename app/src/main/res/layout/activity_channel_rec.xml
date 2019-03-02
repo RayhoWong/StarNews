@@ -14,7 +14,7 @@
         android:autoSizeMinTextSize="8sp"
         android:autoSizeTextType="uniform"
         android:background="@drawable/channel_my_bg_shape_2"
-        android:drawableLeft="@drawable/add_channel_icon"
+        android:drawableLeft="@mipmap/add_channel_icon"
         android:drawablePadding="4dp"
         android:elevation="3dp"
         android:gravity="center_vertical"

@@ -12,6 +12,7 @@ import com.rayho.tsxiu.activity.TestActivity;
 import com.rayho.tsxiu.base.Presenter;
 import com.rayho.tsxiu.databinding.NewsFragmentBinding;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
+import com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel;
 import com.rayho.tsxiu.ui.channelhelper.activity.ChannelActivity;
 import com.rayho.tsxiu.utils.NetworkUtils;
 import com.rayho.tsxiu.utils.ToastUtil;
@@ -35,7 +36,7 @@ public class NewsTabFragment extends RxFragment implements Presenter {
 
     private MainActivity mActivity;//所依赖的activity
 
-    private NewsTabViewModel mViewModel;
+    private NewsTabFtViewModel mViewModel;
 
     private List<Fragment> fragments;
 
@@ -56,7 +57,7 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new NewsTabViewModel();
+        mViewModel = new NewsTabFtViewModel();
         mBinding.setPresenter(this);
         mBinding.setVm(mViewModel);
         mActivity = (MainActivity) getActivity();
