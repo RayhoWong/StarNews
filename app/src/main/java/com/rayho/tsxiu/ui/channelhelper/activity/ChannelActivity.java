@@ -5,9 +5,15 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.http.api.NetObserver;
+import com.rayho.tsxiu.http.exception.ApiException;
+import com.rayho.tsxiu.http.exception.ServerStatusCode;
+import com.rayho.tsxiu.module_news.bean.NewsTypeBean;
+import com.rayho.tsxiu.module_news.retrofit.NewsLoader;
 import com.rayho.tsxiu.ui.channelhelper.adapter.ChannelAdapter;
 import com.rayho.tsxiu.ui.channelhelper.base.IChannelType;
 import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
+import com.rayho.tsxiu.utils.NetworkUtils;
 import com.rayho.tsxiu.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -20,15 +26,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by rayho on 2019/3/2
+ * 频道管理器
  */
 public class ChannelActivity extends AppCompatActivity implements ChannelAdapter.ChannelItemClickListener {
     private ImageView mIvClose;
     private RecyclerView mRecyclerView;
     private ChannelAdapter mRecyclerAdapter;
-    private String[] myStrs = new String[]{"热门","关注","技术","科技","商业","互联网","涨知识","时尚","我麻烦德萨"};
-    private String[] recStrs = new String[]{"设计","天文","美食","星座","历史","消费维权","体育","明星八卦"};
+    private String[] myStrs = new String[]{"热门", "关注", "技术", "科技", "商业", "互联网", "涨知识", "时尚", "我麻烦德萨"};
+    private String[] recStrs = new String[]{"设计", "天文", "美食", "星座", "历史", "消费维权", "体育", "明星八卦"};
     private List<ChannelBean> mMyChannelList;
-    private List<ChannelBean> mRecChannelList ;
+    private List<ChannelBean> mRecChannelList;
 
 //    private NewsTabFtViewModel model;
 
@@ -40,7 +47,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
         initView();
         initData();
 
-        ToastUtil toast = new ToastUtil(this,"haha");
+        ToastUtil toast = new ToastUtil(this, "haha");
         toast.show();
 
         mIvClose.setOnClickListener(new View.OnClickListener() {
@@ -50,15 +57,17 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
             }
         });
 
-        mRecyclerAdapter = new ChannelAdapter(this,mRecyclerView,mMyChannelList,mRecChannelList,1,1);
+        mRecyclerAdapter = new ChannelAdapter(this, mRecyclerView, mMyChannelList, mRecChannelList, 1, 1);
         mRecyclerAdapter.setChannelItemClickListener(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
+
+        getChannels();
     }
 
-    private void initView(){
+    private void initView() {
         mIvClose = findViewById(R.id.iv_close);
         mRecyclerView = findViewById(R.id.id_tab_recycler_view);
-        GridLayoutManager gridLayout = new GridLayoutManager(this,4);
+        GridLayoutManager gridLayout = new GridLayoutManager(this, 4);
 
         gridLayout.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -68,7 +77,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
                  * 如果是标题就占用4列（最多）显示一行
                  * 否则只占用1列
                  */
-                boolean isHeader = mRecyclerAdapter.getItemViewType(position) == IChannelType.TYPE_MY_CHANNEL_HEADER||
+                boolean isHeader = mRecyclerAdapter.getItemViewType(position) == IChannelType.TYPE_MY_CHANNEL_HEADER ||
                         mRecyclerAdapter.getItemViewType(position) == IChannelType.TYPE_REC_CHANNEL_HEADER;
                 return isHeader ? 4 : 1;
             }
@@ -76,18 +85,41 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
         mRecyclerView.setLayoutManager(gridLayout);
     }
 
-    private void getChannels(){
+
+    private void getChannels() {
+        if (!NetworkUtils.isConnected(this)) {
+            ToastUtil util = new ToastUtil(this, getString(R.string.no_network_tips));
+            util.show();
+        } else {
+            NewsLoader.getInstance().getChannels()
+                    .subscribe(new NetObserver<NewsTypeBean>() {
+                        @Override
+                        public void onNext(NewsTypeBean newsTypeBean) {
+                            if (ServerStatusCode.getStatusResponse(newsTypeBean.retcode)
+                                    .equals(getString(R.string.request_success))) {
+                                ToastUtil util = new ToastUtil(ChannelActivity.this, "success:" + String.valueOf(newsTypeBean.data.size()));
+                                util.show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ApiException ex) {
+                            ToastUtil util = new ToastUtil(ChannelActivity.this, ex.getDisplayMessage());
+                            util.show();
+                        }
+                    });
+        }
 
     }
 
-    private void initData(){
+    private void initData() {
 
 
         mMyChannelList = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             ChannelBean channelBean = new ChannelBean();
             channelBean.setTabName(myStrs[i]);
-            channelBean.setTabType(i==0?0:i==1?1:2);
+            channelBean.setTabType(i == 0 ? 0 : i == 1 ? 1 : 2);
             mMyChannelList.add(channelBean);
         }
         mRecChannelList = new ArrayList<>();
@@ -100,7 +132,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
     }
 
     @Override
-    public void onChannelItemClick(List<ChannelBean> list,int position) {
+    public void onChannelItemClick(List<ChannelBean> list, int position) {
         /*if(mainActivity!=null){
             mainActivity.notifyTabDataChange(list,position);
         }*/

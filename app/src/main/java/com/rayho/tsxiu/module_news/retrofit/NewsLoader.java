@@ -1,7 +1,7 @@
 package com.rayho.tsxiu.module_news.retrofit;
 
 
-import com.rayho.tsxiu.module_news.bean.ChannelsBean;
+import com.rayho.tsxiu.module_news.bean.NewsTypeBean;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.utils.RxUtil;
 
@@ -43,11 +43,11 @@ public class NewsLoader{
      * 获取新闻的所有频道(类型)
      * @return
      */
-    public Observable<ChannelsBean> getChannels(){
+    public Observable<NewsTypeBean> getChannels(){
         return helper.getChannels()
-                .map(RxUtil.jsonTransform(ChannelsBean.class))
-                .onErrorResumeNext(RxUtil.<ChannelsBean>throwableFunc())
-                .compose(RxUtil.<ChannelsBean>rxSchedulerHelper());
+                .map(RxUtil.jsonTransform(NewsTypeBean.class))
+                .onErrorResumeNext(RxUtil.<NewsTypeBean>throwableFunc())
+                .compose(RxUtil.<NewsTypeBean>rxSchedulerHelper());
     }
 
     /**

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Rayho on 2019/3/2
  **/
-public class ChannelsBean {
+public class NewsTypeBean {
     /**
      * pageToken : null
      * retcode : 000000

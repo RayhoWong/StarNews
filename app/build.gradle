@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 28
@@ -25,6 +26,15 @@ android {
         enabled = true
     }
 }
+
+greendao {
+    schemaVersion 1//数据库版本号
+    daoPackage 'com.rayho.tsxiu.greendao'//设置DaoMaster、DaoSession、Dao包名
+    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+    //targetGenDirTest：设置生成单元测试目录
+    //generateTests：设置自动生成单元测试用例
+}
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -81,4 +91,8 @@ dependencies {
     implementation 'com.orhanobut:logger:2.2.0'
     //好用的RxBus
     implementation 'com.blankj:rxbus:1.0'
+    //greendao数据库
+    implementation 'org.greenrobot:greendao:3.2.2'
+    //stetho
+    implementation 'com.facebook.stetho:stetho:1.5.0'
 }

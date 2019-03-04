@@ -64,9 +64,6 @@ public class ContentFtViewModel {
                 mAdapter.setNews(mList);
                 break;
             case 1://上拉加载
-                for(int i=0;i<5;i++){
-                    mList.remove(new Random().nextInt(mList.size()));
-                }
                 mAdapter.addItems(mList);
                 break;
         }

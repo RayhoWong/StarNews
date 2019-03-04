@@ -17,6 +17,10 @@
     <string name="network_error_tips2">网络异常,请下拉刷新</string>
     <!--状态码:000000 代表请求成功-->
     <string name="request_success">请求成功</string>
+    <string name="default_channel_name_1">社会</string>
+    <string name="default_channel_cid_1">news_society</string>
+    <string name="default_channel_name_2">娱乐</string>
+    <string name="default_channel_cid_2">news_entertainment</string>
 
     <string-array name="BottomNavigationNames">
         <item>首页</item>

@@ -37,6 +37,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
+import static com.rayho.tsxiu.base.Constant.TYPE_ID;
+
 /**
  * 新闻列表界面(根据分类id，显示不同的新闻)
  */
@@ -58,11 +60,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     private MyRefreshLottieFooter mFooter;
 
-    private static final String TYPE_ID = "tag";
-
     private ContentFragment mContentFragment;
-
-    private String tag;
 
     private String cid = "news_sports";//新闻的类型id
 
@@ -77,10 +75,11 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     private ContentFtViewModel contentFtViewModel;
 
 
-    public static ContentFragment newInstance(String tag) {
+    public static ContentFragment newInstance(String cid) {
         ContentFragment fragment = new ContentFragment();
+        //通过bundle保存NewTabFragment传过来的分类Id
         Bundle args = new Bundle();
-        args.putString(TYPE_ID, tag);
+        args.putString(TYPE_ID, cid);
         fragment.setArguments(args);
         return fragment;
     }
@@ -108,8 +107,8 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        Timber.tag("Contentfrg");
-        //获取分类名称
-        tag = getArguments().getString(TYPE_ID);
+        //获取分类的id
+        cid = getArguments().getString(TYPE_ID);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -256,6 +255,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                 .subscribe(new NetObserver<NewsBean>() {
                     @Override
                     public void onNext(NewsBean newsBean) {
+                        //请求成功 retcode:000000
                         if (ServerStatusCode.getStatusResponse(newsBean.retcode)
                                 .equals(getString(R.string.request_success))) {
                             if (newsBean.data != null) {
@@ -268,9 +268,19 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                                 mRcv.setAdapter(mAdapter);
                                 mHeader.setMsg("星头条推荐引擎有" + String.valueOf(updateNums) + "条更新");
                                 flag = true;
+                                //如果更新的数据少于5条 禁止上拉加载
+                                if(list.size() < 5){
+                                    mTwiRefreshlayout.setEnableLoadmore(false);
+                                    mTwiRefreshlayout.setOverScrollBottomShow(false);//允许footer回弹
+                                }else {
+                                    mTwiRefreshlayout.setEnableLoadmore(true);
+                                    mTwiRefreshlayout.setOverScrollBottomShow(true);//允许footer回弹
+                                }
                                 mTwiRefreshlayout.finishRefreshing();
                             }
+
                         } else {
+                            mHeader.setMsg(ServerStatusCode.getStatusResponse(newsBean.retcode));
                             ToastUtil toastUtil = new ToastUtil(getActivity(),
                                     ServerStatusCode.getStatusResponse(newsBean.retcode));
                             toastUtil.show();
@@ -280,6 +290,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
                     @Override
                     public void onError(ApiException ex) {
+                        mHeader.setMsg(ex.getDisplayMessage());
                         ToastUtil toastUtil = new ToastUtil(getActivity(), ex.getDisplayMessage());
                         toastUtil.show();
                         mTwiRefreshlayout.finishRefreshing();

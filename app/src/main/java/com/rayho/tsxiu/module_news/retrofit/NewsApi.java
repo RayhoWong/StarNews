@@ -13,7 +13,7 @@ public interface NewsApi {
      * 获取所有分类(频道)
      * @return
      */
-    @GET("news/toutiao?apikey=UVszcjmKFuxIOuo5qngQuUA1oWwTv45XPfso6g1LO9ISf9uqjBxvQicqbXpTIY95&")
+    @GET("catid/toutiao?apikey=UVszcjmKFuxIOuo5qngQuUA1oWwTv45XPfso6g1LO9ISf9uqjBxvQicqbXpTIY95&")
     Observable<ResponseBody> getChannels();
     /**
      * 根据分类id获取新闻

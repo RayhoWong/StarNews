@@ -3,10 +3,12 @@ package com.rayho.tsxiu.app;
 import android.app.Application;
 
 import com.blankj.utilcode.util.Utils;
+import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.rayho.tsxiu.utils.DaoManager;
 
 /**
  * Created by Rayho on 2018/11/8 0008
@@ -28,6 +30,11 @@ public class AppApplication extends Application {
         Utils.init(this);
 
         initLogger();
+        //初始化greenDao数据库
+        DaoManager.getInstance().init(this);
+        DaoManager.getInstance().getDaoMaster();
+        //初始化Stetho 在chrome可以查看app的数据库
+        Stetho.initializeWithDefaults(this);
     }
 
     /**
