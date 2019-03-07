@@ -4,15 +4,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.blankj.rxbus.RxBus;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.http.api.NetObserver;
 import com.rayho.tsxiu.http.exception.ApiException;
 import com.rayho.tsxiu.http.exception.ServerStatusCode;
+import com.rayho.tsxiu.module_news.NewsTabFragment;
 import com.rayho.tsxiu.module_news.bean.NewsTypeBean;
+import com.rayho.tsxiu.module_news.dao.Channel;
 import com.rayho.tsxiu.module_news.retrofit.NewsLoader;
 import com.rayho.tsxiu.ui.channelhelper.adapter.ChannelAdapter;
 import com.rayho.tsxiu.ui.channelhelper.base.IChannelType;
 import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
+import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.NetworkUtils;
 import com.rayho.tsxiu.utils.ToastUtil;
 
@@ -29,46 +33,67 @@ import androidx.recyclerview.widget.RecyclerView;
  * 频道管理器
  */
 public class ChannelActivity extends AppCompatActivity implements ChannelAdapter.ChannelItemClickListener {
-    private ImageView mIvClose;
-    private RecyclerView mRecyclerView;
-    private ChannelAdapter mRecyclerAdapter;
-    private String[] myStrs = new String[]{"热门", "关注", "技术", "科技", "商业", "互联网", "涨知识", "时尚", "我麻烦德萨"};
-    private String[] recStrs = new String[]{"设计", "天文", "美食", "星座", "历史", "消费维权", "体育", "明星八卦"};
-    private List<ChannelBean> mMyChannelList;
-    private List<ChannelBean> mRecChannelList;
 
-//    private NewsTabFtViewModel model;
+    private ImageView mIvClose;
+
+    private RecyclerView mRecyclerView;
+
+    private ChannelAdapter mRecyclerAdapter;
+
+    private List<Channel> mChannels;//从数据库获取的我的(本地)频道
+
+    private List<ChannelBean> mMyChannelList;//我的(本地)频道
+
+    //当前频道管理器显示的我的频道(从ChannelAdapter中动态获取)
+    public List<ChannelBean> mMyChannelList_2 = new ArrayList<>();
+
+    private List<ChannelBean> mRecChannelList;//推荐频道
+
+    private List<String> mMyChannelStrs_Db;//从数据库获取的我的频道对应名称
+
+    private List<String> mMyChannelStrs;//当前频道管理器显示的我的频道对应名称
+
+    private NewsTabFragment mFragment;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_edit);
 
+        getNewsTabFt();
         initView();
-        initData();
+        getChannels();
+    }
 
-        ToastUtil toast = new ToastUtil(this, "haha");
-        toast.show();
 
+    /**
+     * 获取当前NewsTabFragment引用by RxBus
+     */
+    private void getNewsTabFt() {
+        RxBus.getDefault().subscribeSticky(this, "NewTabFt", new RxBus.Callback<NewsTabFragment>() {
+            @Override
+            public void onEvent(NewsTabFragment newsTabFragment) {
+                mFragment = newsTabFragment;
+              /*  if(mFragment != null){
+                    ToastUtil util = new ToastUtil(ChannelActivity.this,"haha" );
+                    util.show();
+                }*/
+            }
+        });
+    }
+
+
+    private void initView() {
+        mIvClose = findViewById(R.id.iv_close);
+        mRecyclerView = findViewById(R.id.id_tab_recycler_view);
         mIvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        mRecyclerAdapter = new ChannelAdapter(this, mRecyclerView, mMyChannelList, mRecChannelList, 1, 1);
-        mRecyclerAdapter.setChannelItemClickListener(this);
-        mRecyclerView.setAdapter(mRecyclerAdapter);
-
-        getChannels();
-    }
-
-    private void initView() {
-        mIvClose = findViewById(R.id.iv_close);
-        mRecyclerView = findViewById(R.id.id_tab_recycler_view);
         GridLayoutManager gridLayout = new GridLayoutManager(this, 4);
-
         gridLayout.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -87,54 +112,135 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
 
 
     private void getChannels() {
+        getMyChannels();
+        getRecChannels();
+    }
+
+    /**
+     * 获取我的(本地)频道
+     */
+    private void getMyChannels() {
+        mMyChannelList = new ArrayList<>();
+        mChannels = DaoManager.getInstance().getDaoSession().getChannelDao().loadAll();
+        for (int i = 0; i < mChannels.size(); i++) {
+            ChannelBean channelBean = new ChannelBean();
+            channelBean.setTabName(mChannels.get(i).getName());
+            channelBean.setCid(mChannels.get(i).getCid());
+            channelBean.setTabType(i == 0 ? 0 : i == 1 ? 1 : 2);
+            mMyChannelList.add(channelBean);
+        }
+    }
+
+    /**
+     * 获取推荐频道
+     */
+    private void getRecChannels() {
+        mRecChannelList = new ArrayList<>();
         if (!NetworkUtils.isConnected(this)) {
+            //无网络
             ToastUtil util = new ToastUtil(this, getString(R.string.no_network_tips));
             util.show();
+            initAdapter();
         } else {
             NewsLoader.getInstance().getChannels()
                     .subscribe(new NetObserver<NewsTypeBean>() {
                         @Override
                         public void onNext(NewsTypeBean newsTypeBean) {
+                            //请求成功 有数据返回
                             if (ServerStatusCode.getStatusResponse(newsTypeBean.retcode)
                                     .equals(getString(R.string.request_success))) {
-                                ToastUtil util = new ToastUtil(ChannelActivity.this, "success:" + String.valueOf(newsTypeBean.data.size()));
-                                util.show();
+
+                                if (newsTypeBean.data.size() > 0 && newsTypeBean.data != null) {
+                                    for (int i = 0; i < newsTypeBean.data.size(); i++) {
+                                        ChannelBean channelBean = new ChannelBean();
+                                        channelBean.setTabName(newsTypeBean.data.get(i).value);
+                                        channelBean.setCid(newsTypeBean.data.get(i).key);
+                                        channelBean.setTabType(2);
+                                        mRecChannelList.add(channelBean);
+                                    }
+                                    /*推荐频道(mRecChannelList)与我的频道(mMyChannelList)
+                                       重复的频道从推荐频道里去掉
+                                       前提条件是：推荐频道的频道数 >= 我的频道的频道数
+                                       结果保证推荐频道不包含我的频道里面的所有频道*/
+                                    if (mRecChannelList.size() >= mMyChannelList.size()) {
+                                        for (int i = 0; i < mMyChannelList.size(); i++) {
+                                            for (int j = 0; j < mRecChannelList.size(); j++) {
+                                                if (mRecChannelList.get(j).getTabName().
+                                                        equals(mMyChannelList.get(i).getTabName())) {
+                                                    mRecChannelList.remove(j);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
+                            initAdapter();
                         }
 
                         @Override
                         public void onError(ApiException ex) {
                             ToastUtil util = new ToastUtil(ChannelActivity.this, ex.getDisplayMessage());
                             util.show();
+                            initAdapter();
                         }
                     });
         }
-
     }
 
-    private void initData() {
-
-
-        mMyChannelList = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            ChannelBean channelBean = new ChannelBean();
-            channelBean.setTabName(myStrs[i]);
-            channelBean.setTabType(i == 0 ? 0 : i == 1 ? 1 : 2);
-            mMyChannelList.add(channelBean);
-        }
-        mRecChannelList = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            ChannelBean channelBean = new ChannelBean();
-            channelBean.setTabName(recStrs[i]);
-            channelBean.setTabType(2);
-            mRecChannelList.add(channelBean);
-        }
+    /**
+     * 初始化adapter
+     * 无论mMyChannelList(推荐频道)是否有数据 都必须调用该方法
+     */
+    private void initAdapter() {
+        mRecyclerAdapter = new ChannelAdapter(ChannelActivity.this, mRecyclerView, mMyChannelList, mRecChannelList, 1, 1);
+        mRecyclerAdapter.setChannelItemClickListener(ChannelActivity.this);
+        mRecyclerView.setAdapter(mRecyclerAdapter);
     }
+
 
     @Override
     public void onChannelItemClick(List<ChannelBean> list, int position) {
-        /*if(mainActivity!=null){
-            mainActivity.notifyTabDataChange(list,position);
-        }*/
+        mMyChannelList_2 = list;
+        //点击当前频道 打开频道的fragment
+        mFragment.mBinding.viewpager.setCurrentItem(position);
+        finish();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //取消订阅 避免内存泄漏
+        RxBus.getDefault().unregister(this);
+        resetContentFts();
+    }
+
+
+    /**
+     * 当频道管理器的我的频道发生变化(跟数据库存储的频道不一样)，
+     * 重新设置我的频道 首页马上更新新闻频道
+     * mMyChannelList_2 从ChannelAdapter动态获取数据
+     */
+    private void resetContentFts(){
+        mMyChannelStrs_Db = new ArrayList<>();//from数据库
+        mMyChannelStrs = new ArrayList<>();//当前显示
+        for (int i = 0; i < mChannels.size(); i++) {
+            mMyChannelStrs_Db.add(mChannels.get(i).getName());
+        }
+
+        if(mMyChannelList_2 != null && mMyChannelList_2.size() > 0){
+            for (int i = 0; i < mMyChannelList_2.size(); i++) {
+                mMyChannelStrs.add(mMyChannelList_2.get(i).getTabName());
+            }
+        }else {
+            //当前我的频道没变化
+            return;
+        }
+        //只要当前显示我的频道 与 数据库中获取我的频道 不一样(频道的数量或者顺序不同)
+        //动态更新首页的新闻
+        if ( ! mMyChannelStrs.equals(mMyChannelStrs_Db)) {
+            //to do DB
+            mFragment.setContentFts(mMyChannelList_2);
+        }
     }
 }

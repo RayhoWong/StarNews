@@ -43,12 +43,12 @@ public class MyChannelWidget implements IChannelType {
         myHolder.mChannelTitleTv.setBackgroundResource(data.getTabType()==0||data.getTabType()==1?
                 R.drawable.channel_fixed_bg_shape:R.drawable.channel_my_bg_shape);
         myHolder.mChannelTitleTv.setTextColor(data.getTabType()==0?Color.RED:
-                data.getTabType()==1?Color.parseColor("#666666"):Color.parseColor("#333333"));
+                data.getTabType()==1?Color.RED:Color.parseColor("#333333"));
         myHolder.mDeleteIv.setVisibility(data.getEditStatus()==1?View.VISIBLE:View.INVISIBLE);
         myHolder.mChannelTitleTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editModeHandler!=null&&data.getTabType()==2){
+                if(editModeHandler!=null){
                     editModeHandler.clickMyChannel(mRecyclerView,holder);
                 }
             }

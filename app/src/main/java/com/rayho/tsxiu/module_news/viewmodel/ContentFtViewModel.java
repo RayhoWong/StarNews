@@ -60,7 +60,7 @@ public class ContentFtViewModel {
 
         switch (refreshType){
             case 0://下拉刷新
-                RxBus.getDefault().post(mList.size(),"updateNums");
+                RxBus.getDefault().postSticky(mList.size(),"updateNums");
                 mAdapter.setNews(mList);
                 break;
             case 1://上拉加载

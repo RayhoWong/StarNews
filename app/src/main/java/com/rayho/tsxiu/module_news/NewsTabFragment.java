@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.rxbus.RxBus;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.activity.MainActivity;
 import com.rayho.tsxiu.activity.TestActivity;
@@ -15,6 +16,7 @@ import com.rayho.tsxiu.module_news.dao.Channel;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel;
 import com.rayho.tsxiu.ui.channelhelper.activity.ChannelActivity;
+import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
 import com.rayho.tsxiu.utils.DaoManager;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -27,20 +29,23 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class NewsTabFragment extends RxFragment implements Presenter {
 
-    private NewsFragmentBinding mBinding;
+    public NewsFragmentBinding mBinding;
 
     private ContentFragment mFragment;//当前显示的fragment
 
     private MainActivity mActivity;//所依赖的activity
 
+    public ContentAdapter mAdapter;
+
     private NewsTabFtViewModel mViewModel;
 
-    private List<Fragment> fragments;
+    public List<Fragment> mFragments;
 
-    private List<Channel> channels;//频道列表
+    public List<Channel> mChannels;//本地缓存的频道列表
 
 
     public static NewsTabFragment newInstance() {
@@ -66,10 +71,22 @@ public class NewsTabFragment extends RxFragment implements Presenter {
         initView();
     }
 
+
     private void initView() {
-        mBinding.viewpager.setAdapter(new ContentAdapter(getChildFragmentManager()));
+        mAdapter = new ContentAdapter(getChildFragmentManager());
+        mBinding.viewpager.setAdapter(mAdapter);
         //除当前页面的预加载页面数(保证切换页面时 不会重新创建)
-        mBinding.viewpager.setOffscreenPageLimit(channels.size() - 1);//缓存所有页面
+        mBinding.viewpager.setOffscreenPageLimit(mChannels.size() - 1);//缓存所有页面
+        mBinding.tablayout.setupWithViewPager(mBinding.viewpager);
+    }
+
+
+    /**
+     * 频道发生变化 重置viewpager
+     */
+    public void resetViewPager(){
+        //除当前页面的预加载页面数(保证切换页面时 不会重新创建)
+        mBinding.viewpager.setOffscreenPageLimit(mChannels.size() - 1);//缓存所有页面
         mBinding.tablayout.setupWithViewPager(mBinding.viewpager);
     }
 
@@ -78,8 +95,8 @@ public class NewsTabFragment extends RxFragment implements Presenter {
      * 获取本地缓存的频道
      */
     private void getLocalChannels() {
-        channels = DaoManager.getInstance().getDaoSession().getChannelDao().loadAll();
-        if (channels.size() == 0) {
+        mChannels = DaoManager.getInstance().getDaoSession().getChannelDao().loadAll();
+        if (mChannels.size() == 0) {
             /*ToastUtil util = new ToastUtil(getActivity(), "本地没有缓存频道");
             util.show();*/
             //如果本地没有缓存频道 插入两条默认频道
@@ -87,14 +104,12 @@ public class NewsTabFragment extends RxFragment implements Presenter {
                     .insert(new Channel(null,getString(R.string.default_channel_name_1), getString(R.string.default_channel_cid_1)));
             DaoManager.getInstance().getDaoSession().getChannelDao()
                     .insert(new Channel(null,getString(R.string.default_channel_name_2), getString(R.string.default_channel_cid_2)));
-            DaoManager.getInstance().closeConnection();
-
-            channels.add(new Channel(null, getString(R.string.default_channel_name_1),  getString(R.string.default_channel_cid_1)));
-            channels.add(new Channel(null, getString(R.string.default_channel_name_2),  getString(R.string.default_channel_cid_2)));
+            mChannels.add(new Channel(null, getString(R.string.default_channel_name_1),  getString(R.string.default_channel_cid_1)));
+            mChannels.add(new Channel(null, getString(R.string.default_channel_name_2),  getString(R.string.default_channel_cid_2)));
         }
-        fragments = new ArrayList<>();
-             for (int i = 0; i < channels.size(); i++) {
-                 fragments.add(ContentFragment.newInstance(channels.get(i).getCid()));
+        mFragments = new ArrayList<>();
+             for (int i = 0; i < mChannels.size(); i++) {
+                 mFragments.add(ContentFragment.newInstance(mChannels.get(i).getCid()));
         }
     }
 
@@ -108,31 +123,76 @@ public class NewsTabFragment extends RxFragment implements Presenter {
             case R.id.ll_scan:
                 break;
             case R.id.channel_menu:
+                RxBus.getDefault().postSticky(this,"NewTabFt");
                 mActivity.startActivity(new Intent(mActivity, ChannelActivity.class));
                 break;
         }
     }
 
 
-    private class ContentAdapter extends FragmentPagerAdapter {
+    /**
+     * 更新首页新闻
+     * 如果list有数据 删除数据库中所有频道记录 重新插入list里面的所有频道记录
+     * @param list 全新的频道记录数据(必须跟数据库的不同 才插入数据库)
+     */
+    public void setContentFts(List<ChannelBean> list){
+        if(list != null && list.size() > 0){
+            mFragments.clear();
+            mChannels.clear();
+            mAdapter.notifyDataSetChanged();
+            if (list.size() > 0) {
+                for (int i = 0; i < list.size(); i++) {
+                    mFragments.add(ContentFragment.newInstance(list.get(i).getCid()));
+                    mChannels.add(new Channel(null, list.get(i).getTabName(), list.get(i).getCid()));
+                }
+                mAdapter.notifyDataSetChanged();
+                //频道更新 重置vp
+                resetViewPager();
+              /*设置当前显示的fragment
+                不过有bug(待解决问题)大几率会后台加载一个不显示的fragment(请求网络)
+                由于接口不支持并发请求 会导致当前显示的fragment进行请求 返回网络异常
+                mBinding.viewpager.setCurrentItem(mChannels.size() - 1,true);*/
+                //更新数据库
+                setLocalChannels();
+            }
+        }
+    }
+
+
+    /**
+     * 删除数据库原有的频道记录 重新插入新的记录
+     */
+    private void setLocalChannels(){
+        if(mChannels.size() > 0){
+            //删除数据库中的所有频道记录
+            DaoManager.getInstance().getDaoSession().getChannelDao().deleteAll();
+            for(int i=0;i<mChannels.size();i++){
+                DaoManager.getInstance().getDaoSession().getChannelDao()
+                        .insert(mChannels.get(i));
+            }
+        }
+    }
+
+
+    public class ContentAdapter extends FragmentStatePagerAdapter {
         public ContentAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            return mFragments.get(position);
         }
 
         @Override
         public int getCount() {
-            return fragments.size();
+            return mFragments.size();
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return channels.get(position).getName();
+            return mChannels.get(position).getName();
         }
 
         /**
@@ -148,6 +208,17 @@ public class NewsTabFragment extends RxFragment implements Presenter {
             //得到当前显示的fragment
             mFragment = (ContentFragment) object;
             mActivity.setOnTabReselectedListener(mFragment);
+        }
+
+        /*在调用notifyDataSetChanged()方法后，随之会触发该方法，
+        根据该方法返回的值来确定是否更新
+
+		object对象为Fragment，具体是当前显示的Fragment和它的前一个以及后一个
+        将它的返回值改为POSITION_NONE就好了（默认返回的是POSITION_UNCHANGED），
+        那么调用notifyDataSetChanged()方法时，就会每次都去加载新的Fragment，而不是引用之前的*/
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return POSITION_NONE;// 返回发生改变，让系统重新加载
         }
     }
 }

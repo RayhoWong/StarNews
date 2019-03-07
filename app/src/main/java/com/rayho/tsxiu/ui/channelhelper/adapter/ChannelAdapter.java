@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.ui.channelhelper.activity.ChannelActivity;
 import com.rayho.tsxiu.ui.channelhelper.base.EditModeHandler;
 import com.rayho.tsxiu.ui.channelhelper.base.IChannelType;
 import com.rayho.tsxiu.ui.channelhelper.base.ItemDragListener;
@@ -29,6 +30,7 @@ import com.rayho.tsxiu.ui.channelhelper.view.MyChannelHeaderWidget;
 import com.rayho.tsxiu.ui.channelhelper.view.MyChannelWidget;
 import com.rayho.tsxiu.ui.channelhelper.view.RecChannelHeaderWidget;
 import com.rayho.tsxiu.ui.channelhelper.view.RecChannelWidget;
+import com.rayho.tsxiu.utils.ToastUtil;
 
 import java.util.List;
 
@@ -57,17 +59,20 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
     private static final long SPACE_TIME = 100;
     private ChannelItemClickListener channelItemClickListener;
 
-    public ChannelAdapter(Context context, RecyclerView recyclerView,
+    private ChannelActivity mActivity;
+
+    public ChannelAdapter(ChannelActivity mActivity, RecyclerView recyclerView,
                           List<ChannelBean> myChannelItems,
                           List<ChannelBean> otherChannelItems,
                           int myHeaderCount, int recHeaderCount){
+        this.mActivity = mActivity;
         this.mItemTouchHelper = new ItemTouchHelper(new ItemDragHelperCallback(this));
         mItemTouchHelper.attachToRecyclerView(recyclerView);
         this.mMyChannelItems = myChannelItems;
         this.mOtherChannelItems = otherChannelItems;
         this.mMyHeaderCount = myHeaderCount;
         this.mRecHeaderCount = recHeaderCount ;
-        mInflater = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(mActivity);
         mTypeMap.put(IChannelType.TYPE_MY_CHANNEL_HEADER,new MyChannelHeaderWidget(new EditHandler()));
         mTypeMap.put(IChannelType.TYPE_MY_CHANNEL,new MyChannelWidget(new EditHandler()));
         mTypeMap.put(IChannelType.TYPE_REC_CHANNEL_HEADER,new RecChannelHeaderWidget());
@@ -220,6 +225,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
                     startTime = 0;
                     break;
             }
+            //如果编辑模式开启 只要item被触摸 我的频道动态更新
+            //将数据赋予 当前频道管理器显示的我的频道(ChannelActivity中的mMyChannelList_2)
+            mActivity.mMyChannelList_2 = mMyChannelItems;
         }
 
         @Override
@@ -261,6 +269,12 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
             }else{
                 moveOtherToMy(position);
             }
+            //只要点击推荐频道，我的频道动态更新
+            // 将数据赋予 当前频道管理器显示的我的频道(ChannelActivity中的mMyChannelList_2)
+            mActivity.mMyChannelList_2 = mMyChannelItems;
+            /*ToastUtil util = new ToastUtil(mActivity,"当前本地频道list的频道数："+
+                    String.valueOf(mActivity.mMyChannelList_2.size()));
+            util.show();*/
         }
     }
     private void doStartEditMode(RecyclerView parent) {
@@ -377,6 +391,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
     public void setChannelItemClickListener(ChannelItemClickListener channelItemClickListener){
         this.channelItemClickListener = channelItemClickListener ;
     }
+
     public interface ChannelItemClickListener {
         void onChannelItemClick(List<ChannelBean> list, int position);
     }

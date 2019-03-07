@@ -7,7 +7,7 @@ package com.rayho.tsxiu.ui.channelhelper.bean;
 public class ChannelBean {
 
     private String tabName;//分类的名字
-    private String key;//分类的id
+    private String cid;//分类的id
     private int editStatus;
     private int tabType;
 
@@ -20,12 +20,12 @@ public class ChannelBean {
         this.tabName = tabName;
     }
 
-    public String getKey() {
-        return key;
+    public String getCid() {
+        return cid;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 
     public int getTabType() {

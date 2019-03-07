@@ -88,7 +88,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContentFragment = this;
-        RxBus.getDefault().subscribe(this, "updateNums", new RxBus.Callback<Integer>() {
+        RxBus.getDefault().subscribeSticky(this, "updateNums", new RxBus.Callback<Integer>() {
             @Override
             public void onEvent(Integer integer) {
                 updateNums = integer;
@@ -271,7 +271,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                                 //如果更新的数据少于5条 禁止上拉加载
                                 if(list.size() < 5){
                                     mTwiRefreshlayout.setEnableLoadmore(false);
-                                    mTwiRefreshlayout.setOverScrollBottomShow(false);//允许footer回弹
+                                    mTwiRefreshlayout.setOverScrollBottomShow(false);//禁止footer回弹
                                 }else {
                                     mTwiRefreshlayout.setEnableLoadmore(true);
                                     mTwiRefreshlayout.setOverScrollBottomShow(true);//允许footer回弹
@@ -336,12 +336,11 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                 });
     }
 
+    /**
+     * 点击首页tab刷新数据
+     */
     public void updateData() {
-       /* if(mTvTag != null){
-            mTvTag.setText("updateData!!!");
-        }else {
-
-        }*/
+       //recyclerView滑动到顶部
         mRcv.smoothScrollToPosition(0);
         mTwiRefreshlayout.startRefresh();
     }
