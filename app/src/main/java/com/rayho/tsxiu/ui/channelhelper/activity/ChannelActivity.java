@@ -197,13 +197,42 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
         mRecyclerView.setAdapter(mRecyclerAdapter);
     }
 
+    /**
+     * 初始化本地我的频道list和当前我的频道list
+     * 用List<String> 便于两个集合对比
+     */
+    private void initMyChannelStrs() {
+        mMyChannelStrs_Db = new ArrayList<>();//from数据库
+        mMyChannelStrs = new ArrayList<>();//当前显示
+        for (int i = 0; i < mChannels.size(); i++) {
+            mMyChannelStrs_Db.add(mChannels.get(i).getName());
+        }
 
+        if (mMyChannelList_2 != null && mMyChannelList_2.size() > 0) {
+            for (int i = 0; i < mMyChannelList_2.size(); i++) {
+                mMyChannelStrs.add(mMyChannelList_2.get(i).getTabName());
+            }
+        } else {
+            //当前我的频道没变化
+            return;
+        }
+    }
+
+    /**
+     * 点击我的频道
+     * @param list  从ChannelAdapter动态获取数据
+     * @param position
+     */
     @Override
     public void onChannelItemClick(List<ChannelBean> list, int position) {
         mMyChannelList_2 = list;
-        //点击当前频道 打开频道的fragment
-        mFragment.mBinding.viewpager.setCurrentItem(position);
-        finish();
+        initMyChannelStrs();
+        //只要当前显示我的频道 与 数据库中获取我的频道 不一样(频道的数量或者顺序不同)
+        //动态更新首页的新闻
+        if (mMyChannelStrs.equals(mMyChannelStrs_Db)) {
+            mFragment.mBinding.viewpager.setCurrentItem(position);
+            finish();
+        }
     }
 
 
@@ -221,25 +250,11 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
      * 重新设置我的频道 首页马上更新新闻频道
      * mMyChannelList_2 从ChannelAdapter动态获取数据
      */
-    private void resetContentFts(){
-        mMyChannelStrs_Db = new ArrayList<>();//from数据库
-        mMyChannelStrs = new ArrayList<>();//当前显示
-        for (int i = 0; i < mChannels.size(); i++) {
-            mMyChannelStrs_Db.add(mChannels.get(i).getName());
-        }
-
-        if(mMyChannelList_2 != null && mMyChannelList_2.size() > 0){
-            for (int i = 0; i < mMyChannelList_2.size(); i++) {
-                mMyChannelStrs.add(mMyChannelList_2.get(i).getTabName());
-            }
-        }else {
-            //当前我的频道没变化
-            return;
-        }
+    private void resetContentFts() {
+        initMyChannelStrs();
         //只要当前显示我的频道 与 数据库中获取我的频道 不一样(频道的数量或者顺序不同)
         //动态更新首页的新闻
-        if ( ! mMyChannelStrs.equals(mMyChannelStrs_Db)) {
-            //to do DB
+        if (!mMyChannelStrs.equals(mMyChannelStrs_Db)) {
             mFragment.setContentFts(mMyChannelList_2);
         }
     }

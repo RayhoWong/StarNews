@@ -197,8 +197,18 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
                     targetX = preTargetView.getLeft();
                     targetY = preTargetView.getTop()+preTargetView.getHeight()+APPConst.ITEM_SPACE;
                 }
-                moveMyToOther(position);
-                startAnimation(mRecyclerView, currentView, targetX, targetY);
+
+                int myPosition = position - mMyHeaderCount;
+                ChannelBean item = mMyChannelItems.get(myPosition);
+                //如果item是默认的两个频道 不做改动
+                if(item.getTabType() == 0 || item.getTabType() == 1){
+                    return;
+                }else {
+                    //做改动 开启动画
+                    moveMyToOther(position);
+                    startAnimation(mRecyclerView, currentView, targetX, targetY);
+                }
+
             }else{
                 if(channelItemClickListener!=null){
                     channelItemClickListener.onChannelItemClick(mMyChannelItems,position-mMyHeaderCount);
@@ -307,6 +317,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
     private void moveMyToOther(int position) {
         int myPosition = position - mMyHeaderCount;
         ChannelBean item = mMyChannelItems.get(myPosition);
+        if(item.getTabType() == 0 || item.getTabType() == 1){
+            return;
+        }
         mMyChannelItems.remove(myPosition);
         mOtherChannelItems.add(0, item);
         notifyItemMoved(position, mMyChannelItems.size() + mMyHeaderCount+mRecHeaderCount);

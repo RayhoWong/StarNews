@@ -268,8 +268,8 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                                 mRcv.setAdapter(mAdapter);
                                 mHeader.setMsg("星头条推荐引擎有" + String.valueOf(updateNums) + "条更新");
                                 flag = true;
-                                //如果更新的数据少于5条 禁止上拉加载
-                                if(list.size() < 5){
+                                //如果更新的数据少于3条 禁止上拉加载
+                                if(list.size() < 3){
                                     mTwiRefreshlayout.setEnableLoadmore(false);
                                     mTwiRefreshlayout.setOverScrollBottomShow(false);//禁止footer回弹
                                 }else {
