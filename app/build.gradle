@@ -28,7 +28,7 @@ android {
 }
 
 greendao {
-    schemaVersion 1//数据库版本号
+    schemaVersion 2//数据库版本号
     daoPackage 'com.rayho.tsxiu.greendao'//设置DaoMaster、DaoSession、Dao包名
     targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
     //targetGenDirTest：设置生成单元测试目录
@@ -62,6 +62,9 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     //超火的工具类大全
     implementation 'com.blankj:utilcode:1.21.2'
+    //rxjava1.x 主要用于支持GreenDao(3.2版本不支持rxjava2)
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'io.reactivex:rxjava:1.2.9'
     //rxjava2.x
     implementation 'io.reactivex.rxjava2:rxjava:2.0.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -75,7 +78,9 @@ dependencies {
     //okhttp网络日志拦截器
     implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     // 依赖以下两个库，会自动引用基础库与Android库(rx绑定生命周期)
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+
+    implementation 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
     //好用的BottomNavigation
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     //lottie动画

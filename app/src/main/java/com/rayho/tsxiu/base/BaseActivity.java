@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.utils.StatusBarUtil;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.widget.Toolbar;

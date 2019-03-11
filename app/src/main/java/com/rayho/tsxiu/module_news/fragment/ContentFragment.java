@@ -9,6 +9,7 @@ import android.view.ViewStub;
 import android.widget.RelativeLayout;
 
 import com.blankj.rxbus.RxBus;
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.button.MaterialButton;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -22,13 +23,18 @@ import com.rayho.tsxiu.http.exception.ApiException;
 import com.rayho.tsxiu.http.exception.ServerStatusCode;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.module_news.dao.FilesName;
 import com.rayho.tsxiu.module_news.viewmodel.ContentFtViewModel;
 import com.rayho.tsxiu.ui.MyRefreshLottieFooter;
 import com.rayho.tsxiu.ui.MyRefreshLottieHeader;
+import com.rayho.tsxiu.utils.CacheUtil;
+import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.NetworkUtils;
 import com.rayho.tsxiu.utils.RxTimer;
+import com.rayho.tsxiu.utils.RxUtil;
 import com.rayho.tsxiu.utils.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -36,6 +42,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.rayho.tsxiu.base.Constant.TYPE_ID;
 
@@ -43,8 +55,6 @@ import static com.rayho.tsxiu.base.Constant.TYPE_ID;
  * 新闻列表界面(根据分类id，显示不同的新闻)
  */
 public class ContentFragment extends LazyLoadFragment implements OnTabReselectedListener, Presenter {
-    /* @BindView(R.id.tv_tag)
-     TextView mTvTag;*/
     @BindView(R.id.rcv)
     RecyclerView mRcv;
     @BindView(R.id.twi_refreshlayout)
@@ -62,11 +72,15 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     private ContentFragment mContentFragment;
 
+    private List<NewsBean.DataBean> mData = new ArrayList<>();//返回的新闻列表数据
+
+    private List<FilesName> mFilesNames;//数据库返回新闻缓存文件的文件名
+
     private String cid = "news_sports";//新闻的类型id
 
     private String pageToken;//分页值id
 
-    private boolean flag = false;//是否有新闻缓存
+    private boolean cacheFlag = false;//是否有新闻缓存
 
     private int updateNums;//更新成功 返回的数据数量
 
@@ -94,6 +108,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                 updateNums = integer;
             }
         });
+        cacheFlag = SPUtils.getInstance("NewsCache").getBoolean("cacheFlag", false);
     }
 
     @Override
@@ -154,33 +169,36 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
                 if (!NetworkUtils.isConnected(getActivity())) {
+                    refreshLayout.setEnableLoadmore(false);
+                    refreshLayout.setEnableOverScroll(false);
                     //判断是否有新闻缓存
-                    if (!flag) {
+                    if (!cacheFlag) {
                         //无缓存 显示网络错误（支持重新加载数据）界面
-                        RxTimer.timer(2000, new RxTimer.RxAction() {
+                        RxTimer.timer(1000, new RxTimer.RxAction() {
                             @Override
                             public void action() {
-                                isShowNetWorkErrorLayout(flag);
+                                isShowNetWorkErrorLayout(cacheFlag);
                                 mHeader.setMsg(getString(R.string.network_error));
                                 refreshLayout.finishRefreshing();
                             }
                         });
                     } else {
                         //有缓存 隐藏网络错误界面 读取新闻缓存 显示在列表上
-                        RxTimer.timer(2000, new RxTimer.RxAction() {
+                        RxTimer.timer(1000, new RxTimer.RxAction() {
                             @Override
                             public void action() {
-                                isShowNetWorkErrorLayout(flag);
+                                isShowNetWorkErrorLayout(cacheFlag);
                                 mHeader.setMsg(getString(R.string.network_error));
                                 refreshLayout.finishRefreshing();
                                 //to do getNewsCache(读取缓存)
+                                if (mData.size() == 0) getNewsCache();
                             }
                         });
                     }
                 } else {
                     //有网络 开启上拉加载和越界回弹
                     refreshLayout.setEnableLoadmore(true);
-                    mTwiRefreshlayout.setEnableOverScroll(true);
+                    refreshLayout.setEnableOverScroll(true);
                     if (mViewStub.getVisibility() == View.VISIBLE) {
                         mViewStub.setVisibility(View.GONE);
                     }
@@ -211,15 +229,88 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         });
     }
 
+
+    private void setNewsCache() {
+        //缓存文章到本地(文件缓存)
+        Observable
+                .create(new ObservableOnSubscribe<String>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                        for (NewsBean.DataBean bean : mData) {
+                            //新闻写入文件
+                            CacheUtil.saveObjectByFile(getActivity(), bean, bean.publishDateStr + "_" + bean.id);
+                            //新闻的文件名保存到数据库
+                            DaoManager.getInstance().getDaoSession().getFilesNameDao()
+                                    .insertOrReplace(new FilesName(null, bean.publishDateStr + "_" + bean.id));
+                        }
+                        emitter.onNext(getString(R.string.success));
+                    }
+                })
+                .compose(RxUtil.<String>rxSchedulerHelper())
+                .compose(this.<String>bindToLifecycle())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        if (s.equals(getString(R.string.success))) {
+                            cacheFlag = true;//新闻缓存成功
+                            SPUtils.getInstance("NewsCache").put("cacheFlag", cacheFlag);
+                        }
+                    }
+                });
+    }
+
+
+    private void getNewsCache() {
+        mData = new ArrayList<>();
+        DaoManager.getInstance().getDaoSession().getFilesNameDao()
+                .rx()
+                .loadAll()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<FilesName>>() {
+                    @Override
+                    public void call(List<FilesName> filesNames) {
+                        mFilesNames = filesNames;
+                        toDo();
+                    }
+                });
+    }
+
+    private void toDo() {
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                if (mFilesNames != null && mFilesNames.size() > 0) {
+                    for (FilesName file : mFilesNames) {
+                        mData.add((NewsBean.DataBean) CacheUtil.readObjectByFile(getActivity(), file.getName()));
+                    }
+                }
+                //操作执行完毕 发送数据 触发观察者的onNext方法
+                emitter.onNext(getString(R.string.success));
+            }
+        })
+                .compose(RxUtil.<String>rxSchedulerHelper())
+                .compose(this.<String>bindToLifecycle())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String str) throws Exception {
+                        if (str.equals(getString(R.string.success))) {
+                            contentFtViewModel.setNews(mData, Constant.REFRESH_DATA);
+                            mRcv.setAdapter(mAdapter);
+                        }
+                    }
+                });
+    }
+
+
     /**
      * 显示网络错误布局 支持重连
      *
-     * @param flag 是否有缓存 true:有  false:无
+     * @param cacheFlag 是否有缓存 true:有  false:无
      */
-    private void isShowNetWorkErrorLayout(boolean flag) {
-        if (!flag) {
+    private void isShowNetWorkErrorLayout(boolean cacheFlag) {
+        if (!cacheFlag) {
             if (mViewStub.getVisibility() == View.GONE) {
-/*               * 当mViewStub.setVisibility(View.VISIBLE)后 得到加载进来的布局
+                /*               * 当mViewStub.setVisibility(View.VISIBLE)后 得到加载进来的布局
                  * 然后通过根布局mRl.findViewById()找到已加载布局的子控件view
                  * 该做法避免找不到控件的空指针异常
                  * 如果直接 布局子控件 = mViewStub.findViewById 报空指针异常*/
@@ -259,20 +350,21 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                         if (ServerStatusCode.getStatusResponse(newsBean.retcode)
                                 .equals(getString(R.string.request_success))) {
                             if (newsBean.data != null) {
-                                List<NewsBean.DataBean> list = newsBean.data;
-                                contentFtViewModel.setNews(list, Constant.REFRESH_DATA);
+                                mData = newsBean.data;
+                                contentFtViewModel.setNews(mData, Constant.REFRESH_DATA);
                                 if (!TextUtils.isEmpty(newsBean.pageToken)) {
                                     pageToken = newsBean.pageToken;
 //                                    Logger.d("=pageToken:"+pageToken);
                                 }
                                 mRcv.setAdapter(mAdapter);
                                 mHeader.setMsg("星头条推荐引擎有" + String.valueOf(updateNums) + "条更新");
-                                flag = true;
+                                //缓存新闻
+                                setNewsCache();
                                 //如果更新的数据少于3条 禁止上拉加载
-                                if(list.size() < 3){
+                                if (mData.size() < 3) {
                                     mTwiRefreshlayout.setEnableLoadmore(false);
                                     mTwiRefreshlayout.setOverScrollBottomShow(false);//禁止footer回弹
-                                }else {
+                                } else {
                                     mTwiRefreshlayout.setEnableLoadmore(true);
                                     mTwiRefreshlayout.setOverScrollBottomShow(true);//允许footer回弹
                                 }
@@ -309,8 +401,8 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                         if (ServerStatusCode.getStatusResponse(newsBean.retcode)
                                 .equals(getString(R.string.request_success))) {
                             if (newsBean.data != null) {
-                                List<NewsBean.DataBean> list = newsBean.data;
-                                contentFtViewModel.setNews(list, Constant.LOAD_MORE_DATA);
+                                mData = newsBean.data;
+                                contentFtViewModel.setNews(mData, Constant.LOAD_MORE_DATA);
                                 if (!TextUtils.isEmpty(newsBean.pageToken)) {
                                     pageToken = newsBean.pageToken;
 //                                    Logger.d("=====pageToken:"+pageToken);
@@ -340,13 +432,11 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
      * 点击首页tab刷新数据
      */
     public void updateData() {
-       //recyclerView滑动到顶部
+        //recyclerView滑动到顶部
         mRcv.smoothScrollToPosition(0);
         mTwiRefreshlayout.startRefresh();
     }
 
     @Override
-    public void onClick(View v) {
-
-    }
+    public void onClick(View v) {}
 }

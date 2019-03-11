@@ -21,6 +21,7 @@
     <string name="default_channel_cid_1">news_society</string>
     <string name="default_channel_name_2">娱乐</string>
     <string name="default_channel_cid_2">news_entertainment</string>
+    <string name="success">success</string>
 
     <string-array name="BottomNavigationNames">
         <item>首页</item>

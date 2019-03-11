@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.rxbus.RxBus;
+import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.activity.MainActivity;
 import com.rayho.tsxiu.activity.TestActivity;
@@ -18,7 +19,7 @@ import com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel;
 import com.rayho.tsxiu.ui.channelhelper.activity.ChannelActivity;
 import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
 import com.rayho.tsxiu.utils.DaoManager;
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.trello.rxlifecycle3.components.support.RxFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import io.reactivex.schedulers.Schedulers;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class NewsTabFragment extends RxFragment implements Presenter {
 
@@ -68,7 +72,6 @@ public class NewsTabFragment extends RxFragment implements Presenter {
         mActivity = (MainActivity) getActivity();
 
         getLocalChannels();
-        initView();
     }
 
 
@@ -95,22 +98,34 @@ public class NewsTabFragment extends RxFragment implements Presenter {
      * 获取本地缓存的频道
      */
     private void getLocalChannels() {
-        mChannels = DaoManager.getInstance().getDaoSession().getChannelDao().loadAll();
-        if (mChannels.size() == 0) {
-            /*ToastUtil util = new ToastUtil(getActivity(), "本地没有缓存频道");
-            util.show();*/
-            //如果本地没有缓存频道 插入两条默认频道
-            DaoManager.getInstance().getDaoSession().getChannelDao()
-                    .insert(new Channel(null,getString(R.string.default_channel_name_1), getString(R.string.default_channel_cid_1)));
-            DaoManager.getInstance().getDaoSession().getChannelDao()
-                    .insert(new Channel(null,getString(R.string.default_channel_name_2), getString(R.string.default_channel_cid_2)));
-            mChannels.add(new Channel(null, getString(R.string.default_channel_name_1),  getString(R.string.default_channel_cid_1)));
-            mChannels.add(new Channel(null, getString(R.string.default_channel_name_2),  getString(R.string.default_channel_cid_2)));
-        }
-        mFragments = new ArrayList<>();
-             for (int i = 0; i < mChannels.size(); i++) {
-                 mFragments.add(ContentFragment.newInstance(mChannels.get(i).getCid()));
-        }
+        DaoManager.getInstance().getDaoSession().getChannelDao()
+                .rx()
+                .loadAll()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Channel>>() {
+                    @Override
+                    public void call(List<Channel> channels) {
+                        mChannels = channels;
+//                        Logger.d("长度："+mChannels.size());
+                        if (mChannels.size() == 0) {
+                            DaoManager.getInstance().getDaoSession().getChannelDao()
+                                    .rx()
+                                    .insertOrReplace(new Channel(null,getString(R.string.default_channel_name_1), getString(R.string.default_channel_cid_1)))
+                                    .subscribe();
+                            DaoManager.getInstance().getDaoSession().getChannelDao()
+                                    .rx()
+                                    .insertOrReplace(new Channel(null,getString(R.string.default_channel_name_2), getString(R.string.default_channel_cid_2)))
+                                    .subscribe();
+                            mChannels.add(new Channel(null, getString(R.string.default_channel_name_1),  getString(R.string.default_channel_cid_1)));
+                            mChannels.add(new Channel(null, getString(R.string.default_channel_name_2),  getString(R.string.default_channel_cid_2)));
+                        }
+                        mFragments = new ArrayList<>();
+                        for (int i = 0; i < mChannels.size(); i++) {
+                            mFragments.add(ContentFragment.newInstance(mChannels.get(i).getCid()));
+                        }
+                        initView();
+                    }
+                });
     }
 
 
@@ -165,10 +180,16 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     private void setLocalChannels(){
         if(mChannels.size() > 0){
             //删除数据库中的所有频道记录
-            DaoManager.getInstance().getDaoSession().getChannelDao().deleteAll();
+            DaoManager.getInstance().getDaoSession().getChannelDao()
+                    .rx()
+                    .deleteAll()
+                    .subscribe();
+
             for(int i=0;i<mChannels.size();i++){
                 DaoManager.getInstance().getDaoSession().getChannelDao()
-                        .insert(mChannels.get(i));
+                        .rx()
+                        .insertOrReplace(mChannels.get(i))
+                        .subscribe();
             }
         }
     }

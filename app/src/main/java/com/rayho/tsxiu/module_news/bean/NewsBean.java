@@ -1,5 +1,6 @@
 package com.rayho.tsxiu.module_news.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class NewsBean {
     public boolean hasNext;
     public List<DataBean> data;
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * viewCount : 18940
          * publishDateStr : 2019-01-27T00:41:02

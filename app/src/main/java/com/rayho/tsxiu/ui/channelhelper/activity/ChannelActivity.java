@@ -27,6 +27,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by rayho on 2019/3/2
@@ -113,7 +115,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
 
     private void getChannels() {
         getMyChannels();
-        getRecChannels();
+//        getRecChannels();
     }
 
     /**
@@ -121,14 +123,24 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
      */
     private void getMyChannels() {
         mMyChannelList = new ArrayList<>();
-        mChannels = DaoManager.getInstance().getDaoSession().getChannelDao().loadAll();
-        for (int i = 0; i < mChannels.size(); i++) {
-            ChannelBean channelBean = new ChannelBean();
-            channelBean.setTabName(mChannels.get(i).getName());
-            channelBean.setCid(mChannels.get(i).getCid());
-            channelBean.setTabType(i == 0 ? 0 : i == 1 ? 1 : 2);
-            mMyChannelList.add(channelBean);
-        }
+        DaoManager.getInstance().getDaoSession().getChannelDao()
+                .rx()
+                .loadAll()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Channel>>() {
+                    @Override
+                    public void call(List<Channel> channels) {
+                        mChannels = channels;
+                        for (int i = 0; i < mChannels.size(); i++) {
+                            ChannelBean channelBean = new ChannelBean();
+                            channelBean.setTabName(mChannels.get(i).getName());
+                            channelBean.setCid(mChannels.get(i).getCid());
+                            channelBean.setTabType(i == 0 ? 0 : i == 1 ? 1 : 2);
+                            mMyChannelList.add(channelBean);
+                        }
+                        getRecChannels();
+                    }
+                });
     }
 
     /**
