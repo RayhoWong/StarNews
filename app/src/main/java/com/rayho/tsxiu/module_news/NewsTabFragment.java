@@ -175,7 +175,6 @@ public class NewsTabFragment extends RxFragment implements Presenter {
         }
     }
 
-
     /**
      * 删除数据库原有的频道记录 重新插入新的记录
      */
