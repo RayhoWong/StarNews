@@ -82,7 +82,7 @@ public class MyRefreshLottieHeader extends LinearLayout implements IHeaderView {
         rt.play();
         //延迟2秒提醒消失
         RxTimer timer = new RxTimer();
-        timer.timer(2000, new RxTimer.RxAction() {
+        timer.timer(1500, new RxTimer.RxAction() {
             @Override
             public void action() {
                 //Header的收缩动画

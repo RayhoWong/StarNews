@@ -20,4 +20,6 @@ public class Constant {
     public static int LOAD_MORE_DATA = 1;//上拉加载
     //新闻缓存的间隔
     public static long CACHE_TIME = 2000;
+    //缓存数据的最大值
+    public static int MAX_CACHE_NUMS = 10;
 }

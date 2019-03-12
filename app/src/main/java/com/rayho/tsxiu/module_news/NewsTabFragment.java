@@ -87,7 +87,7 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     /**
      * 频道发生变化 重置viewpager
      */
-    public void resetViewPager(){
+    public void resetViewPager() {
         //除当前页面的预加载页面数(保证切换页面时 不会重新创建)
         mBinding.viewpager.setOffscreenPageLimit(mChannels.size() - 1);//缓存所有页面
         mBinding.tablayout.setupWithViewPager(mBinding.viewpager);
@@ -108,16 +108,17 @@ public class NewsTabFragment extends RxFragment implements Presenter {
                         mChannels = channels;
 //                        Logger.d("长度："+mChannels.size());
                         if (mChannels.size() == 0) {
+                            //如果没有默认频道 添加两个默认频道(社会和娱乐)
                             DaoManager.getInstance().getDaoSession().getChannelDao()
                                     .rx()
-                                    .insertOrReplace(new Channel(null,getString(R.string.default_channel_name_1), getString(R.string.default_channel_cid_1)))
+                                    .insertOrReplace(new Channel(null, getString(R.string.default_channel_name_1), getString(R.string.default_channel_cid_1)))
                                     .subscribe();
                             DaoManager.getInstance().getDaoSession().getChannelDao()
                                     .rx()
-                                    .insertOrReplace(new Channel(null,getString(R.string.default_channel_name_2), getString(R.string.default_channel_cid_2)))
+                                    .insertOrReplace(new Channel(null, getString(R.string.default_channel_name_2), getString(R.string.default_channel_cid_2)))
                                     .subscribe();
-                            mChannels.add(new Channel(null, getString(R.string.default_channel_name_1),  getString(R.string.default_channel_cid_1)));
-                            mChannels.add(new Channel(null, getString(R.string.default_channel_name_2),  getString(R.string.default_channel_cid_2)));
+                            mChannels.add(new Channel(null, getString(R.string.default_channel_name_1), getString(R.string.default_channel_cid_1)));
+                            mChannels.add(new Channel(null, getString(R.string.default_channel_name_2), getString(R.string.default_channel_cid_2)));
                         }
                         mFragments = new ArrayList<>();
                         for (int i = 0; i < mChannels.size(); i++) {
@@ -138,7 +139,7 @@ public class NewsTabFragment extends RxFragment implements Presenter {
             case R.id.ll_scan:
                 break;
             case R.id.channel_menu:
-                RxBus.getDefault().postSticky(this,"NewTabFt");
+                RxBus.getDefault().postSticky(this, "NewTabFt");
                 mActivity.startActivity(new Intent(mActivity, ChannelActivity.class));
                 break;
         }
@@ -148,10 +149,11 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     /**
      * 更新首页新闻
      * 如果list有数据 删除数据库中所有频道记录 重新插入list里面的所有频道记录
+     *
      * @param list 全新的频道记录数据(必须跟数据库的不同 才插入数据库)
      */
-    public void setContentFts(List<ChannelBean> list){
-        if(list != null && list.size() > 0){
+    public void setContentFts(List<ChannelBean> list) {
+        if (list != null && list.size() > 0) {
             mFragments.clear();
             mChannels.clear();
             mAdapter.notifyDataSetChanged();
@@ -177,20 +179,22 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     /**
      * 删除数据库原有的频道记录 重新插入新的记录
      */
-    private void setLocalChannels(){
-        if(mChannels.size() > 0){
+    private void setLocalChannels() {
+        if (mChannels.size() > 0) {
             //删除数据库中的所有频道记录
             DaoManager.getInstance().getDaoSession().getChannelDao()
                     .rx()
                     .deleteAll()
-                    .subscribe();
-
-            for(int i=0;i<mChannels.size();i++){
-                DaoManager.getInstance().getDaoSession().getChannelDao()
-                        .rx()
-                        .insertOrReplace(mChannels.get(i))
-                        .subscribe();
-            }
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(Void aVoid) {
+                            //插入新的频道
+                            DaoManager.getInstance().getDaoSession().getChannelDao()
+                                    .rx()
+                                    .insertInTx(mChannels)
+                                    .subscribe();
+                        }
+                    });
         }
     }
 

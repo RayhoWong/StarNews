@@ -115,8 +115,8 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
 
     private void getChannels() {
         getMyChannels();
-//        getRecChannels();
     }
+
 
     /**
      * 获取我的(本地)频道
@@ -142,6 +142,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
                     }
                 });
     }
+
 
     /**
      * 获取推荐频道
@@ -199,6 +200,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
         }
     }
 
+
     /**
      * 初始化adapter
      * 无论mMyChannelList(推荐频道)是否有数据 都必须调用该方法
@@ -208,6 +210,7 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
         mRecyclerAdapter.setChannelItemClickListener(ChannelActivity.this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
     }
+
 
     /**
      * 初始化本地我的频道list和当前我的频道list
@@ -230,9 +233,11 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
         }
     }
 
+
     /**
      * 点击我的频道
-     * @param list  从ChannelAdapter动态获取数据
+     *
+     * @param list     从ChannelAdapter动态获取数据
      * @param position
      */
     @Override
