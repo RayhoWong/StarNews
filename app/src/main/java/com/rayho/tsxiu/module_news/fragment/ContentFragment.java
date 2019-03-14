@@ -9,7 +9,6 @@ import android.view.ViewStub;
 import android.widget.RelativeLayout;
 
 import com.blankj.rxbus.RxBus;
-import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.button.MaterialButton;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -26,8 +25,8 @@ import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.dao.NewsCache;
 import com.rayho.tsxiu.module_news.viewmodel.ContentFtViewModel;
-import com.rayho.tsxiu.ui.MyRefreshLottieFooter;
-import com.rayho.tsxiu.ui.MyRefreshLottieHeader;
+import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieFooter;
+import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieHeader;
 import com.rayho.tsxiu.utils.CacheUtil;
 import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.NetworkUtils;
@@ -109,6 +108,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                 updateNums = integer;
             }
         });
+
 //        cacheFlag = SPUtils.getInstance("NewsCache").getBoolean("cacheFlag", false);
     }
 
@@ -137,6 +137,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     public void loadData() {
         initRefreshLayout();
         initRcv();
+
         setNewsCacheFlag();
     }
 
@@ -161,6 +162,38 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         mTwiRefreshlayout.startRefresh(); //自动刷新
         mTwiRefreshlayout.setAutoLoadMore(true); //自动加载
     }
+
+
+
+    /**
+     * 判断是否有缓存 设置cacheFlag标记
+     * cacheFlag=true:有
+     * cacheFlag=false:无
+     */
+    private void setNewsCacheFlag() {
+        mData = new ArrayList<>();
+        //条件查询 获取数据库中属于该类型的新闻缓存
+        DaoManager.getInstance().getDaoSession().getNewsCacheDao()
+                .queryBuilder()
+                .where(NewsCacheDao.Properties.Cid.eq(cid))
+                .rx()
+                .list()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<NewsCache>>() {
+                    @Override
+                    public void call(List<NewsCache> newsCaches) {
+                        mNewsCaches = newsCaches;
+//                        ToastUtil toast = new ToastUtil(getActivity(),"长度为："+String.valueOf(mNewsCaches.size()));
+//                        toast.show();
+                        if (mNewsCaches.size() > 0) {
+                            cacheFlag = true;
+                        }
+                        //设置cacheFlag后 立刻获取数据
+                        getData();
+                    }
+                });
+    }
+
 
 
     /**
@@ -203,35 +236,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                 .subscribe();
     }
 
-
-    /**
-     * 判断是否有缓存 设置cacheFlag标记
-     * cacheFlag=true:有
-     * cacheFlag=false:无
-     */
-    private void setNewsCacheFlag() {
-        mData = new ArrayList<>();
-        //条件查询 获取数据库中属于该类型的新闻缓存
-        DaoManager.getInstance().getDaoSession().getNewsCacheDao()
-                .queryBuilder()
-                .where(NewsCacheDao.Properties.Cid.eq(cid))
-                .rx()
-                .list()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<NewsCache>>() {
-                    @Override
-                    public void call(List<NewsCache> newsCaches) {
-                        mNewsCaches = newsCaches;
-//                        ToastUtil toast = new ToastUtil(getActivity(),"长度为："+String.valueOf(mNewsCaches.size()));
-//                        toast.show();
-                        if (mNewsCaches.size() > 0) {
-                            cacheFlag = true;
-                        }
-                        //设置cacheFlag后 立刻获取数据
-                        getData();
-                    }
-                });
-    }
 
 
     /**
@@ -475,6 +479,8 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     }
 
 
+
+
     /**
      * 点击首页tab刷新数据
      */
@@ -486,5 +492,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     @Override
     public void onClick(View v) {
+
     }
 }

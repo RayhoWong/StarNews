@@ -28,7 +28,7 @@ android {
 }
 
 greendao {
-    schemaVersion 3//数据库版本号
+    schemaVersion 1//数据库版本号
     daoPackage 'com.rayho.tsxiu.greendao'//设置DaoMaster、DaoSession、Dao包名
     targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
     //targetGenDirTest：设置生成单元测试目录
@@ -78,7 +78,6 @@ dependencies {
     //okhttp网络日志拦截器
     implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     // 依赖以下两个库，会自动引用基础库与Android库(rx绑定生命周期)
-
     implementation 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
     //好用的BottomNavigation
@@ -100,4 +99,8 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     //stetho
     implementation 'com.facebook.stetho:stetho:1.5.0'
+    //Rx权限管理库
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+
+
 }

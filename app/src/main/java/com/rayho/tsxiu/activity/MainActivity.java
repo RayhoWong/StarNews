@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MainActivity.this, "haha", Toast.LENGTH_SHORT).show();
             }
         });
-        mToolBar.inflateMenu(R.menu.setting_menu);
+        mToolBar.inflateMenu(R.news.setting_menu);
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

@@ -1,6 +1,7 @@
 package com.rayho.tsxiu.utils;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.rayho.tsxiu.greendao.DaoMaster;
 import com.rayho.tsxiu.greendao.DaoSession;
@@ -25,7 +26,7 @@ public class DaoManager {
     private static DaoMaster mDaoMaster;
 
     //创建数据库的工具
-    private static DaoMaster.DevOpenHelper mHelper;
+    private static MySQLiteOpenHelper mHelper;
 
     //管理gen里生成的所有的Dao对象里边带有基本的增删改查的方法
     private static DaoSession mDaoSession;
@@ -63,8 +64,10 @@ public class DaoManager {
      */
     public DaoMaster getDaoMaster() {
         if (mDaoMaster == null) {
-            mHelper = new DaoMaster.DevOpenHelper(mContext, DB_NAME, null);
-            mDaoMaster = new DaoMaster(mHelper.getWritableDatabase());
+            mHelper = new MySQLiteOpenHelper(mContext, DB_NAME, null);
+           // MigrationHelper.DEBUG = true; //如果你想查看日志信息，请将DEBUG设置为true
+            SQLiteDatabase db = mHelper.getWritableDatabase();
+            mDaoMaster = new DaoMaster(db);
         }
         return mDaoMaster;
     }
