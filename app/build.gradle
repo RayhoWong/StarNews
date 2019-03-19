@@ -28,7 +28,7 @@ android {
 }
 
 greendao {
-    schemaVersion 1//数据库版本号
+    schemaVersion 1//数据库版本号(每次更改表 都要当前值+1)
     daoPackage 'com.rayho.tsxiu.greendao'//设置DaoMaster、DaoSession、Dao包名
     targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
     //targetGenDirTest：设置生成单元测试目录
@@ -99,8 +99,12 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     //stetho
     implementation 'com.facebook.stetho:stetho:1.5.0'
-    //Rx权限管理库
-    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
-
-
+    //国产手机好用的权限管理库
+    implementation 'com.yanzhenjie.permission:x:2.0.1'
+    //二维码扫描库
+    implementation 'com.github.yuzhiqiang1993:zxing:2.2.6'
+    //AgentWeb(好用的webview)
+    implementation 'com.just.agentweb:agentweb:4.0.2' // (必选)
+    //AgentWeb监听文件下载
+    implementation 'com.just.agentweb:download:4.0.2'
 }

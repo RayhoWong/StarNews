@@ -1,5 +1,6 @@
 package com.rayho.tsxiu.module_news;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,19 +8,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.rxbus.RxBus;
-import com.orhanobut.logger.Logger;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.activity.MainActivity;
 import com.rayho.tsxiu.activity.TestActivity;
 import com.rayho.tsxiu.base.Presenter;
 import com.rayho.tsxiu.databinding.NewsFragmentBinding;
+import com.rayho.tsxiu.module_news.activity.ScannerResultActivity;
 import com.rayho.tsxiu.module_news.dao.Channel;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel;
 import com.rayho.tsxiu.ui.channelhelper.activity.ChannelActivity;
 import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
 import com.rayho.tsxiu.utils.DaoManager;
+import com.rayho.tsxiu.utils.PermissionSettingPage;
+import com.rayho.tsxiu.utils.ToastUtil;
 import com.trello.rxlifecycle3.components.support.RxFragment;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yzq.zxinglibrary.android.CaptureActivity;
+import com.yzq.zxinglibrary.bean.ZxingConfig;
+import com.yzq.zxinglibrary.common.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +39,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import io.reactivex.schedulers.Schedulers;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static android.app.Activity.RESULT_OK;
+import static com.rayho.tsxiu.base.Constant.REQUEST_CODE_SCAN;
 
 public class NewsTabFragment extends RxFragment implements Presenter {
 
@@ -72,6 +82,7 @@ public class NewsTabFragment extends RxFragment implements Presenter {
         mActivity = (MainActivity) getActivity();
 
         getLocalChannels();
+//        checkPermission();
     }
 
 
@@ -93,6 +104,62 @@ public class NewsTabFragment extends RxFragment implements Presenter {
         mBinding.tablayout.setupWithViewPager(mBinding.viewpager);
     }
 
+
+    /**
+     * 申请权限
+     * 已获取的权限 不必申请
+     */
+    private void checkCameraPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                .onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        startScanning();
+                    }
+                })
+                .onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        //判断用户是不是选中不再显示权限弹窗了，若不再显示的话提醒进入权限设置页
+                        if (AndPermission.hasAlwaysDeniedPermission(mActivity, data)) {
+                            //提醒打开权限设置页
+                            ToastUtil toast = new ToastUtil(mActivity, getString(R.string.permission_request_tip));
+                            toast.show();
+                            PermissionSettingPage.start(mActivity,false);
+                        }else {
+                            ToastUtil toast = new ToastUtil(mActivity,"你拒绝了该权限");
+                            toast.show();
+                        }
+                    }
+                }).start();
+    }
+
+
+    /**
+     * 删除数据库原有的频道记录 重新插入新的记录
+     */
+    private void setLocalChannels() {
+        if (mChannels.size() > 0) {
+            //删除数据库中的所有频道记录
+            DaoManager.getInstance().getDaoSession().getChannelDao()
+                    .rx()
+                    .deleteAll()
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(Void aVoid) {
+                            //插入新的频道
+                            DaoManager.getInstance().getDaoSession().getChannelDao()
+                                    .rx()
+                                    .insertInTx(mChannels)
+                                    .subscribe();
+                        }
+                    });
+        }
+    }
 
     /**
      * 获取本地缓存的频道
@@ -133,15 +200,53 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_search:
+            case R.id.ll_search://搜索
                 mActivity.startActivity(new Intent(mActivity, TestActivity.class));
                 break;
-            case R.id.ll_scan:
+            case R.id.ll_scan://扫描
+                checkCameraPermission();
                 break;
-            case R.id.channel_menu:
+            case R.id.channel_menu://打开频道管理器
                 RxBus.getDefault().postSticky(this, "NewTabFt");
                 mActivity.startActivity(new Intent(mActivity, ChannelActivity.class));
                 break;
+        }
+    }
+
+
+    /**
+     * 开启二维码扫描
+     */
+    private void startScanning() {
+        Intent intent = new Intent(getActivity(), CaptureActivity.class);
+        //扫描界面的配置
+        ZxingConfig config = new ZxingConfig();
+        config.setPlayBeep(false);//是否播放扫描声音 默认为true
+        config.setShake(true);//是否震动  默认为true
+        config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
+        config.setShowbottomLayout(true);//是否显示相册和闪光灯布局
+        config.setDecodeBarCode(false);//是否扫描条形码 默认为true
+        config.setReactColor(R.color.white);//设置扫描框四个角的颜色 默认为白色
+        config.setFrameLineColor(R.color.white);//设置扫描框边框颜色 默认无色
+        config.setScanLineColor(R.color.transparent);//设置扫描线的颜色 默认白色
+        intent.putExtra(Constant.INTENT_ZXING_CONFIG, config);
+        startActivityForResult(intent, REQUEST_CODE_SCAN);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 扫描二维码/条码回传
+        if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
+            if (data != null) {
+                String result = data.getStringExtra(Constant.CODED_CONTENT);
+//                ToastUtil toast = new ToastUtil(getActivity(), "扫描结果为：" + result);
+//                toast.show();
+                Intent intent = new Intent(mActivity,ScannerResultActivity.class);
+                intent.putExtra("url",result);
+                startActivity(intent);
+            }
         }
     }
 
@@ -172,28 +277,6 @@ public class NewsTabFragment extends RxFragment implements Presenter {
                 //更新数据库
                 setLocalChannels();
             }
-        }
-    }
-
-    /**
-     * 删除数据库原有的频道记录 重新插入新的记录
-     */
-    private void setLocalChannels() {
-        if (mChannels.size() > 0) {
-            //删除数据库中的所有频道记录
-            DaoManager.getInstance().getDaoSession().getChannelDao()
-                    .rx()
-                    .deleteAll()
-                    .subscribe(new Action1<Void>() {
-                        @Override
-                        public void call(Void aVoid) {
-                            //插入新的频道
-                            DaoManager.getInstance().getDaoSession().getChannelDao()
-                                    .rx()
-                                    .insertInTx(mChannels)
-                                    .subscribe();
-                        }
-                    });
         }
     }
 
@@ -236,7 +319,6 @@ public class NewsTabFragment extends RxFragment implements Presenter {
 
         /*在调用notifyDataSetChanged()方法后，随之会触发该方法，
         根据该方法返回的值来确定是否更新
-
 		object对象为Fragment，具体是当前显示的Fragment和它的前一个以及后一个
         将它的返回值改为POSITION_NONE就好了（默认返回的是POSITION_UNCHANGED），
         那么调用notifyDataSetChanged()方法时，就会每次都去加载新的Fragment，而不是引用之前的*/

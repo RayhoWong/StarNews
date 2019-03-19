@@ -18,27 +18,28 @@ public class CommonDialog extends Dialog {
     /**
      * 显示的图片
      */
-    private ImageView imageIv ;
+    private ImageView imageIv;
 
     /**
      * 显示的标题
      */
-    private TextView titleTv ;
+    private TextView titleTv;
 
     /**
      * 显示的消息
      */
-    private TextView messageTv ;
+    private TextView messageTv;
 
     /**
      * 确认和取消按钮
      */
-    private TextView negtiveBn ,positiveBn;
+    private TextView negtiveBn, positiveBn;
 
     /**
      * 按钮之间的分割线
      */
-    private View columnLineView ;
+    private View columnLineView;
+
     public CommonDialog(Context context) {
         super(context, R.style.CommonDialog);
     }
@@ -48,8 +49,8 @@ public class CommonDialog extends Dialog {
      */
     private String message;
     private String title;
-    private String positive,negtive ;
-    private int imageResId = -1 ;
+    private String positive, negtive;
+    private int imageResId = -1;
 
     /**
      * 底部是否只有一个按钮
@@ -78,7 +79,7 @@ public class CommonDialog extends Dialog {
         positiveBn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( onClickBottomListener!= null) {
+                if (onClickBottomListener != null) {
                     onClickBottomListener.onPositiveClick();
                 }
             }
@@ -100,7 +101,7 @@ public class CommonDialog extends Dialog {
         if (!TextUtils.isEmpty(title)) {
             titleTv.setText(title);
             titleTv.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             titleTv.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(message)) {
@@ -109,28 +110,28 @@ public class CommonDialog extends Dialog {
         //如果设置按钮的文字
         if (!TextUtils.isEmpty(positive)) {
             positiveBn.setText(positive);
-        }else {
+        } else {
             positiveBn.setText("确定");
         }
         if (!TextUtils.isEmpty(negtive)) {
             negtiveBn.setText(negtive);
-        }else {
+        } else {
             negtiveBn.setText("取消");
         }
 
-        if (imageResId!=-1){
+        if (imageResId != -1) {
             imageIv.setImageResource(imageResId);
             imageIv.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             imageIv.setVisibility(View.GONE);
         }
         /**
          * 只显示一个按钮的时候隐藏取消按钮，回掉只执行确定的事件
          */
-        if (isSingle){
+        if (isSingle) {
             columnLineView.setVisibility(View.GONE);
             negtiveBn.setVisibility(View.GONE);
-        }else {
+        } else {
             negtiveBn.setVisibility(View.VISIBLE);
             columnLineView.setVisibility(View.VISIBLE);
         }
@@ -145,11 +146,11 @@ public class CommonDialog extends Dialog {
      * 初始化界面控件
      */
     private void initView() {
-        negtiveBn = (TextView) findViewById(R.id.negtive);
-        positiveBn = (TextView) findViewById(R.id.positive);
-        titleTv = (TextView) findViewById(R.id.title);
-        messageTv = (TextView) findViewById(R.id.message);
-        imageIv = (ImageView) findViewById(R.id.image);
+        negtiveBn = findViewById(R.id.negtive);
+        positiveBn = findViewById(R.id.positive);
+        titleTv = findViewById(R.id.title);
+        messageTv = findViewById(R.id.message);
+        imageIv = findViewById(R.id.image);
         columnLineView = findViewById(R.id.column_line);
     }
 
@@ -157,15 +158,18 @@ public class CommonDialog extends Dialog {
      * 设置确定取消按钮的回调
      */
     public OnClickBottomListener onClickBottomListener;
+
+
     public CommonDialog setOnClickBottomListener(OnClickBottomListener onClickBottomListener) {
         this.onClickBottomListener = onClickBottomListener;
         return this;
     }
-    public interface OnClickBottomListener{
+
+    public interface OnClickBottomListener {
         /**
          * 点击确定按钮事件
          */
-        public void onPositiveClick();
+        void onPositiveClick();
     }
 
     public String getMessage() {
@@ -174,7 +178,7 @@ public class CommonDialog extends Dialog {
 
     public CommonDialog setMessage(String message) {
         this.message = message;
-        return this ;
+        return this;
     }
 
     public String getTitle() {
@@ -183,7 +187,7 @@ public class CommonDialog extends Dialog {
 
     public CommonDialog setTitle(String title) {
         this.title = title;
-        return this ;
+        return this;
     }
 
     public String getPositive() {
@@ -192,7 +196,7 @@ public class CommonDialog extends Dialog {
 
     public CommonDialog setPositive(String positive) {
         this.positive = positive;
-        return this ;
+        return this;
     }
 
     public String getNegtive() {
@@ -201,7 +205,7 @@ public class CommonDialog extends Dialog {
 
     public CommonDialog setNegtive(String negtive) {
         this.negtive = negtive;
-        return this ;
+        return this;
     }
 
     public int getImageResId() {
@@ -214,12 +218,12 @@ public class CommonDialog extends Dialog {
 
     public CommonDialog setSingle(boolean single) {
         isSingle = single;
-        return this ;
+        return this;
     }
 
     public CommonDialog setImageResId(int imageResId) {
         this.imageResId = imageResId;
-        return this ;
+        return this;
     }
 
 

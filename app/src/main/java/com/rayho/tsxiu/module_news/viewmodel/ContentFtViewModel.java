@@ -6,7 +6,6 @@ import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.retrofit.NewsLoader;
 
 import java.util.List;
-import java.util.Random;
 
 import io.reactivex.Observable;
 
@@ -17,8 +16,6 @@ import io.reactivex.Observable;
 public class ContentFtViewModel {
 
     private List<NewsBean.DataBean> mList;
-
-    private List<String> mImageUrlList;
 
     private NewsAdapter mAdapter;
 

@@ -22,4 +22,6 @@ public class Constant {
     public static long CACHE_TIME = 2000;
     //缓存数据的最大值
     public static int MAX_CACHE_NUMS = 10;
+    //打开相机的请求码
+    public static int REQUEST_CODE_SCAN = 0000;
 }

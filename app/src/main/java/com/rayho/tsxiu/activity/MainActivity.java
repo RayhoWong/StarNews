@@ -50,7 +50,6 @@ public class MainActivity extends BaseActivity {
         initToolbar();
         initBottomNavigationBar();
         initFragment();
-
     }
 
 
@@ -118,6 +117,8 @@ public class MainActivity extends BaseActivity {
         transaction.commit();
         mFragment = newsTabFragment;
     }
+
+
 
     private void initBottomNavigationBar(){
         titles = getResources().getStringArray(R.array.BottomNavigationNames);

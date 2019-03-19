@@ -74,7 +74,8 @@ public class TestActivity extends BaseActivity {
             }
         });*/
 //        initRefreshLayout();
-            getData();
+//            getData();
+
     }
 
 
@@ -103,13 +104,6 @@ public class TestActivity extends BaseActivity {
 
 
     }
-
-
-
-
-
-
-
 
 
 

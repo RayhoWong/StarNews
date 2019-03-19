@@ -20,7 +20,7 @@ public class PermissionSettingPage {
      * @param context 上下文对象
      * @param newTask 是否使用新的任务栈启动
      */
-    static void start(Context context, boolean newTask) {
+    public static void start(Context context, boolean newTask) {
 
         Intent intent;
         if (MARK.contains("huawei")) {

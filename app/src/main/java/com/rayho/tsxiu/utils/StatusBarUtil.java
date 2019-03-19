@@ -15,6 +15,7 @@ public class StatusBarUtil {
 
     /**
      * 状态栏透明
+     *
      * @param context
      */
     public static void setStatusBarTranslucent(Activity context) {
@@ -30,7 +31,7 @@ public class StatusBarUtil {
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
@@ -38,10 +39,11 @@ public class StatusBarUtil {
 
     /**
      * 改变状态栏颜色
+     *
      * @param context
      * @param color
      */
-    public static void setStatusBarColor(Activity context,int color) {
+    public static void setStatusBarColor(Activity context, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上
             View decorView = context.getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -54,7 +56,7 @@ public class StatusBarUtil {
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
@@ -62,9 +64,10 @@ public class StatusBarUtil {
 
     /**
      * 隐藏状态栏
+     *
      * @param context
      */
-    public static void hideStatusBar(Activity context){
+    public static void hideStatusBar(Activity context) {
         View decorView = context.getWindow().getDecorView();
         int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(option);
@@ -72,13 +75,15 @@ public class StatusBarUtil {
 
     /**
      * 改变状态栏字体的颜色
+     * 默认6.0及以上改字体颜色(白色背景->深色字体)
      * 6.0及以上版本可以更改状态栏的字体颜色，如果状态栏的背景色是浅色或者白色，
      * 那么字体图标的颜色趋向于深色或者是黑色
      * 记得根布局设置属性android:fitsSystemWindows="true"，不然toolbar会占用状态栏
+     *
      * @param context
      */
-    public static void changeStatusBarTextColor(Activity context){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+    public static void changeStatusBarTextColor(Activity context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
@@ -87,10 +92,11 @@ public class StatusBarUtil {
     /**
      * 为ToolBar添加一个状态栏高度的paddingTop
      * 效果等于fitsSystemWindows=true这个属性
+     *
      * @param context
      * @param toolbar
      */
-    public static void setToolBarPaddingTop(Activity context,View toolbar) {
+    public static void setToolBarPaddingTop(Activity context, View toolbar) {
 
         final float scale = context.getResources().getDisplayMetrics().density;
 
@@ -99,7 +105,7 @@ public class StatusBarUtil {
         if (resourceId > 0) {
             statusBarHeight = context.getResources().getDimensionPixelSize(resourceId);
         }
-        Log.d("CompatToolbar", "状态栏高度：" + (statusBarHeight/scale) + "dp");
+        Log.d("CompatToolbar", "状态栏高度：" + (statusBarHeight / scale) + "dp");
 
         int compatPadingTop = 0;
         // android 4.4以上将Toolbar添加状态栏高度的上边距，沉浸到状态栏下方
