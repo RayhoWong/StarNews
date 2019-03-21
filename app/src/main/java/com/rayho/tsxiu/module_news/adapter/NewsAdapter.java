@@ -7,9 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.rxbus.RxBus;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.greendao.NewsDao;
+import com.rayho.tsxiu.module_news.activity.NewsDetailActivity;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.dao.News;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
@@ -96,15 +99,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
      * @param position
      */
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         NewsViewModel model = new NewsViewModel(list.get(position));
         holder.getBinding().setVariable(BR.item, model);
         holder.getBinding().executePendingBindings();//防止画面闪烁
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                RxBus.getDefault().postSticky(list.get(position),"news");
+                ActivityUtils.startActivity(NewsDetailActivity.class);
             }
         });
 

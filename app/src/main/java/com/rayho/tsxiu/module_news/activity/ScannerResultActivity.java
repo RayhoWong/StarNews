@@ -99,7 +99,7 @@ public class ScannerResultActivity extends AppCompatActivity implements Presente
                 .setWebViewClient(mWebViewClient)
                 .setMainFrameErrorView(R.layout.agentweb_error_page, -1)//参数1是错误显示的布局，参数2点击刷新控件ID -1表示点击整个布局都刷新， AgentWeb 3.0.0 加入。
                 .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)//严格模式 Android 4.2.2 以下会放弃注入对象 ，使用AgentWebView没影响。
-                .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.DISALLOW)//打开其他应用时，弹窗咨询用户是否前往其他应用
+                .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.DISALLOW)//打开其他应用时，弹窗咨询用户是否前往其他应用(这里选择拒绝)
                 .interceptUnkownUrl()  //拦截找不到相关页面的Url AgentWeb 3.0.0 加入。
                 .createAgentWeb()//创建AgentWeb。
                 .ready()//设置 WebSettings。

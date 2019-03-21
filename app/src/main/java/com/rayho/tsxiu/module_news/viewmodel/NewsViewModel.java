@@ -12,7 +12,7 @@ import androidx.databinding.Bindable;
 /**
  * Created by Rayho on 2019/2/22
  **/
-public class NewsViewModel extends BaseObservable{
+public class NewsViewModel extends BaseObservable {
 
     private NewsBean.DataBean news;
     private String title;
@@ -34,9 +34,9 @@ public class NewsViewModel extends BaseObservable{
         commentCounts = String.valueOf(news.commentCount) + "评论";
         time = DateUtils.convertTimeToFormat(news.publishDate);
         imageUrls = news.imageUrls;
-        if(imageUrls == null || imageUrls.size() == 0){
+        if (imageUrls == null || imageUrls.size() == 0) {
             nums = "";
-        }else {
+        } else {
             nums = String.valueOf(news.imageUrls.size()) + " 图";
         }
 

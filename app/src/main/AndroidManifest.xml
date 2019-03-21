@@ -16,11 +16,11 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".app.AppApplication"
@@ -64,7 +64,12 @@
             android:name=".module_news.activity.ScannerResultActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true" />
-        <activity android:name=".module_news.activity.NewsDetailActivity"></activity>
+
+        <!--新闻详细界面-->
+        <activity
+            android:name=".module_news.activity.NewsDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
