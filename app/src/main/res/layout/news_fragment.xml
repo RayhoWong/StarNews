@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="vm"
-            type="com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel"/>
+            type="com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel" />
 
         <variable
             name="presenter"
-            type="com.rayho.tsxiu.base.Presenter"/>
+            type="com.rayho.tsxiu.base.Presenter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -36,11 +38,11 @@
 
                 <LinearLayout
                     android:id="@+id/ll_search"
-                    android:layout_width="wrap_content"
+                    android:layout_width="235dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:onClick="@{(v) -> presenter.onClick(v)}">
+                    android:onClick="@{(v) -> presenter.onClick(v)}"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -48,13 +50,18 @@
                         android:layout_marginLeft="15dp"
                         android:src="@mipmap/search" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="@string/search_content"
-                        android:textColor="@color/content_color"
-                        android:textSize="16sp" />
+                    <com.sunfusheng.marqueeview.MarqueeView
+                        android:id="@+id/marqueeView"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="13dp"
+                        android:maxLength="20"
+                        app:mvAnimDuration="1000"
+                        app:mvDirection="top_to_bottom"
+                        app:mvInterval="3000"
+                        app:mvSingleLine="true"
+                        app:mvTextColor="@color/black"
+                        app:mvTextSize="15sp" />
                 </LinearLayout>
 
                 <View
@@ -68,13 +75,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:onClick="@{(v) -> presenter.onClick(v)}">
+                    android:onClick="@{(v) -> presenter.onClick(v)}"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="13dp"
                         android:src="@mipmap/scan" />
 
                     <TextView
@@ -83,7 +90,7 @@
                         android:layout_marginLeft="8dp"
                         android:text="@string/search_scan"
                         android:textColor="@color/content_color"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -112,8 +119,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="13dp"
-                    android:src="@mipmap/menu"
-                    android:onClick="@{(v) -> presenter.onClick(v)}"/>
+                    android:onClick="@{(v) -> presenter.onClick(v)}"
+                    android:src="@mipmap/menu" />
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
 

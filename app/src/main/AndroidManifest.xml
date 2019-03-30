@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.rayho.tsxiu">
-
     <!-- 先加一堆权限为敬 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -21,7 +20,6 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-
     <application
         android:name=".app.AppApplication"
         android:allowBackup="true"
@@ -31,7 +29,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name">
-
         <!-- 设计图一般按照主流的1080x1920作图 通过公式换算成dp -->
         <meta-data
             android:name="design_width_in_dp"
@@ -54,10 +51,12 @@
         <!-- 测试功能 -->
         <activity android:name=".activity.TestActivity" />
 
+
         <!-- 频道管理器 -->
         <activity
             android:name=".ui.channelhelper.activity.ChannelActivity"
             android:screenOrientation="portrait" />
+
 
         <!-- 二维码扫描结果返回的界面 -->
         <activity
@@ -65,11 +64,17 @@
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true" />
 
-        <!--新闻详细界面-->
+
+        <!-- 新闻详细界面 -->
         <activity
             android:name=".module_news.activity.NewsDetailActivity"
             android:screenOrientation="portrait" />
 
+
+        <!--搜索界面-->
+        <activity
+            android:name=".module_news.activity.SearchActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

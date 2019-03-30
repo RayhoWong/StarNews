@@ -6,15 +6,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.blankj.rxbus.RxBus;
-import com.blankj.utilcode.util.ActivityUtils;
+import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.activity.MainActivity;
 import com.rayho.tsxiu.activity.TestActivity;
 import com.rayho.tsxiu.base.Presenter;
 import com.rayho.tsxiu.databinding.NewsFragmentBinding;
+import com.rayho.tsxiu.http.api.NetObserver;
+import com.rayho.tsxiu.http.exception.ApiException;
 import com.rayho.tsxiu.module_news.activity.ScannerResultActivity;
+import com.rayho.tsxiu.module_news.activity.SearchActivity;
+import com.rayho.tsxiu.module_news.bean.NewsHotSearch;
 import com.rayho.tsxiu.module_news.dao.Channel;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel;
@@ -23,6 +28,7 @@ import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
 import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.PermissionSettingPage;
 import com.rayho.tsxiu.utils.ToastUtil;
+import com.sunfusheng.marqueeview.MarqueeView;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -39,6 +45,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import io.reactivex.Observable;
+import io.reactivex.functions.BiFunction;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -82,8 +90,107 @@ public class NewsTabFragment extends RxFragment implements Presenter {
         mActivity = (MainActivity) getActivity();
 
         getLocalChannels();
-//        checkPermission();
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getHotSearchList();
+    }
+
+
+
+    /**
+     * 获取热搜的新闻词条
+     */
+    private void getHotSearchList() {
+        mViewModel.getHotSearch()
+                .compose(this.<NewsHotSearch>bindToLifecycle())
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(new NetObserver<NewsHotSearch>() {
+                    @Override
+                    public void onNext(NewsHotSearch newsHotSearch) {
+                        if (newsHotSearch != null) {
+                            if (newsHotSearch.data.suggest_words != null && newsHotSearch.data.suggest_words.size() > 0) {
+                                List<String> words = new ArrayList<>();
+                                for (NewsHotSearch.DataBean.SuggestWordsBean bean : newsHotSearch.data.suggest_words) {
+                                    words.add(bean.word);
+                                }
+                                mBinding.marqueeView.stopFlipping();
+                                mBinding.marqueeView.startWithList(words);
+                                mBinding.marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(int position, TextView textView) {
+                                        mActivity.startActivity(new Intent(mActivity, SearchActivity.class));
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(ApiException ex) {
+                        Logger.d("错误信息：" + ex.getDisplayMessage());
+//                        ToastUtil toast = new ToastUtil(mActivity, ex.getDisplayMessage());
+//                        toast.show();
+                    }
+                });
+    }
+
+
+    /**
+     * 这只是一个zip使用的例子 并不实际调用
+     * 使用zip操作符合并两个或以上网络请求(传入两个或以上的Observable)返回的数据
+     * zip将合并多个数据源转换成所需要的数据
+     * (多个Observable合并成一个Observable,并且可以对数据源进行加工)
+     */
+    private void zipSample() {
+        Observable<NewsHotSearch> observable1 = mViewModel.getHotSearch();
+        Observable<NewsHotSearch> observable2 = mViewModel.getHotSearch();
+        Observable
+                .zip(observable1, observable2, new BiFunction<NewsHotSearch, NewsHotSearch, List<String>>() {
+                    @Override
+                    public List<String> apply(NewsHotSearch newsHotSearch, NewsHotSearch newsHotSearch2) throws Exception {
+                        List<NewsHotSearch.DataBean.SuggestWordsBean> list = new ArrayList<>();
+                        List<String> words = new ArrayList<>();
+                        if (newsHotSearch.data.suggest_words != null && newsHotSearch2.data.suggest_words != null) {
+                            list.addAll(newsHotSearch.data.suggest_words);
+                            list.addAll(newsHotSearch2.data.suggest_words);
+                        }
+                        for (NewsHotSearch.DataBean.SuggestWordsBean bean : list) {
+                            words.add(bean.word);
+                        }
+                        return words;
+                    }
+                })
+                .compose(this.<List<String>>bindToLifecycle())
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(new NetObserver<List<String>>() {
+                    @Override
+                    public void onNext(List<String> words) {
+                        if (words != null && words.size() > 0) {
+                            mBinding.marqueeView.startWithList(words);
+                            mBinding.marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position, TextView textView) {
+                                    mActivity.startActivity(new Intent(mActivity, TestActivity.class));
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onError(ApiException ex) {
+//                        Logger.d("错误信息："+ex.getDisplayMessage());
+                        ToastUtil toast = new ToastUtil(mActivity, ex.getDisplayMessage());
+                        toast.show();
+                    }
+                });
+    }
+
+
+
 
 
     private void initView() {
@@ -129,9 +236,9 @@ public class NewsTabFragment extends RxFragment implements Presenter {
                             //提醒打开权限设置页
                             ToastUtil toast = new ToastUtil(mActivity, getString(R.string.permission_request_tip));
                             toast.show();
-                            PermissionSettingPage.start(mActivity,false);
-                        }else {
-                            ToastUtil toast = new ToastUtil(mActivity,"你拒绝了该权限");
+                            PermissionSettingPage.start(mActivity, false);
+                        } else {
+                            ToastUtil toast = new ToastUtil(mActivity, "你拒绝了该权限");
                             toast.show();
                         }
                     }
@@ -160,6 +267,7 @@ public class NewsTabFragment extends RxFragment implements Presenter {
                     });
         }
     }
+
 
     /**
      * 获取本地缓存的频道
@@ -197,11 +305,12 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     }
 
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_search://搜索
-                mActivity.startActivity(new Intent(mActivity, TestActivity.class));
+                mActivity.startActivity(new Intent(mActivity, SearchActivity.class));
                 break;
             case R.id.ll_scan://扫描
                 checkCameraPermission();
@@ -243,8 +352,8 @@ public class NewsTabFragment extends RxFragment implements Presenter {
                 String result = data.getStringExtra(Constant.CODED_CONTENT);
 //                ToastUtil toast = new ToastUtil(getActivity(), "扫描结果为：" + result);
 //                toast.show();
-                Intent intent = new Intent(mActivity,ScannerResultActivity.class);
-                intent.putExtra("url",result);
+                Intent intent = new Intent(mActivity, ScannerResultActivity.class);
+                intent.putExtra("url", result);
                 startActivity(intent);
             }
         }

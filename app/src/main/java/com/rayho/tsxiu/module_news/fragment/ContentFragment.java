@@ -109,7 +109,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
             }
         });
 
-//        cacheFlag = SPUtils.getInstance("NewsCache").getBoolean("cacheFlag", false);
     }
 
     @Override
@@ -128,24 +127,27 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+
     @Override
     public int getLayoutId() {
         return R.layout.content_fragment;
     }
 
+
     @Override
     public void loadData() {
         initRefreshLayout();
         initRcv();
-
         setNewsCacheFlag();
     }
 
+
     private void initRcv() {
         mRcv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new NewsAdapter(this);
+        mAdapter = new NewsAdapter(getActivity());
         contentFtViewModel = new ContentFtViewModel(mAdapter);
     }
+
 
     private void initRefreshLayout() {
         mHeader = new MyRefreshLottieHeader(getActivity());
@@ -156,13 +158,10 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         mTwiRefreshlayout.setBottomView(mFooter);
         mTwiRefreshlayout.setEnableRefresh(true);
         mTwiRefreshlayout.setEnableLoadmore(true);
-        //越界回弹
-        mTwiRefreshlayout.setOverScrollRefreshShow(false);//禁止header回弹
-        mTwiRefreshlayout.setOverScrollBottomShow(true);//允许footer回弹
+        mTwiRefreshlayout.setEnableOverScroll(true);//允许footer回弹
         mTwiRefreshlayout.startRefresh(); //自动刷新
         mTwiRefreshlayout.setAutoLoadMore(true); //自动加载
     }
-
 
 
     /**
@@ -193,7 +192,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                     }
                 });
     }
-
 
 
     /**
@@ -235,7 +233,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                 .compose(this.<String>bindToLifecycle())
                 .subscribe();
     }
-
 
 
     /**
@@ -356,7 +353,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     private void isShowNetWorkErrorLayout(boolean cacheFlag) {
         if (!cacheFlag) {
             if (mViewStub.getVisibility() == View.GONE) {
-                /*               * 当mViewStub.setVisibility(View.VISIBLE)后 得到加载进来的布局
+                /* 当mViewStub.setVisibility(View.VISIBLE)后 得到加载进来的布局
                  * 然后通过根布局mRl.findViewById()找到已加载布局的子控件view
                  * 该做法避免找不到控件的空指针异常
                  * 如果直接 布局子控件 = mViewStub.findViewById 报空指针异常*/
@@ -409,10 +406,10 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                                 //如果更新的数据少于3条 禁止上拉加载
                                 if (mData.size() < 3) {
                                     mTwiRefreshlayout.setEnableLoadmore(false);
-                                    mTwiRefreshlayout.setOverScrollBottomShow(false);//禁止footer回弹
+                                    mTwiRefreshlayout.setEnableOverScroll(false);
                                 } else {
                                     mTwiRefreshlayout.setEnableLoadmore(true);
-                                    mTwiRefreshlayout.setOverScrollBottomShow(true);//允许footer回弹
+                                    mTwiRefreshlayout.setEnableOverScroll(true);
                                 }
                                 mTwiRefreshlayout.finishRefreshing();
                             }
@@ -479,8 +476,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     }
 
 
-
-
     /**
      * 点击首页tab刷新数据
      */
@@ -490,8 +485,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         mTwiRefreshlayout.startRefresh();
     }
 
-    @Override
-    public void onClick(View v) {
 
-    }
+    @Override
+    public void onClick(View v) {}
 }

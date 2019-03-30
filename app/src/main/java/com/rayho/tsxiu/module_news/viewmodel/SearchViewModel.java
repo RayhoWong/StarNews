@@ -3,36 +3,49 @@ package com.rayho.tsxiu.module_news.viewmodel;
 import com.blankj.rxbus.RxBus;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.module_news.bean.NewsHotSearch;
 import com.rayho.tsxiu.module_news.retrofit.NewsLoader;
 
 import java.util.List;
 
+import androidx.databinding.ObservableField;
 import io.reactivex.Observable;
 
 /**
- * Created by Rayho on 2019/2/23
- * ContentFragmeht页面的VW 负责获取数据 处理业务逻辑
+ * Created by Rayho on 2019/3/22
  **/
-public class ContentFtViewModel {
+public class SearchViewModel {
+
+    public ObservableField<String> content = new ObservableField<>();
 
     private List<NewsBean.DataBean> mList;
 
     private NewsAdapter mAdapter;
 
 
-    public ContentFtViewModel(NewsAdapter adapter) {
+    public SearchViewModel(String content,NewsAdapter adapter) {
+        this.content.set(content);
         mAdapter = adapter;
     }
 
 
     /**
+     * 获取热搜词条
+     * @return
+     */
+    public Observable<NewsHotSearch> getHotSearch(){
+        return NewsLoader.getInstance().getHotSearch();
+    }
+
+
+    /**
      * 返回NewsBean类型的Observable(已请求网络 得到数据)
-     * @param cid 类别id
+     * @param kw 关键字
      * @param pageToken 分页id
      * @return
      */
-    public Observable<NewsBean> getNewsObservable(String cid,String pageToken){
-        return NewsLoader.getInstance().getNews(cid,pageToken);
+    public Observable<NewsBean> getNewsObservable(String kw, String pageToken){
+        return NewsLoader.getInstance().searchNews(kw,pageToken);
     }
 
 
@@ -67,4 +80,6 @@ public class ContentFtViewModel {
                 break;
         }
     }
+
+
 }

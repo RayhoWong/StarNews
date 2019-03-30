@@ -27,6 +27,10 @@ public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingA
 
     public List<Items> items = new ArrayList<>();
 
+    /**
+     * 子类adapter必须调用 传值
+     * @param items
+     */
     public void setItems(List<Items> items) {
         this.items = items;
     }
@@ -63,6 +67,7 @@ public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingA
 
         public void bindTo(Items item) {
             binding.setVariable(BR.item, item);
+            //防止画面闪烁
             binding.executePendingBindings();
         }
     }
@@ -74,22 +79,39 @@ public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingA
 
     public void addItem(Items item) {
         items.add(item);
+        notifyDataSetChanged();
     }
 
     public void addItem(Items item, int position) {
         items.add(position, item);
+        notifyDataSetChanged();
     }
 
     public void addItems(List<Items> items) {
         this.items.addAll(items);
+        notifyDataSetChanged();
     }
 
+
+    private long curClickTime;//当前点击删除按钮的时间
+    private long lastClickTime;//上一次点击删除按钮的时间
     public void removeItem(int position) {
-        items.remove(position);
+        //防止快速删除item 导致app崩溃
+        //两次点击的间隔必须 >= 250ms
+        curClickTime = System.currentTimeMillis();
+        if(curClickTime - lastClickTime >= 250){
+            lastClickTime = curClickTime;
+            items.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position,items.size());
+        }else {
+            return;
+        }
     }
 
     public void clearItems() {
         items.clear();
+        notifyDataSetChanged();
     }
     ///////////////////////////////////////////////////////////////////////////////////
 }

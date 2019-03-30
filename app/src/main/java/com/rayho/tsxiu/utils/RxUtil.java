@@ -1,10 +1,7 @@
 package com.rayho.tsxiu.utils;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.http.exception.ExceptionEngine;
 

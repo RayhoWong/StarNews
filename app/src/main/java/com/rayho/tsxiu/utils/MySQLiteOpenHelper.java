@@ -7,6 +7,7 @@ import com.rayho.tsxiu.greendao.ChannelDao;
 import com.rayho.tsxiu.greendao.DaoMaster;
 import com.rayho.tsxiu.greendao.NewsCacheDao;
 import com.rayho.tsxiu.greendao.NewsDao;
+import com.rayho.tsxiu.greendao.SearchHistoryDao;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -25,16 +26,18 @@ public class MySQLiteOpenHelper extends DaoMaster.DevOpenHelper {
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
         MigrationHelper.migrate(db, new MigrationHelper.ReCreateAllTableListener() {
 
-            @Override
-            public void onCreateAllTables(Database db, boolean ifNotExists) {
-                DaoMaster.createAllTables(db, ifNotExists);
-            }
+                    @Override
+                    public void onCreateAllTables(Database db, boolean ifNotExists) {
+                        DaoMaster.createAllTables(db, ifNotExists);
+                    }
 
-            @Override
-            public void onDropAllTables(Database db, boolean ifExists) {
-                DaoMaster.dropAllTables(db, ifExists);
-            }
-        },      //数据库升级时 将需要保存数据的DAO类传进来(一般将全部Dao加入)
-                ChannelDao.class,NewsCacheDao.class,NewsDao.class);
+                    @Override
+                    public void onDropAllTables(Database db, boolean ifExists) {
+                        DaoMaster.dropAllTables(db, ifExists);
+                    }
+                },
+                //数据库升级时 将需要保存数据的DAO类传进来(一般将全部Dao加入)
+                ChannelDao.class, NewsCacheDao.class,
+                NewsDao.class, SearchHistoryDao.class);
     }
 }

@@ -1,17 +1,21 @@
 package com.rayho.tsxiu.module_news.retrofit;
 
 
-import com.rayho.tsxiu.module_news.bean.NewsTypeBean;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
+import com.rayho.tsxiu.module_news.bean.NewsHotSearch;
+import com.rayho.tsxiu.module_news.bean.NewsTypeBean;
 import com.rayho.tsxiu.utils.RxUtil;
 
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 public class NewsLoader{
     private NewsApi helper;
+    private NewsApi helper2;
 
     public NewsLoader(){
         helper = NewsServiceHelper.getInstance().create(NewsApi.class);
+        helper2 = NewsServiceHelper2.getInstance().create(NewsApi.class);
     }
 
     private static class SingleHolder{
@@ -61,5 +65,31 @@ public class NewsLoader{
                      .map(RxUtil.jsonTransform(NewsBean.class))
                      .onErrorResumeNext(RxUtil.<NewsBean>throwableFunc())
                      .compose(RxUtil.<NewsBean>rxSchedulerHelper());
+    }
+
+
+    /**
+     * 获取今日头条的热搜词条
+     * @return
+     */
+    public Observable<NewsHotSearch> getHotSearch(){
+        return helper2.getNewsHotSearch()
+                .map(RxUtil.jsonTransform(NewsHotSearch.class))
+                .onErrorResumeNext(RxUtil.<NewsHotSearch>throwableFunc())
+                .subscribeOn(Schedulers.io());
+    }
+
+
+    /**
+     * 根据关键字获取新闻
+     * @param kw 关键字
+     * @param pageToken 分页值（可null）
+     * @return
+     */
+    public Observable<NewsBean> searchNews(String kw,String pageToken){
+        return helper.searchNews(kw,pageToken)
+                .map(RxUtil.jsonTransform(NewsBean.class))
+                .onErrorResumeNext(RxUtil.<NewsBean>throwableFunc())
+                .compose(RxUtil.<NewsBean>rxSchedulerHelper());
     }
 }

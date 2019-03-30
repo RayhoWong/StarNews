@@ -8,6 +8,8 @@ public class Constant {
     //第三方平台提供头条新闻的主页和APIKEY
     public static String IDATA_URL = "http://api01.idataapi.cn:8000/";
     public static String API_KEY = "UVszcjmKFuxIOuo5qngQuUA1oWwTv45XPfso6g1LO9ISf9uqjBxvQicqbXpTIY95&";
+    //今日头条主页
+    public static String TOUTIAO_URL = "http://lf.snssdk.com/";
     //分类id
     public static final String TYPE_ID = "tag";
     //新闻的界面类型

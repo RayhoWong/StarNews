@@ -18,6 +18,7 @@ import com.rayho.tsxiu.module_news.dao.News;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.module_news.viewmodel.NewsViewModel;
 import com.rayho.tsxiu.utils.DaoManager;
+import com.rayho.tsxiu.utils.RxTimer;
 import com.rayho.tsxiu.utils.ToastUtil;
 
 import java.lang.reflect.Field;
@@ -39,11 +40,15 @@ import rx.functions.Action1;
  **/
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
 
+    private long curClickTime;//当前点击删除按钮的时间
+
+    private long lastClickTime;//上一次点击删除按钮的时间
+
     private List<NewsBean.DataBean> list;
 
-    private ContentFragment mContext;
+    private Context mContext;
 
-    public NewsAdapter(ContentFragment mContext) {
+    public NewsAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -115,7 +120,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         holder.itemView.findViewById(R.id.iv_more).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenu(mContext.getActivity(), v, holder.getLayoutPosition());
+                showMenu(mContext, v, holder.getLayoutPosition());
             }
         });
 
@@ -190,7 +195,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
                         if (news == null) {
                             //未收藏过
                             NewsBean.DataBean bean = list.get(position);
-                            News data = new News(null, list.get(position).id,
+                            News data = new News(null, bean.id,
                                     bean.viewCount, bean.publishDateStr, bean.catPathKey,
                                     bean.title, bean.publishDate, bean.dislikeCount,
                                     bean.commentCount, bean.likeCount, bean.posterId,
@@ -205,17 +210,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
                                     .subscribe(new Action1<News>() {
                                         @Override
                                         public void call(News news) {
-                                            ToastUtil toast = new ToastUtil(mContext.getActivity(), mContext.getString(R.string.collect_news_success));
+                                            ToastUtil toast = new ToastUtil(mContext, mContext.getString(R.string.collect_news_success));
                                             toast.show();
                                         }
                                     });
                         } else {
-                            ToastUtil toast = new ToastUtil(mContext.getActivity(), mContext.getString(R.string.collect_news_tip));
+                            ToastUtil toast = new ToastUtil(mContext, mContext.getString(R.string.collect_news_tip));
                             toast.show();
                         }
                     }
                 });
     }
+
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -235,8 +241,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     }
 
 
-    //////////////////////////////list的操作方法///////////////////////////////////////////////////////
 
+    //////////////////////////////list的操作方法///////////////////////////////////////////////////////
     public List<NewsBean.DataBean> getList() {
         return list;
     }
@@ -256,9 +262,24 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         notifyDataSetChanged();
     }
 
-    public void removeItem(int position) {
-        list.remove(position);
-        notifyItemRemoved(position);
+
+    public void removeItem(final int position) {
+        //防止快速删除item 导致app崩溃
+        //两次点击的间隔必须 >= 250ms
+        curClickTime = System.currentTimeMillis();
+        if(curClickTime - lastClickTime >= 250){
+            lastClickTime = curClickTime;
+            list.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position,list.size());
+        }else {
+            return;
+        }
+    }
+
+    public void clearItems() {
+        list.clear();
+        notifyDataSetChanged();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 }
