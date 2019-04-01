@@ -7,6 +7,7 @@ import com.rayho.tsxiu.base.BaseDataBindingApater;
 
 /**
  * Created by Rayho on 2019/3/31
+ * 图片展示的adapter
  **/
 public class PhotoAdapter extends BaseDataBindingApater {
 
