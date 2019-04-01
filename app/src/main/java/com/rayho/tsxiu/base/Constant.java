@@ -10,6 +10,10 @@ public class Constant {
     public static String API_KEY = "UVszcjmKFuxIOuo5qngQuUA1oWwTv45XPfso6g1LO9ISf9uqjBxvQicqbXpTIY95&";
     //今日头条主页
     public static String TOUTIAO_URL = "http://lf.snssdk.com/";
+    //图虫主页
+    public static String TUCHONG_URL = "https://api.tuchong.com/";
+    //T图虫图片主页
+    public static String TUCHONG_PHOTO_URL = "https://photo.tuchong.com/";
     //分类id
     public static final String TYPE_ID = "tag";
     //新闻的界面类型
@@ -22,8 +26,10 @@ public class Constant {
     public static int LOAD_MORE_DATA = 1;//上拉加载
     //新闻缓存的间隔
     public static long CACHE_TIME = 2000;
-    //缓存数据的最大值
+    //缓存新闻数据的最大值
     public static int MAX_CACHE_NUMS = 10;
     //打开相机的请求码
     public static int REQUEST_CODE_SCAN = 0000;
+    //图片获取的最大数量
+    public static int MAX_PHOTO_NUMS = 10;
 }

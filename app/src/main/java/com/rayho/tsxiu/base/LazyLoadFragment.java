@@ -47,6 +47,7 @@ public abstract class LazyLoadFragment extends RxFragment {
         lazyLoad();
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

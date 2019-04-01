@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rayho.tsxiu.R;
-import com.rayho.tsxiu.module_news.NewsTypeUI;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;

@@ -8,14 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rayho.tsxiu.R;
-import com.rayho.tsxiu.module_news.NewsTypeUI;
 import com.rayho.tsxiu.module_news.adapter.NewsAdapter;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
 import com.rayho.tsxiu.utils.DateUtils;
 import com.rayho.tsxiu.utils.GlideUtils;
-
-import java.util.Random;
 
 import androidx.annotation.NonNull;
 import butterknife.BindView;

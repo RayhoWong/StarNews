@@ -486,6 +486,7 @@ public class SearchActivity extends RxAppCompatActivity implements Presenter {
                                     mBinding.twiRefreshlayout.setEnableLoadmore(true);
                                     mBinding.twiRefreshlayout.setEnableOverScroll(true);//允许footer回弹
                                 }
+                                mBinding.twiRefreshlayout.setOverScrollRefreshShow(false);
                                 mBinding.twiRefreshlayout.finishRefreshing();
                             }
 

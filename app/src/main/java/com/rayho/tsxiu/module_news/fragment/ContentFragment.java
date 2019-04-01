@@ -411,6 +411,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                                     mTwiRefreshlayout.setEnableLoadmore(true);
                                     mTwiRefreshlayout.setEnableOverScroll(true);
                                 }
+                                mTwiRefreshlayout.setOverScrollRefreshShow(false);
                                 mTwiRefreshlayout.finishRefreshing();
                             }
 

@@ -1,4 +1,4 @@
-package com.rayho.tsxiu.module_news;
+package com.rayho.tsxiu.module_news.view;
 
 import android.view.ViewGroup;
 

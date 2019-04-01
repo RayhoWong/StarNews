@@ -70,6 +70,10 @@ public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingA
             //防止画面闪烁
             binding.executePendingBindings();
         }
+
+        public ViewDataBinding getBinding(){
+            return binding;
+        }
     }
 
     ///////////////////////items的操作方法/////////////////////////////////////////////
