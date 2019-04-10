@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.rayho.tsxiu.greendao.ChannelDao;
 import com.rayho.tsxiu.greendao.DaoMaster;
+import com.rayho.tsxiu.greendao.ImageDao;
 import com.rayho.tsxiu.greendao.NewsCacheDao;
 import com.rayho.tsxiu.greendao.NewsDao;
 import com.rayho.tsxiu.greendao.SearchHistoryDao;
@@ -38,6 +39,6 @@ public class MySQLiteOpenHelper extends DaoMaster.DevOpenHelper {
                 },
                 //数据库升级时 将需要保存数据的DAO类传进来(一般将全部Dao加入)
                 ChannelDao.class, NewsCacheDao.class,
-                NewsDao.class, SearchHistoryDao.class);
+                NewsDao.class, SearchHistoryDao.class, ImageDao.class);
     }
 }

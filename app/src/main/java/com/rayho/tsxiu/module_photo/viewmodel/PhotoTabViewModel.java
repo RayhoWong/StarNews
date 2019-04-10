@@ -9,6 +9,7 @@ import com.rayho.tsxiu.module_photo.bean.PhotoBean;
 import com.rayho.tsxiu.module_photo.retrofit.PhotosLoader;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -42,6 +43,15 @@ public class PhotoTabViewModel {
         List<BaseDataBindingApater.Items> mItems = new ArrayList<>();
 
         if (list != null && list.size() >= 0) {
+            //使用迭代器对list进行删除/添加操作
+            // 避免用foreach循环出现ConcurrentModificationException导致程序崩溃
+            Iterator<PhotoBean.FeedListBean> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                PhotoBean.FeedListBean bean = iterator.next();
+                if (bean.images == null || bean.images.size() == 0) {
+                    iterator.remove();
+                }
+            }
             for (PhotoBean.FeedListBean bean : list) {
                 mItems.add(new PhotosViewModel(bean));
             }

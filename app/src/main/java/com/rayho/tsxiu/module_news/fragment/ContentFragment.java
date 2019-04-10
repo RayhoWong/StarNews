@@ -27,7 +27,7 @@ import com.rayho.tsxiu.module_news.dao.NewsCache;
 import com.rayho.tsxiu.module_news.viewmodel.ContentFtViewModel;
 import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieFooter;
 import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieHeader;
-import com.rayho.tsxiu.utils.CacheUtil;
+import com.rayho.tsxiu.utils.FileUtil;
 import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.NetworkUtils;
 import com.rayho.tsxiu.utils.RxTimer;
@@ -212,7 +212,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
                         if (mData.size() > Constant.MAX_CACHE_NUMS) {
                             for (int i = 0; i < Constant.MAX_CACHE_NUMS; i++) {
-                                CacheUtil.saveObjectByFile(getActivity(), mData.get(i), mData.get(i).publishDateStr + "_" + mData.get(i).id);
+                                FileUtil.saveObjectByFile(getActivity(), mData.get(i), mData.get(i).publishDateStr + "_" + mData.get(i).id);
                                 //新闻的文件名保存到数据库
                                 DaoManager.getInstance().getDaoSession().getNewsCacheDao()
                                         .insertOrReplace(new NewsCache(null, mData.get(i).publishDateStr + "_" + mData.get(i).id, cid));
@@ -220,7 +220,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                         } else {
                             for (NewsBean.DataBean bean : mData) {
                                 //新闻写入文件
-                                CacheUtil.saveObjectByFile(getActivity(), bean, bean.publishDateStr + "_" + bean.id);
+                                FileUtil.saveObjectByFile(getActivity(), bean, bean.publishDateStr + "_" + bean.id);
                                 //新闻的文件名保存到数据库
                                 DaoManager.getInstance().getDaoSession().getNewsCacheDao()
                                         .insertOrReplace(new NewsCache(null, bean.publishDateStr + "_" + bean.id, cid));
@@ -244,7 +244,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
             public void subscribe(ObservableEmitter<String> emitter) {
                 if (mNewsCaches != null && mNewsCaches.size() > 0) {
                     for (NewsCache news : mNewsCaches) {
-                        mData.add((NewsBean.DataBean) CacheUtil.readObjectByFile(getActivity(), news.getFileName()));
+                        mData.add((NewsBean.DataBean) FileUtil.readObjectByFile(getActivity(), news.getFileName()));
                     }
                 }
                 //操作执行完毕 发送数据 触发观察者的onNext方法

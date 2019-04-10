@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rayho.tsxiu.module_photo.viewmodel.PhotoDetailViewModel" />
+
+        <variable
+            name="presenter"
+            type="com.rayho.tsxiu.base.Presenter" />
+    </data>
+
+    <com.rayho.tsxiu.ui.SlideCloseLayout
+        android:id="@+id/container_scl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".module_photo.activity.PhotoDetailActivity">
+
+        <com.rayho.tsxiu.ui.PhotoViewViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/rl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/tv_nums"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@{vm.number}"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="1/10" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:onClick="@{(v) -> presenter.onClick(v)}"
+                android:src="@mipmap/close3" />
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:onClick="@{(v) -> presenter.onClick(v)}"
+                android:src="@mipmap/share2" />
+
+            <ImageView
+                android:id="@+id/iv_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@id/iv_share"
+                android:onClick="@{(v) -> presenter.onClick(v)}"
+                android:src="@mipmap/download" />
+
+            <ImageView
+                android:id="@+id/iv_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@id/iv_download"
+                android:onClick="@{(v) -> presenter.onClick(v)}"
+                android:src="@mipmap/collect2" />
+        </RelativeLayout>
+
+    </com.rayho.tsxiu.ui.SlideCloseLayout>
+</layout>

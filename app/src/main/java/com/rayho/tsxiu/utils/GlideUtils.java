@@ -30,6 +30,9 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class GlideUtils {
     private static final int placeholderSoWhite = R.color.whitesmoke;
     private static final int errorSoWhite = R.color.whitesmoke;
+
+    private static final int placeholderSoBlack = R.color.black;
+    private static final int errorSoBlack = R.color.black;
     // public static final int soWhite = R.color.white;
 
     /*
@@ -40,6 +43,28 @@ public class GlideUtils {
                 .centerCrop()
                 .placeholder(placeholderSoWhite) //占位图
                 .error(errorSoWhite)//错误图
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+        Glide.with(context).load(url)
+                .transition(new DrawableTransitionOptions().withCrossFade())//渐入动画
+                .apply(options)
+                .into(imageView);
+    }
+
+
+    /**
+     * 加载图片的原始尺寸 无视imageview设置的宽高
+     * Target.SIZE_ORIGINAL关键字----override(Target.SIZE_ORIGINAL)
+     * @param context
+     * @param url
+     * @param imageView
+     */
+    public static void loadImageInOriginalSize(Context context, String url, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(placeholderSoBlack) //占位图
+                .error(errorSoBlack)//错误图
+                .override(Target.SIZE_ORIGINAL)//原始尺寸
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(context).load(url)
