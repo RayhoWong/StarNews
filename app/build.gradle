@@ -25,6 +25,10 @@ android {
     dataBinding {
         enabled = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 greendao {
@@ -52,8 +56,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:9.0.0-rc1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     //基于头条屏幕适配原理的适配方案
     implementation 'me.jessyan:autosize:1.0.6'
     //MaterialDialog(这个库最新版2.0已经用kotlin重构了不支持java 但是旧版支持java调用
@@ -61,7 +65,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     //超火的工具类大全
-    implementation 'com.blankj:utilcode:1.21.2'
+    implementation 'com.blankj:utilcodex:1.23.7'
     //rxjava1.x 主要用于支持GreenDao(3.2版本不支持rxjava2)
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.2.9'
@@ -93,8 +97,7 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
     //强大的日志工具
     implementation 'com.orhanobut:logger:2.2.0'
-    //好用的RxBus
-    implementation 'com.blankj:rxbus:1.0'
+
     //greendao数据库
     implementation 'org.greenrobot:greendao:3.2.2'
     //stetho
@@ -113,8 +116,12 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
 
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    //好用的播放器(基于ljkplayer)
+    implementation 'com.shuyu:GSYVideoPlayer:7.0.1'
 
-
+    implementation 'com.blankj:rxbus:1.5'
+    //好用的RxBus
+//    implementation 'com.blankj:rxbus:1.0'
 
 
 }

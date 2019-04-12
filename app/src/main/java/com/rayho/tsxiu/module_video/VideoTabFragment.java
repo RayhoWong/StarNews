@@ -1,18 +1,16 @@
 package com.rayho.tsxiu.module_video;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.module_video.viewmodel.VideoTabViewModel;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 public class VideoTabFragment extends Fragment {
 
@@ -31,7 +29,6 @@ public class VideoTabFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(VideoTabViewModel.class);
         // TODO: Use the ViewModel
     }
 

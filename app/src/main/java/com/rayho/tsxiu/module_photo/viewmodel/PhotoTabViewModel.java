@@ -14,6 +14,9 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+/**
+ * PhotoTabFragment界面的VM
+ */
 public class PhotoTabViewModel {
 
     private PhotoAdapter mAdapter;

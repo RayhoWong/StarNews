@@ -12,8 +12,10 @@ public class Constant {
     public static String TOUTIAO_URL = "http://lf.snssdk.com/";
     //图虫主页
     public static String TUCHONG_URL = "https://api.tuchong.com/";
-    //T图虫图片主页
+    //图虫图片主页
     public static String TUCHONG_PHOTO_URL = "https://photo.tuchong.com/";
+    //梨视频主页
+    public static String PEAR_VIDEO_URL = "http://app.pearvideo.com/clt/jsp/v4/";
     //分类id
     public static final String TYPE_ID = "tag";
     //新闻的界面类型

@@ -1,7 +1,5 @@
 package com.rayho.tsxiu.module_photo.viewmodel;
 
-import android.text.TextUtils;
-
 import com.rayho.tsxiu.BR;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseDataBindingApater;

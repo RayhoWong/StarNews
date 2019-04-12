@@ -5,4 +5,11 @@
 
     <!--修改底部导航栏的图标跟文本的间距-->
     <dimen name="fixed_height_bottom_padding">5dp</dimen>
+
+    <!--视频尺寸配置-->
+    <dimen name="post_media_height">200dp</dimen>
+    <dimen name="seek_bar_image">150dp</dimen>
+    <dimen name="app_bar_height">@dimen/post_media_height</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
