@@ -1,26 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.rayho.tsxiu.module_video.view.SampleCoverVideo
-        android:id="@+id/video_item_player"
+    <data>
+        <variable
+            name="item"
+            type="com.rayho.tsxiu.module_video.viewmodel.VideosViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/post_media_height"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="175dp"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        tools:text="01'50''" />
+        <com.rayho.tsxiu.module_video.view.SampleCoverVideo
+            android:id="@+id/video_item_player"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/post_media_height" />
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:text="@{item.duration}"
+            tools:text="01'50''" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/video_item_player"
+            android:layout_margin="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@{item.title}"
+            tools:text="雷霆110-100开拓者，率先拿下一城" />
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp">
 
+            <ImageView
+                android:id="@+id/iv_avator"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                imageUrl="@{item.avator}" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/tv_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/iv_avator"
+                android:textColor="@color/tab_text_nor"
+                android:textSize="15sp"
+                android:text="@{item.nickname}"
+                tools:text="一条" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@mipmap/close_2" />
+
+            <TextView
+                android:id="@+id/tv_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@id/iv_close"
+                android:textColor="@color/tab_text_nor"
+                android:textSize="15sp"
+                android:text="@{item.commentTimes}"
+                tools:text="1000" />
+
+            <ImageView
+                android:id="@+id/iv_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/tv_comments"
+                android:src="@mipmap/comment" />
+
+            <TextView
+                android:id="@+id/tv_favors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@id/iv_comments"
+                android:textColor="@color/tab_text_nor"
+                android:textSize="15sp"
+                android:text="@{item.praiseTimes}"
+                tools:text="15800" />
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/tv_favors"
+                android:src="@mipmap/like2" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

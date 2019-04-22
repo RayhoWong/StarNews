@@ -3,5 +3,6 @@
     <!--给ImageView添加属性imageUrl方便在xml中找到-->
     <declare-styleable name="ImageView">
         <attr name="imageUrl" format="string"/>
+        <attr name="imageUrl_2" format="string"/>
     </declare-styleable>
 </resources>

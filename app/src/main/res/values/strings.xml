@@ -28,6 +28,7 @@
     <string name="open_browser_tip">该链接无法使用浏览器打开</string>
     <string name="search">搜索</string>
     <string name="album">图库</string>
+    <string name="videos">影片</string>
 
     <string-array name="BottomNavigationNames">
         <item>首页</item>

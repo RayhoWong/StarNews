@@ -25,6 +25,9 @@ android {
     dataBinding {
         enabled = true
     }
+    //项目中可以使用java1.8部分语言功能 调用部分api则需要minSdkVersion >= 24
+    //为项目中的某些第三方依赖提供java1.8支持 才可以正常工作
+    //否则会报com.android.builder.dexing.DexArchiveBuilderException异常
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -114,14 +117,11 @@ dependencies {
     implementation 'com.sunfusheng:marqueeview:1.3.3'
     //tag标签布局
     implementation 'com.hyman:flowlayout-lib:1.1.2'
-
+    //经典的图片缩放控件
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     //好用的播放器(基于ljkplayer)
     implementation 'com.shuyu:GSYVideoPlayer:7.0.1'
-
-    implementation 'com.blankj:rxbus:1.5'
     //好用的RxBus
-//    implementation 'com.blankj:rxbus:1.0'
-
+    implementation 'com.blankj:rxbus:1.5'
 
 }

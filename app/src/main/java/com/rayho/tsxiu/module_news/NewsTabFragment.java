@@ -22,7 +22,7 @@ import com.rayho.tsxiu.module_news.activity.SearchActivity;
 import com.rayho.tsxiu.module_news.bean.NewsHotSearch;
 import com.rayho.tsxiu.module_news.dao.Channel;
 import com.rayho.tsxiu.module_news.fragment.ContentFragment;
-import com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel;
+import com.rayho.tsxiu.module_news.viewmodel.NewsTabViewModel;
 import com.rayho.tsxiu.ui.channelhelper.activity.ChannelActivity;
 import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
 import com.rayho.tsxiu.utils.DaoManager;
@@ -53,6 +53,9 @@ import rx.functions.Action1;
 import static android.app.Activity.RESULT_OK;
 import static com.rayho.tsxiu.base.Constant.REQUEST_CODE_SCAN;
 
+/**
+ * 新闻模块
+ */
 public class NewsTabFragment extends RxFragment implements Presenter {
 
     public NewsFragmentBinding mBinding;
@@ -63,7 +66,7 @@ public class NewsTabFragment extends RxFragment implements Presenter {
 
     public ContentAdapter mAdapter;
 
-    private NewsTabFtViewModel mViewModel;
+    private NewsTabViewModel mViewModel;
 
     public List<Fragment> mFragments;
 
@@ -84,7 +87,7 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new NewsTabFtViewModel();
+        mViewModel = new NewsTabViewModel();
         mBinding.setPresenter(this);
         mBinding.setVm(mViewModel);
         mActivity = (MainActivity) getActivity();
@@ -98,7 +101,6 @@ public class NewsTabFragment extends RxFragment implements Presenter {
         super.onResume();
         getHotSearchList();
     }
-
 
 
     /**
@@ -146,47 +148,47 @@ public class NewsTabFragment extends RxFragment implements Presenter {
      * (多个Observable合并成一个Observable,并且可以对数据源进行加工)
      */
     private void zipSample() {
-        Observable<NewsHotSearch> observable1 = mViewModel.getHotSearch();
-        Observable<NewsHotSearch> observable2 = mViewModel.getHotSearch();
-        Observable
-                .zip(observable1, observable2, new BiFunction<NewsHotSearch, NewsHotSearch, List<String>>() {
-                    @Override
-                    public List<String> apply(NewsHotSearch newsHotSearch, NewsHotSearch newsHotSearch2) throws Exception {
-                        List<NewsHotSearch.DataBean.SuggestWordsBean> list = new ArrayList<>();
-                        List<String> words = new ArrayList<>();
-                        if (newsHotSearch.data.suggest_words != null && newsHotSearch2.data.suggest_words != null) {
-                            list.addAll(newsHotSearch.data.suggest_words);
-                            list.addAll(newsHotSearch2.data.suggest_words);
-                        }
-                        for (NewsHotSearch.DataBean.SuggestWordsBean bean : list) {
-                            words.add(bean.word);
-                        }
-                        return words;
-                    }
-                })
-                .compose(this.<List<String>>bindToLifecycle())
-                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(new NetObserver<List<String>>() {
-                    @Override
-                    public void onNext(List<String> words) {
-                        if (words != null && words.size() > 0) {
-                            mBinding.marqueeView.startWithList(words);
-                            mBinding.marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(int position, TextView textView) {
-                                    mActivity.startActivity(new Intent(mActivity, TestActivity.class));
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onError(ApiException ex) {
-//                        Logger.d("错误信息："+ex.getDisplayMessage());
-                        ToastUtil toast = new ToastUtil(mActivity, ex.getDisplayMessage());
-                        toast.show();
-                    }
-                });
+//        Observable<NewsHotSearch> observable1 = mViewModel.getHotSearch();
+//        Observable<NewsHotSearch> observable2 = mViewModel.getHotSearch();
+//        Observable
+//                .zip(observable1, observable2, new BiFunction<NewsHotSearch, NewsHotSearch, List<String>>() {
+//                    @Override
+//                    public List<String> apply(NewsHotSearch newsHotSearch, NewsHotSearch newsHotSearch2) throws Exception {
+//                        List<NewsHotSearch.DataBean.SuggestWordsBean> list = new ArrayList<>();
+//                        List<String> words = new ArrayList<>();
+//                        if (newsHotSearch.data.suggest_words != null && newsHotSearch2.data.suggest_words != null) {
+//                            list.addAll(newsHotSearch.data.suggest_words);
+//                            list.addAll(newsHotSearch2.data.suggest_words);
+//                        }
+//                        for (NewsHotSearch.DataBean.SuggestWordsBean bean : list) {
+//                            words.add(bean.word);
+//                        }
+//                        return words;
+//                    }
+//                })
+//                .compose(this.<List<String>>bindToLifecycle())
+//                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+//                .subscribe(new NetObserver<List<String>>() {
+//                    @Override
+//                    public void onNext(List<String> words) {
+//                        if (words != null && words.size() > 0) {
+//                            mBinding.marqueeView.startWithList(words);
+//                            mBinding.marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
+//                                @Override
+//                                public void onItemClick(int position, TextView textView) {
+//                                    mActivity.startActivity(new Intent(mActivity, TestActivity.class));
+//                                }
+//                            });
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(ApiException ex) {
+////                        Logger.d("错误信息："+ex.getDisplayMessage());
+//                        ToastUtil toast = new ToastUtil(mActivity, ex.getDisplayMessage());
+//                        toast.show();
+//                    }
+//                });
     }
 
 

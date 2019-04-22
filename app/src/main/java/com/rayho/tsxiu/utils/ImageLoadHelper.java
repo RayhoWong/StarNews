@@ -12,13 +12,14 @@ public class ImageLoadHelper {
     /**
      * 通过注解@BindingAdapter自定义imageUrl属性
      * imageview在xml中可以使用该属性传值url给该方法加载图片
-     * 加载圆角
+     *
+     * 加载圆形图片
      * @param view
      * @param url
      */
     @BindingAdapter({"imageUrl"})
     public static void loadImage(ImageView view, String url) {
-        GlideUtils.loadRoundCircleImage(
+        GlideUtils.loadCircleImage(
                 view.getContext(), url, view);
     }
 

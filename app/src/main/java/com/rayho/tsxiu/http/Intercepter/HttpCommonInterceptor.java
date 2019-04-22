@@ -39,6 +39,7 @@ public class HttpCommonInterceptor implements Interceptor {
         return chain.proceed(newRequest);
     }
 
+
     public static class Builder {
         HttpCommonInterceptor mHttpCommonInterceptor;
 

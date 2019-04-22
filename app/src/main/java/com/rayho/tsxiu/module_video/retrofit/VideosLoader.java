@@ -1,9 +1,7 @@
 package com.rayho.tsxiu.module_video.retrofit;
 
 
-import com.rayho.tsxiu.module_photo.bean.PhotoBean;
-import com.rayho.tsxiu.module_video.bean.Video;
-import com.rayho.tsxiu.module_video.bean.Video2;
+import com.rayho.tsxiu.module_video.bean.VideoBean;
 import com.rayho.tsxiu.utils.RxUtil;
 
 import io.reactivex.Observable;
@@ -42,28 +40,17 @@ public class VideosLoader {
 
     /**
      * 获取视频
-     *start:分页值
+     *start:分页值 首页刷新默认为10
      * @return
      */
-    public Observable<Video> getVideos(String start) {
+    public Observable<VideoBean> getVideos(String start) {
         return helper.getVideos(start)
-                .map(RxUtil.jsonTransform(Video.class))
-                .onErrorResumeNext(RxUtil.<Video>throwableFunc())
-                .compose(RxUtil.<Video>rxSchedulerHelper());
+                .map(RxUtil.jsonTransform(VideoBean.class))
+                .onErrorResumeNext(RxUtil.<VideoBean>throwableFunc())
+                .compose(RxUtil.<VideoBean>rxSchedulerHelper());
     }
 
 
-    /**
-     * 上拉加载获取视频
-     * start:分页值=(默认加载第一页为1*10 = 10 以此类推 当前页码*10)
-     * @return
-     */
-    public Observable<Video2> getVideo2sByLoadmore(String start) {
-        return helper.getVideosByLoadmore(start)
-                .map(RxUtil.jsonTransform(Video2.class))
-                .onErrorResumeNext(RxUtil.<Video2>throwableFunc())
-                .compose(RxUtil.<Video2>rxSchedulerHelper());
-    }
 
 }
 

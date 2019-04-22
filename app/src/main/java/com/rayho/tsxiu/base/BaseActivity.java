@@ -1,8 +1,11 @@
 package com.rayho.tsxiu.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.transition.Explode;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
         mRootView = View.inflate(this, R.layout.activity_base, null);
         addContent(getLayoutId());
+
         setContentView(mRootView);
         //指定方向是竖屏 禁止所有activity横屏(手机旋转后重新创建生命周期)
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

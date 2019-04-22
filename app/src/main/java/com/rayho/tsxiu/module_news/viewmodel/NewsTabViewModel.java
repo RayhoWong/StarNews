@@ -7,9 +7,9 @@ import com.rayho.tsxiu.module_news.retrofit.NewsLoader;
 import io.reactivex.Observable;
 
 
-public class NewsTabFtViewModel {
+public class NewsTabViewModel {
 
-    public NewsTabFtViewModel() {}
+    public NewsTabViewModel() {}
 
 
     /**

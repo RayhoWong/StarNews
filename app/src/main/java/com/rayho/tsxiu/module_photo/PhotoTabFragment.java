@@ -33,6 +33,9 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+/**
+ * 图片模块
+ */
 public class PhotoTabFragment extends RxFragment {
 
     private View mViewStub;
@@ -188,7 +191,7 @@ public class PhotoTabFragment extends RxFragment {
     private void isShowNetWorkErrorLayout(boolean flag) {
         if (flag) {
             if (mData.size() > 0) {
-                //已显示新闻列表 不显示错误布局
+                //已显示图片列表 不显示错误布局
                 return;
             }
             //无网络 显示布局

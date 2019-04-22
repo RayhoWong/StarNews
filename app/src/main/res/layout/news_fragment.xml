@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.rayho.tsxiu.module_news.viewmodel.NewsTabFtViewModel" />
+            type="com.rayho.tsxiu.module_news.viewmodel.NewsTabViewModel" />
 
         <variable
             name="presenter"

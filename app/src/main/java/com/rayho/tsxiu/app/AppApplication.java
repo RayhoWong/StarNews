@@ -3,6 +3,7 @@ package com.rayho.tsxiu.app;
 import android.app.Application;
 import android.util.Log;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -36,12 +37,18 @@ public class AppApplication extends Application {
         //AndroidUtilCode的初始化
         Utils.init(this);
 
+        //初始化Logger
         initLogger();
+
         //初始化greenDao数据库
         DaoManager.getInstance().init(this);
         DaoManager.getInstance().getDaoMaster();
+
         //初始化Stetho 在chrome可以查看app的数据库
         Stetho.initializeWithDefaults(this);
+
+        //设置视频自动播放的标记
+        SPUtils.getInstance().put("autoplay",true);
     }
 
     /**

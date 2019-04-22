@@ -3,14 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
+    <data>
+        <variable
+            name="vm"
+            type="com.rayho.tsxiu.module_video.viewmodel.VideoTabViewModel" />
+    </data>
+
 
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/whitesmoke"
+        android:background="@color/white"
         tools:context=".module_news.fragment.ContentFragment">
-
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -27,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/album"
+                    android:text="@string/videos"
                     android:textColor="@color/tab_text_nor"
                     android:textSize="20sp" />
 
@@ -36,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/photo2" />
+                    android:src="@mipmap/video3" />
             </RelativeLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -52,8 +57,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none" />
-
         </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
 
         <ViewStub
             android:id="@+id/viewStub"
