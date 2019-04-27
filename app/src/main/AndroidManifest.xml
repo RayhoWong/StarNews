@@ -37,18 +37,28 @@
             android:name="design_height_in_dp"
             android:value="640" />
 
+        <!--FileProvider适配7.0获取File的Uri-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.rayho.tsxiu.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- 测试功能 -->
+        </activity> <!-- 测试功能 -->
         <activity android:name=".activity.TestActivity" /> <!-- 频道管理器 -->
         <activity
             android:name=".ui.channelhelper.activity.ChannelActivity"
@@ -62,12 +72,25 @@
             android:screenOrientation="portrait" /> <!-- 搜索界面 -->
         <activity
             android:name=".module_news.activity.SearchActivity"
-            android:screenOrientation="portrait" />
-        <!--图片详细-->
+            android:screenOrientation="portrait" /> <!-- 图片详细 -->
         <activity
             android:name=".module_photo.activity.PhotoDetailActivity"
-            android:theme="@style/SlideCloseTheme"
+            android:screenOrientation="portrait"
+            android:theme="@style/SlideCloseTheme" /> <!-- 设置界面 -->
+        <activity
+            android:name=".module_mine.activity.SettingsActivity"
+            android:screenOrientation="portrait" /> <!-- 我的收藏 -->
+        <activity
+            android:name=".module_mine.activity.MyCollectionActivity"
+            android:screenOrientation="portrait" /> <!-- 编辑个人资料 -->
+        <activity
+            android:name=".module_mine.activity.EditInfoActivity"
             android:screenOrientation="portrait" />
+        <!--头像图片详细查看-->
+        <activity
+            android:name=".module_mine.activity.FaceDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SlideCloseTheme"/>
 
     </application>
 

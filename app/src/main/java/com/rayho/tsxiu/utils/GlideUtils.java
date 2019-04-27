@@ -1,14 +1,24 @@
 package com.rayho.tsxiu.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
@@ -17,6 +27,7 @@ import com.bumptech.glide.request.target.Target;
 import com.rayho.tsxiu.R;
 
 import java.io.File;
+import java.security.MessageDigest;
 
 import androidx.annotation.Nullable;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -55,6 +66,7 @@ public class GlideUtils {
     /**
      * 加载图片的原始尺寸 无视imageview设置的宽高
      * Target.SIZE_ORIGINAL关键字----override(Target.SIZE_ORIGINAL)
+     *
      * @param context
      * @param url
      * @param imageView
@@ -116,19 +128,21 @@ public class GlideUtils {
         Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
     }
 
+
     /**
      * 加载圆形图片
      */
     public static void loadCircleImage(Context context, String url, ImageView imageView) {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .circleCrop()//设置圆形
                 .placeholder(placeholderSoWhite)
                 .error(errorSoWhite)
+                .bitmapTransform(new CircleCrop())
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
     }
+
 
     /**
      * 预先加载图片
@@ -151,6 +165,23 @@ public class GlideUtils {
                 .placeholder(placeholderSoWhite)
                 .error(errorSoWhite)
                 .bitmapTransform(new RoundedCornersTransformation(15, 0, RoundedCornersTransformation.CornerType.ALL))
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+        Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
+    }
+
+
+    /**
+     * 加载圆形图片带边框
+     */
+    public static void loadRoundCircleImageWithBorder(Context context, String url, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(placeholderSoWhite)
+                .error(errorSoWhite)
+                .bitmapTransform(
+                        new GlideCircleTransformWithBorder(context, 1, context.getResources().getColor(R.color.white))
+                )
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
@@ -180,19 +211,19 @@ public class GlideUtils {
      *
      * @param context
      * @param url
-     * @param imageView
+     * @param imageView 在xml中scaleType设置为centerCrop才可以占满屏幕宽度
+     *                  这里设置由于未知原因导致无效
      * @param blur      模糊度，一般1-100够了，越大越模糊
      */
     public static void loadBlurImage(Context context, String url, ImageView imageView, int blur) {
         RequestOptions options = new RequestOptions()
-                .centerCrop()
+//                .centerCrop()
                 .placeholder(placeholderSoWhite)
                 .error(errorSoWhite)
-                //.priority(Priority.HIGH)
                 .bitmapTransform(new BlurTransformation(blur))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        Glide.with(context).load(url).apply(options).into(imageView);
+        Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
     }
 
     /*
@@ -207,7 +238,7 @@ public class GlideUtils {
                 .bitmapTransform(new GrayscaleTransformation())
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        Glide.with(context).load(url).apply(options).into(imageView);
+        Glide.with(context).load(url).transition(new DrawableTransitionOptions().withCrossFade()).apply(options).into(imageView);
     }
 
     /**
@@ -251,6 +282,7 @@ public class GlideUtils {
 
     /**
      * 获取下载图片的文件路径
+     *
      * @param context
      * @param url
      */
@@ -265,7 +297,7 @@ public class GlideUtils {
                             .load(url)
                             .submit();
                     final File imageFile = target.get();
-                    Log.d("logcat", "下载好的图片文件路径="+imageFile.getPath());
+                    Log.d("logcat", "下载好的图片文件路径=" + imageFile.getPath());
 //                    runOnUiThread(new Runnable() {
 //                        @Override
 //                        public void run() {
@@ -278,4 +310,65 @@ public class GlideUtils {
             }
         }).start();
     }
+
+
+    /**
+     * 加载带白色边框的圆形图的工具类
+     */
+    static class GlideCircleTransformWithBorder extends BitmapTransformation {
+        private Paint mBorderPaint;
+        private float mBorderWidth;
+
+        public GlideCircleTransformWithBorder(Context context) {
+
+        }
+
+        public GlideCircleTransformWithBorder(Context context, int borderWidth, int borderColor) {
+
+            mBorderWidth = Resources.getSystem().getDisplayMetrics().density * borderWidth;
+
+            mBorderPaint = new Paint();
+            mBorderPaint.setDither(true);
+            mBorderPaint.setAntiAlias(true);
+            mBorderPaint.setColor(borderColor);
+            mBorderPaint.setStyle(Paint.Style.STROKE);
+            mBorderPaint.setStrokeWidth(mBorderWidth);
+        }
+
+
+        protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+            return circleCrop(pool, toTransform);
+        }
+
+        private Bitmap circleCrop(BitmapPool pool, Bitmap source) {
+            if (source == null) return null;
+
+            int size = (int) (Math.min(source.getWidth(), source.getHeight()) - (mBorderWidth / 2));
+            int x = (source.getWidth() - size) / 2;
+            int y = (source.getHeight() - size) / 2;
+            // TODO this could be acquired from the pool too
+            Bitmap squared = Bitmap.createBitmap(source, x, y, size, size);
+            Bitmap result = pool.get(size, size, Bitmap.Config.ARGB_8888);
+            if (result == null) {
+                result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+            }
+            Canvas canvas = new Canvas(result);
+            Paint paint = new Paint();
+            paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+            paint.setAntiAlias(true);
+            float r = size / 2f;
+            canvas.drawCircle(r, r, r, paint);
+            if (mBorderPaint != null) {
+                float borderRadius = r - mBorderWidth / 2;
+                canvas.drawCircle(r, r, borderRadius, mBorderPaint);
+            }
+            return result;
+        }
+
+        @Override
+        public void updateDiskCacheKey(MessageDigest messageDigest) {
+
+        }
+    }
+
 }

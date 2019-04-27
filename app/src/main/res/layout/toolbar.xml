@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize">
 
     <TextView
         android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        android:textSize="20sp"
-        android:textColor="@android:color/black"
         android:layout_gravity="center"
-        android:text="title"/>
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/subTitle"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        android:visibility="gone"
+        android:layout_gravity="end"
         android:clickable="true"
         android:paddingRight="20dp"
-        android:textSize="15sp"
+        android:text="subtitle"
         android:textColor="@android:color/black"
-        android:layout_gravity="end"
-        android:text="subtitle"/>
+        android:textSize="15sp"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/rightImage"
-        android:src="@mipmap/ic_launcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:clickable="true"
         android:layout_gravity="end"
-        android:paddingRight="20dp"
-        android:scaleType="fitCenter"/>
+        android:layout_marginRight="20dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
 </androidx.appcompat.widget.Toolbar>

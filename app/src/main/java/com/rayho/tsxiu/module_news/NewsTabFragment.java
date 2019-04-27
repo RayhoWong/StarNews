@@ -96,6 +96,9 @@ public class NewsTabFragment extends RxFragment implements Presenter {
     }
 
 
+    /**
+     * 返回MainActivity更新热搜词条
+     */
     @Override
     public void onResume() {
         super.onResume();

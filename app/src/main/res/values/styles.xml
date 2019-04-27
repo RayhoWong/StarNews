@@ -9,7 +9,7 @@
     </style>
 
 
-    <!--图片查看的activity主题-->
+    <!--图片细节查看的activity主题-->
     <style name="SlideCloseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -44,4 +44,17 @@
         <!--是否模糊-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+
+    <style name="EditText_Theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+
+        <item name="android:textColorHint">@color/result_minor_text</item>
+        <item name="colorControlNormal">@color/result_minor_text</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
 </resources>

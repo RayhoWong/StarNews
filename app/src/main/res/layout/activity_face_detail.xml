@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.rayho.tsxiu.ui.SlideCloseLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_scl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/photoview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
+
+</com.rayho.tsxiu.ui.SlideCloseLayout>

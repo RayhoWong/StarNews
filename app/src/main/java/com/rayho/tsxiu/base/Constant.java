@@ -34,4 +34,10 @@ public class Constant {
     public static int REQUEST_CODE_SCAN = 0000;
     //图片获取的最大数量
     public static int MAX_PHOTO_NUMS = 10;
+    //默认用户的id
+    public static String DEFAULT_USER_ID = "100";
+    //默认用户名
+    public static String DEFAULT_USER_NAME = "Koo";
+    //默认用户头像
+    public static String DEFAULT_USER_FACE = "https://photo.tuchong.com/1673709/f/25389444.jpg";
 }

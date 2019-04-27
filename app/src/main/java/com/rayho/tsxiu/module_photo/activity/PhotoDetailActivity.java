@@ -46,7 +46,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -233,7 +232,7 @@ public class PhotoDetailActivity extends RxAppCompatActivity implements Presente
                 .create(new ObservableOnSubscribe<File>() {
                     @Override
                     public void subscribe(ObservableEmitter<File> emitter) throws Exception {
-                        //glide缓存获取的原文件
+                        //glide下载的图片文件
                         File sourceFile = Glide.with(PhotoDetailActivity.this)
                                 .load(mUrl)
                                 .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
@@ -251,7 +250,7 @@ public class PhotoDetailActivity extends RxAppCompatActivity implements Presente
                             }
                             String fileName = System.currentTimeMillis() + ".jpg";
                             destFile = new File(appDir, fileName);
-                            //把glide下载得到图片复制到定义好的目录中去
+                            //把glide下载得到图片复制到目标文件中
                             FileUtil.copyFile(sourceFile, destFile);
                         }
                         emitter.onNext(destFile);
