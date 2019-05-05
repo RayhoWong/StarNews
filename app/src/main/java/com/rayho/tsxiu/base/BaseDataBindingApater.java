@@ -22,7 +22,7 @@ public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingA
     //相当于BaseViewModel 绑定的viewmodel必须实现该接口作为子类
     public interface Items {
         //返回布局Id
-        int getType();
+        int getLayoutType();
     }
 
     public List<Items> items = new ArrayList<>();
@@ -37,7 +37,7 @@ public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingA
 
     @Override
     public int getItemViewType(int position) {
-        return items.get(position).getType();
+        return items.get(position).getLayoutType();
     }
 
     @Override
@@ -56,6 +56,7 @@ public class BaseDataBindingApater extends RecyclerView.Adapter<BaseDataBindingA
     public int getItemCount() {
         return items == null ? 0 : items.size();
     }
+
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         private final ViewDataBinding binding;

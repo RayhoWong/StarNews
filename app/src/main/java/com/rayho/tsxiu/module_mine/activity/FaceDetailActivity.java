@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 头像详细查看
+ */
 public class FaceDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.photoview)

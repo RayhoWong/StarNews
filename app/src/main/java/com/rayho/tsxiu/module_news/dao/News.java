@@ -4,13 +4,12 @@ import com.rayho.tsxiu.utils.StringConverter;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.List;
-
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by Rayho on 2019/3/14

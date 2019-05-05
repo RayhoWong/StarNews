@@ -7,16 +7,22 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseActivity;
+import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.base.listener.OnTabReselectedListener;
+import com.rayho.tsxiu.greendao.VideoAutoPlayDao;
 import com.rayho.tsxiu.module_mine.MineTabFragment;
 import com.rayho.tsxiu.module_news.NewsTabFragment;
 import com.rayho.tsxiu.module_photo.PhotoTabFragment;
 import com.rayho.tsxiu.module_video.VideoTabFragment;
+import com.rayho.tsxiu.module_video.dao.VideoAutoPlay;
+import com.rayho.tsxiu.utils.DaoManager;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity {
 
@@ -50,6 +56,23 @@ public class MainActivity extends BaseActivity {
         initToolbar();
         initBottomNavigationBar();
         initFragment();
+
+        //设置视频自动播放的标记
+        DaoManager.getInstance().getDaoSession().getVideoAutoPlayDao()
+                .queryBuilder()
+                .where(VideoAutoPlayDao.Properties.Vid.eq(Constant.AUTO_PLAY_ID))
+                .rx()
+                .unique()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(videoAutoPlay -> {
+                    if(videoAutoPlay == null){
+                        DaoManager.getInstance().getDaoSession().getVideoAutoPlayDao()
+                                .rx()
+                                .insert(new VideoAutoPlay(null,Constant.AUTO_PLAY_ID,false))
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe();
+                    }
+                });
     }
 
 

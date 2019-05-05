@@ -40,4 +40,7 @@ public class Constant {
     public static String DEFAULT_USER_NAME = "Koo";
     //默认用户头像
     public static String DEFAULT_USER_FACE = "https://photo.tuchong.com/1673709/f/25389444.jpg";
+    //视频自动播放的标记id
+    public static String AUTO_PLAY_ID = "100";
+
 }

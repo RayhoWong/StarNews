@@ -68,6 +68,8 @@ public class PhotoDetailActivity extends RxAppCompatActivity implements Presente
 
     private String mId;//当前显示图片的id
 
+    private PhotoBean.FeedListBean mPhoto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class PhotoDetailActivity extends RxAppCompatActivity implements Presente
             @Override
             public void onEvent(PhotoBean.FeedListBean feedListBean) {
                 if (feedListBean != null) {
+                    mPhoto = feedListBean;
                     if (feedListBean.images != null && feedListBean.images.size() > 0) {
                         for (PhotoBean.FeedListBean.ImagesBean bean : feedListBean.images) {
                             //图片地址 = https://photo.tuchong.com/ + user_id +/f/ + img_id + .jpg
@@ -219,7 +222,7 @@ public class PhotoDetailActivity extends RxAppCompatActivity implements Presente
 
     /**
      * 保存图片
-     * 从glide中获取缓存图片 复制图片保存到本地
+     * glide下载图片 复制图片保存到本地
      */
     @SuppressLint("CheckResult")
     private void saveImage() {
@@ -245,10 +248,11 @@ public class PhotoDetailActivity extends RxAppCompatActivity implements Presente
                             //第二个参数为你想要保存的目录名称
                             File appDir = new File(pictureFolder, "starnews");
                             if (!appDir.exists()) {
-                                //创建文件目录
+                                //创建目标文件目录
                                 appDir.mkdirs();
                             }
                             String fileName = System.currentTimeMillis() + ".jpg";
+                            //创建目标文件实例
                             destFile = new File(appDir, fileName);
                             //把glide下载得到图片复制到目标文件中
                             FileUtil.copyFile(sourceFile, destFile);
@@ -261,7 +265,7 @@ public class PhotoDetailActivity extends RxAppCompatActivity implements Presente
                 .subscribe(new Consumer<File>() {
                     @Override
                     public void accept(File destFile) throws Exception {
-                        if (destFile != null) {
+                        if (destFile.length() > 0) {
                             ToastUtil toast = new ToastUtil(PhotoDetailActivity.this, "图片保存至" + destFile.getPath());
                             toast.show();
                             // 最后通知图库更新
@@ -300,10 +304,20 @@ public class PhotoDetailActivity extends RxAppCompatActivity implements Presente
                             ToastUtil toast = new ToastUtil(PhotoDetailActivity.this, "图片已收藏过");
                             toast.show();
                         } else {
+                            String date = null;//发布日期
+                            String title = null;//标题
+                            String favorites = null;//点赞数
+                            String comments = null;//评论数
+                            if(mPhoto != null){
+                                date = mPhoto.passed_time;
+                                title = mPhoto.excerpt;
+                                favorites = String.valueOf(mPhoto.favorites);
+                                comments = String.valueOf(mPhoto.comments);
+                            }
                             //图片不存在 插入图片
                             DaoManager.getInstance().getDaoSession().getImageDao()
                                     .rx()
-                                    .insertOrReplace(new Image(null, mId, mUrl))
+                                    .insertOrReplace(new Image(null, mId, mUrl,date,title,favorites,comments))
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Action1<Image>() {
                                         @Override

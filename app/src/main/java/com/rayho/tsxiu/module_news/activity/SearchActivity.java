@@ -31,7 +31,7 @@ import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.bean.NewsHotSearch;
 import com.rayho.tsxiu.module_news.dao.SearchHistory;
 import com.rayho.tsxiu.module_news.viewmodel.HistoryRecordViewModel;
-import com.rayho.tsxiu.module_news.viewmodel.SearchViewModel;
+import com.rayho.tsxiu.module_news.viewmodel.SearchNewsViewModel;
 import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieFooter;
 import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieHeader;
 import com.rayho.tsxiu.utils.DaoManager;
@@ -69,7 +69,7 @@ public class SearchActivity extends RxAppCompatActivity implements Presenter {
 
     private MaterialButton mBtReload;
 
-    private SearchViewModel mViewModel;
+    private SearchNewsViewModel mViewModel;
 
     private HistoryRecordAdapter mHistoryAdapter;
 
@@ -118,7 +118,7 @@ public class SearchActivity extends RxAppCompatActivity implements Presenter {
     private void initNewsRcv() {
         mBinding.rcvNews.setLayoutManager(new LinearLayoutManager(this));
         mNewsAdapter = new NewsAdapter(this);
-        mViewModel = new SearchViewModel(mContent, mNewsAdapter);
+        mViewModel = new SearchNewsViewModel(mContent, mNewsAdapter);
         mBinding.setVm(mViewModel);
     }
 

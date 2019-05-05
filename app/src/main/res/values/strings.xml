@@ -41,5 +41,15 @@
         <item>我的</item>
     </string-array>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="news">新闻</string>
+    <string name="photos">图片</string>
+    <string name="nothing_show_tip">这里空空如也(´･_･`)</string>
+    <string name="basic_setting">基本设置</string>
+    <string name="auto_play">视频自动播放</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="clear_cache">清除缓存</string>
+
 
 </resources>

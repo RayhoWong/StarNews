@@ -1,21 +1,24 @@
-package com.rayho.tsxiu.module_photo.viewmodel;
+package com.rayho.tsxiu.module_mine.viewmodel;
 
 import com.rayho.tsxiu.BR;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseDataBindingApater;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.module_photo.bean.PhotoBean;
+import com.rayho.tsxiu.module_photo.dao.Image;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 /**
- * Created by Rayho on 2019/3/31
+ * Created by Rayho on 2019/4/31
  * 图片的viewmodel
  **/
-public class PhotosViewModel extends BaseObservable implements BaseDataBindingApater.Items {
+public class PhotosCtViewModel extends BaseObservable implements BaseDataBindingApater.Items {
 
-    private PhotoBean.FeedListBean photo;
+    private Image photo;//数据库返回的图片实例
+
+    private String id;//图片id
 
     private String url;//图片地址
 
@@ -28,41 +31,50 @@ public class PhotosViewModel extends BaseObservable implements BaseDataBindingAp
     private String comments;//评论数
 
 
-    public PhotosViewModel(PhotoBean.FeedListBean photo) {
+    public PhotosCtViewModel(Image photo) {
         this.photo = photo;
         initData();
     }
 
 
     private void initData() {
-        if (photo.images != null && photo.images.size() > 0) {
-            PhotoBean.FeedListBean.ImagesBean image = photo.images.get(0);
-            //图片地址 = https://photo.tuchong.com/ + user_id +/f/ + img_id + .jpg
-            //eg: https://photo.tuchong.com/1673709/f/25389444.jpg
-            url = Constant.TUCHONG_PHOTO_URL + image.user_id + "/f/" + image.img_id + ".jpg";
-        }
-        date = photo.passed_time;
-        title = photo.excerpt;
-        favorites = String.valueOf(photo.favorites);
-        comments = String.valueOf(photo.comments);
+        id = photo.getImageId();
+        url = photo.getUrl();
+        date = photo.getDate();
+        title = photo.getTitle();
+        favorites = photo.getFavorites();
+        comments = photo.getComments();
     }
 
 
     @Override
     public int getLayoutType() {
-        return R.layout.item_photo;
+        return R.layout.item_photo2;
     }
 
 
     @Bindable
-    public PhotoBean.FeedListBean getPhoto() {
+    public Image getPhoto() {
         return photo;
     }
 
-    public void setPhoto(PhotoBean.FeedListBean photo) {
+    public void setPhoto(Image photo) {
         this.photo = photo;
         notifyPropertyChanged(BR.photo);
     }
+
+
+
+    @Bindable
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+        notifyPropertyChanged(BR.id);
+    }
+
 
     @Bindable
     public String getUrl() {

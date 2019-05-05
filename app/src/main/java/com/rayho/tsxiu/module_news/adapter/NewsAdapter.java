@@ -160,6 +160,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.collect:
+                        //收藏新闻
                         collectNews(position);
                         return true;
                     case R.id.hide:
@@ -202,7 +203,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
                                     bean.html, bean.url, bean.coverUrl,
                                     bean.content, bean.posterScreenName,
                                     bean.imageUrls, bean.tags, bean.type);
-                            //插入数据
+                            //插入新闻
                             DaoManager.getInstance().getDaoSession().getNewsDao()
                                     .rx()
                                     .insertOrReplace(data)

@@ -134,7 +134,7 @@ public class VideosViewModel extends BaseObservable implements BaseDataBindingAp
 
 
     @Override
-    public int getType() {
+    public int getLayoutType() {
         return R.layout.item_video;
     }
 }

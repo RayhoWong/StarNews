@@ -31,8 +31,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
+/**
+ * 我的 模块
+ */
 public class MineTabFragment extends Fragment {
 
     @BindView(R.id.iv_cover)
@@ -131,18 +133,18 @@ public class MineTabFragment extends Fragment {
     @OnClick({R.id.iv_face, R.id.rl_edit, R.id.rl_collect, R.id.rl_settings})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_face:
+            case R.id.iv_face://头像查看
                 Intent intent = new Intent(getActivity(), FaceDetailActivity.class);
-                intent.putExtra("path",mPhotoPath);
+                intent.putExtra("path", mPhotoPath);
                 startActivity(intent);
                 break;
-            case R.id.rl_edit:
+            case R.id.rl_edit://编辑个人资料
                 ActivityUtils.startActivity(EditInfoActivity.class);
                 break;
-            case R.id.rl_collect:
+            case R.id.rl_collect://我的收藏
                 ActivityUtils.startActivity(MyCollectionActivity.class);
                 break;
-            case R.id.rl_settings:
+            case R.id.rl_settings://设置
                 ActivityUtils.startActivity(SettingsActivity.class);
                 break;
         }

@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 /**
  * Created by Rayho on 2019/3/22
  **/
-public class SearchViewModel {
+public class SearchNewsViewModel {
 
     public ObservableField<String> content = new ObservableField<>();
 
@@ -23,7 +23,7 @@ public class SearchViewModel {
     private NewsAdapter mAdapter;
 
 
-    public SearchViewModel(String content,NewsAdapter adapter) {
+    public SearchNewsViewModel(String content, NewsAdapter adapter) {
         this.content.set(content);
         mAdapter = adapter;
     }

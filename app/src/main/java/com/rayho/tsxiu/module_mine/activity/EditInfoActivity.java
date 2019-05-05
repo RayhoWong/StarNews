@@ -44,6 +44,9 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+/**
+ * 个人资料修改
+ */
 public class EditInfoActivity extends AppCompatActivity {
 
     @BindView(R.id.rightImage)

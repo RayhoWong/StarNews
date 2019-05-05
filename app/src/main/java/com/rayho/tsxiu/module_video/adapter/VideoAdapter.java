@@ -7,12 +7,19 @@ import android.widget.ImageView;
 import com.blankj.utilcode.util.SPUtils;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseDataBindingApater;
+import com.rayho.tsxiu.base.Constant;
+import com.rayho.tsxiu.greendao.VideoAutoPlayDao;
+import com.rayho.tsxiu.module_video.dao.VideoAutoPlay;
 import com.rayho.tsxiu.module_video.viewmodel.VideosViewModel;
+import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.GlideUtils;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by Rayho on 2019/4/13
@@ -21,6 +28,9 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 public class VideoAdapter extends BaseDataBindingApater {
 
     private Context mContext;
+
+    public StandardGSYVideoPlayer mGsyVideoPlayer;
+
 
     public VideoAdapter(Context mContext) {
         this.mContext = mContext;
@@ -107,12 +117,30 @@ public class VideoAdapter extends BaseDataBindingApater {
             }
         });
 
-        //自动播放标记
-        boolean autoplay;
-        autoplay = SPUtils.getInstance().getBoolean("autoplay");
-        if (position == 0 && autoplay) {
-            //默认播放第一个视频
-            gsyVideoPlayer.startPlayLogic();
+
+        DaoManager.getInstance().getDaoSession().getVideoAutoPlayDao()
+                .queryBuilder()
+                .where(VideoAutoPlayDao.Properties.Vid.eq(Constant.AUTO_PLAY_ID))
+                .rx()
+                .unique()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<VideoAutoPlay>() {
+                    @Override
+                    public void call(VideoAutoPlay videoAutoPlay) {
+                        boolean autoplay;//自动播放标记
+                        if(videoAutoPlay != null){
+                            autoplay = videoAutoPlay.getAutoplay();
+                            if (position == 0 && autoplay) {
+                                //默认播放第一个视频
+                                gsyVideoPlayer.startPlayLogic();
+                            }
+                        }
+                    }
+                });
+
+        //将position=0的item(player)传给VideoTabFragment
+        if(position == 0){
+            mGsyVideoPlayer = gsyVideoPlayer;
         }
 
     }

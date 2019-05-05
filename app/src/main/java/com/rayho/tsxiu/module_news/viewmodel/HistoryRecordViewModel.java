@@ -36,7 +36,7 @@ public class HistoryRecordViewModel extends BaseObservable implements BaseDataBi
      * @return
      */
     @Override
-    public int getType() {
+    public int getLayoutType() {
         return R.layout.item_history;
     }
 }

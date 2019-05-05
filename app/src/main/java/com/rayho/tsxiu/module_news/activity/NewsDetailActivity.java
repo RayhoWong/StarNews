@@ -15,6 +15,7 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.blankj.rxbus.RxBus;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.rayho.tsxiu.R;
@@ -76,7 +77,8 @@ public class NewsDetailActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.search:
-
+                        ActivityUtils.startActivity(SearchActivity.class);
+                        finish();
                         return true;
                     case R.id.share:
                         shareLink(mUrl);

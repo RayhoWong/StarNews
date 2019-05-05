@@ -35,9 +35,7 @@
             android:value="360" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="640" />
-
-        <!--FileProvider适配7.0获取File的Uri-->
+            android:value="640" /> <!-- FileProvider适配7.0获取File的Uri -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.rayho.tsxiu.fileprovider"
@@ -85,12 +83,16 @@
             android:screenOrientation="portrait" /> <!-- 编辑个人资料 -->
         <activity
             android:name=".module_mine.activity.EditInfoActivity"
-            android:screenOrientation="portrait" />
-        <!--头像图片详细查看-->
+            android:screenOrientation="portrait" /> <!-- 头像图片详细查看 -->
         <activity
             android:name=".module_mine.activity.FaceDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SlideCloseTheme"/>
+            android:theme="@style/SlideCloseTheme" />
+        <!--图片收藏的详细查看-->
+        <activity
+            android:name=".module_mine.activity.ImageDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SlideCloseTheme" />
 
     </application>
 

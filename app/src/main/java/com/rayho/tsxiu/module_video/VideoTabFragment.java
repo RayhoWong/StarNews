@@ -16,6 +16,7 @@ import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.databinding.VideoFragmentBinding;
+import com.rayho.tsxiu.greendao.VideoAutoPlayDao;
 import com.rayho.tsxiu.http.api.NetObserver;
 import com.rayho.tsxiu.http.exception.ApiException;
 import com.rayho.tsxiu.module_video.adapter.VideoAdapter;
@@ -24,6 +25,7 @@ import com.rayho.tsxiu.module_video.viewmodel.VideoTabViewModel;
 import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieFooter;
 import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieHeader;
 import com.rayho.tsxiu.ui.refreshlayout.MyRefreshLottieHeader2;
+import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.NetworkUtils;
 import com.rayho.tsxiu.utils.RxTimer;
 import com.rayho.tsxiu.utils.ScrollCalculatorHelper;
@@ -40,6 +42,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * 视频模块
@@ -83,12 +86,6 @@ public class VideoTabFragment extends RxFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mActivity = getActivity();
-        // 设置一个exit transition 要在activity的setContentView前调用才生效
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            mActivity.getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-//            mActivity.getWindow().setEnterTransition(new Explode());
-//            mActivity.getWindow().setExitTransition(new Explode());
-//        }
         super.onCreate(savedInstanceState);
         getUpdateNums();
     }
@@ -110,6 +107,63 @@ public class VideoTabFragment extends RxFragment {
         initRefreshLayout();
         initVideoPlayer();
         getData();
+    }
+
+
+    /**
+     * 每次返回当前fragment 调用此方法进行界面更新
+     * 更新符合播放条件的item(player)的播放状态
+     * 列表播放状态分两种情况：
+     * 1.列表没有滑动过 更新position=0的item(player)的播放状态
+     * 2.列表已经滑动过 更新符合播放条件item(player)的播放状态
+     * autoplay:
+     *       1.true: 开启视频自动播放
+     *       2.false: 关闭视频自动播放
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        DaoManager.getInstance().getDaoSession().getVideoAutoPlayDao()
+                .queryBuilder()
+                .where(VideoAutoPlayDao.Properties.Vid.eq(Constant.AUTO_PLAY_ID))
+                .rx()
+                .unique()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(videoAutoPlay -> {
+                    if (videoAutoPlay != null) {
+                        //从数据库获取自动播放标记
+                        boolean autoplay = videoAutoPlay.getAutoplay();
+                        if (mScrollCalculatorHelper != null) {
+                            //设置滑动播放帮助类的标记值
+                            mScrollCalculatorHelper.setAutoPlay(autoplay);
+                        }
+                        //设置当前position=0的item(player)的播放状态(当前界面没有滑动过 静止状态)
+                        //mScrollCalculatorHelper.mGsyBaseVideoPlayer = null 表示当前界面没有滑动过
+                        if (mAdapter.mGsyVideoPlayer != null && mScrollCalculatorHelper.mGsyBaseVideoPlayer == null) {
+                            //标记为false
+                            if (autoplay == false) {
+                                //重置播放器 停止播放
+                                mAdapter.mGsyVideoPlayer.onVideoReset();
+                                //item无播放并且标记为true
+                            } else if (autoplay) {
+                                //开启播放
+                                mAdapter.mGsyVideoPlayer.startPlayLogic();
+                            }
+                        }
+                        //设置滑动后符合播放条件item(player)的播放状态(已滑动)
+                        if (mScrollCalculatorHelper.mGsyBaseVideoPlayer != null) {
+                            //标记为false
+                            if (autoplay == false) {
+                                //重置播放器 停止播放
+                                mScrollCalculatorHelper.mGsyBaseVideoPlayer.onVideoReset();
+                                //item无播放并且标记为true
+                            } else if (autoplay) {
+                                //开启播放
+                                mScrollCalculatorHelper.mGsyBaseVideoPlayer.startPlayLogic();
+                            }
+                        }
+                    }
+                });
     }
 
 
@@ -146,11 +200,11 @@ public class VideoTabFragment extends RxFragment {
      */
     private void initVideoPlayer() {
         //限定范围为屏幕一半的上下偏移180
-        int playTop = CommonUtil.getScreenHeight(mActivity) / 2 + CommonUtil.dip2px(mActivity, 130);
-        int playBottom = CommonUtil.getScreenHeight(mActivity) / 2 - CommonUtil.dip2px(mActivity, 130);
+        int playTop = CommonUtil.getScreenHeight(mActivity) / 2 + CommonUtil.dip2px(mActivity, 180);
+        int playBottom = CommonUtil.getScreenHeight(mActivity) / 2 - CommonUtil.dip2px(mActivity, 180);
         //自定播放帮助类
         mAdapter = new VideoAdapter(mActivity);
-        mScrollCalculatorHelper = new ScrollCalculatorHelper(R.id.video_item_player, playTop, playBottom,mAdapter);
+        mScrollCalculatorHelper = new ScrollCalculatorHelper(R.id.video_item_player, playTop, playBottom, mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(mActivity);
         mBinding.rcv.setLayoutManager(mLinearLayoutManager);
         mViewModel = new VideoTabViewModel(mAdapter);
@@ -402,12 +456,12 @@ public class VideoTabFragment extends RxFragment {
         如果当前是全屏模式true -> 退出全屏
         不是全屏false -> 退出app*/
     public boolean onBackPressed() {
-        if(mActivity == null){
+        if (mActivity == null) {
             return false;
         }
         if (GSYVideoManager.backFromWindowFull(mActivity)) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }

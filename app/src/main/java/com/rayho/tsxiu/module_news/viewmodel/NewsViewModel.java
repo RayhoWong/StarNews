@@ -39,7 +39,6 @@ public class NewsViewModel extends BaseObservable {
         } else {
             nums = String.valueOf(news.imageUrls.size()) + " 图";
         }
-
     }
 
     @Bindable

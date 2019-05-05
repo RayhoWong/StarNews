@@ -9,11 +9,16 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.orhanobut.logger.Logger;
+import com.rayho.tsxiu.base.Constant;
+import com.rayho.tsxiu.greendao.VideoAutoPlayDao;
 import com.rayho.tsxiu.module_video.adapter.VideoAdapter;
+import com.rayho.tsxiu.module_video.dao.VideoAutoPlay;
 import com.shuyu.gsyvideoplayer.utils.NetworkUtils;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 
 import androidx.recyclerview.widget.RecyclerView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * 计算视频列表滑动，自动播放的帮助类
@@ -33,17 +38,22 @@ public class ScrollCalculatorHelper {
 
     private Handler playHandler = new Handler();
 
+
     private boolean autoPlay;//视频自动播放标记
 
     private boolean secondPlay;//第二个视频是否已经自动播放的标记
 
     private VideoAdapter adapter;//视频adapter
 
+    public GSYBaseVideoPlayer mGsyBaseVideoPlayer;//当前符合播放条件的player
+
+
     public ScrollCalculatorHelper(int playId, int rangeTop, int rangeBottom, VideoAdapter adapter) {
         this.playId = playId;
         this.rangeTop = rangeTop;
         this.rangeBottom = rangeBottom;
         this.adapter = adapter;
+
     }
 
     public void onScrollStateChanged(RecyclerView view, int scrollState) {
@@ -61,6 +71,15 @@ public class ScrollCalculatorHelper {
         firstVisible = firstVisibleItem;
         lastVisible = lastVisibleItem;
         visibleCount = visibleItemCount;
+    }
+
+
+    /**
+     * 设置标记
+     * @param autoPlay 自动播放标记
+     */
+    public void setAutoPlay(boolean autoPlay) {
+        this.autoPlay = autoPlay;
     }
 
 
@@ -120,6 +139,7 @@ public class ScrollCalculatorHelper {
             runnable = new PlayRunnable(gsyBaseVideoPlayer);
             //降低频率
             playHandler.postDelayed(runnable, 400);
+
         }
 
 
@@ -159,12 +179,15 @@ public class ScrollCalculatorHelper {
                 if (rangePosition >= rangeBottom && rangePosition <= rangeTop) {
                     inPosition = true;
                 }
-                if (inPosition) {
-                    autoPlay = SPUtils.getInstance().getBoolean("autoplay");
-                    //标记=ture 开启播放
-                    if (autoPlay) {
-                        startPlayLogic(gsyBaseVideoPlayer, gsyBaseVideoPlayer.getContext());
-                    }
+
+                if (inPosition){
+                    //将符合播放条件的item(player)传给VideoTabFragment
+                    mGsyBaseVideoPlayer = gsyBaseVideoPlayer;
+                }
+
+                if (inPosition && autoPlay) {
+                    //自动播放标记=ture 开启播放
+                    startPlayLogic(gsyBaseVideoPlayer, gsyBaseVideoPlayer.getContext());
                     //gsyBaseVideoPlayer.startPlayLogic();
                 }
             }

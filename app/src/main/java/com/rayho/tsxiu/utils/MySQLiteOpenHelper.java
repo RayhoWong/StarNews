@@ -10,6 +10,7 @@ import com.rayho.tsxiu.greendao.NewsCacheDao;
 import com.rayho.tsxiu.greendao.NewsDao;
 import com.rayho.tsxiu.greendao.SearchHistoryDao;
 import com.rayho.tsxiu.greendao.UserDao;
+import com.rayho.tsxiu.greendao.VideoAutoPlayDao;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -41,6 +42,6 @@ public class MySQLiteOpenHelper extends DaoMaster.DevOpenHelper {
                 //数据库升级时 将需要保存数据的DAO类传进来(一般将全部Dao加入)
                 ChannelDao.class, NewsCacheDao.class,
                 NewsDao.class, SearchHistoryDao.class,
-                ImageDao.class, UserDao.class);
+                ImageDao.class, UserDao.class, VideoAutoPlayDao.class);
     }
 }

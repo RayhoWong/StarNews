@@ -23,11 +23,25 @@ public class Image {
     private String url;//图片地址
 
 
-    @Generated(hash = 940484217)
-    public Image(Long id, @NotNull String imageId, @NotNull String url) {
+    private String date;//发布日期
+
+    private String title;//标题
+
+    private String favorites;//点赞数
+
+    private String comments;//评论数
+
+
+    @Generated(hash = 936323031)
+    public Image(Long id, @NotNull String imageId, @NotNull String url, String date,
+            String title, String favorites, String comments) {
         this.id = id;
         this.imageId = imageId;
         this.url = url;
+        this.date = date;
+        this.title = title;
+        this.favorites = favorites;
+        this.comments = comments;
     }
 
     @Generated(hash = 1590301345)
@@ -56,5 +70,37 @@ public class Image {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getFavorites() {
+        return this.favorites;
+    }
+
+    public void setFavorites(String favorites) {
+        this.favorites = favorites;
+    }
+
+    public String getComments() {
+        return this.comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
