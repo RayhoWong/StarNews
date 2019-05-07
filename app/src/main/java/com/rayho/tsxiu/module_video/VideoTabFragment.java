@@ -134,7 +134,7 @@ public class VideoTabFragment extends RxFragment {
                         //从数据库获取自动播放标记
                         boolean autoplay = videoAutoPlay.getAutoplay();
                         if (mScrollCalculatorHelper != null) {
-                            //设置滑动播放帮助类的标记值
+                            //设置滑动播放帮助类的自动播放标记值
                             mScrollCalculatorHelper.setAutoPlay(autoplay);
                         }
                         //设置当前position=0的item(player)的播放状态(当前界面没有滑动过 静止状态)

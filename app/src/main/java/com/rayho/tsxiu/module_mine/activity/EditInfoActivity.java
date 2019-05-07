@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orhanobut.logger.Logger;
@@ -43,11 +44,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import skin.support.design.widget.SkinMaterialTextInputEditText;
+import skin.support.design.widget.SkinMaterialTextInputLayout;
+import skin.support.widget.SkinCompatSupportable;
 
 /**
  * 个人资料修改
  */
-public class EditInfoActivity extends AppCompatActivity {
+public class EditInfoActivity extends AppCompatActivity implements SkinCompatSupportable {
 
     @BindView(R.id.rightImage)
     ImageView mIvSave;
@@ -59,10 +63,10 @@ public class EditInfoActivity extends AppCompatActivity {
     ImageView mIvFace;
 
     @BindView(R.id.et_name)
-    TextInputEditText mEtName;
+    SkinMaterialTextInputEditText mEtName;
 
     @BindView(R.id.til_name)
-    TextInputLayout mTilName;
+    SkinMaterialTextInputLayout mTilName;
 
     private static int CODE_PHOTO_FROM_CAMERA = 0;//拍照的请求码
 
@@ -89,7 +93,6 @@ public class EditInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_info);
         ButterKnife.bind(this);
-        StatusBarUtil.changeStatusBarTextColor(this);
 
         initView();
         initUser();
@@ -97,8 +100,16 @@ public class EditInfoActivity extends AppCompatActivity {
 
 
     private void initView() {
+        //根据夜间模式的设置 设置状态栏的颜色
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
+
         mToolbar.setTitle(getString(R.string.edit_user_info));
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.tab_text_nor));
         mIvSave.setVisibility(View.VISIBLE);
         mIvSave.setImageResource(R.mipmap.sure);
         mToolbar.setNavigationIcon(R.mipmap.close_2);
@@ -340,4 +351,18 @@ public class EditInfoActivity extends AppCompatActivity {
                 });
     }
 
+
+    /**
+     * 动态监听换肤行为 设置状态栏颜色
+     */
+    @Override
+    public void applySkin() {
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
+    }
 }

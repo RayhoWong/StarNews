@@ -196,8 +196,6 @@ public class NewsTabFragment extends RxFragment implements Presenter {
 
 
 
-
-
     private void initView() {
         mAdapter = new ContentAdapter(getChildFragmentManager());
         mBinding.viewpager.setAdapter(mAdapter);

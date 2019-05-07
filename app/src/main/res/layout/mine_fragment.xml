@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitesmoke"
+    android:background="@color/root_view_bg_2"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@color/white">
+        android:background="@color/root_view_bg_4">
 
         <ImageView
             android:id="@+id/iv_cover"
@@ -63,7 +62,7 @@
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/iv_edit"
             android:text="@string/edit_user_info"
-            android:textColor="@color/black"
+            android:textColor="@color/default_text"
             android:textSize="15sp" />
 
         <ImageView
@@ -101,7 +100,7 @@
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/iv_collect"
             android:text="@string/my_collect"
-            android:textColor="@color/black"
+            android:textColor="@color/default_text"
             android:textSize="15sp" />
 
         <ImageView
@@ -139,7 +138,7 @@
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/iv_settings"
             android:text="@string/settings"
-            android:textColor="@color/black"
+            android:textColor="@color/default_text"
             android:textSize="15sp" />
 
         <ImageView

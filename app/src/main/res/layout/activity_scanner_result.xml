@@ -43,7 +43,8 @@
                     android:maxEms="10"
                     android:singleLine="true"
                     android:text="@{vm.title}"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textColor="@color/default_text"/>
 
                 <ImageView
                     android:id="@+id/iv_more"

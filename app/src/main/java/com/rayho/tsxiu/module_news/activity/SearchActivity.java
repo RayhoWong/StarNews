@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.rxbus.RxBus;
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.button.MaterialButton;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -55,8 +56,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import skin.support.widget.SkinCompatSupportable;
 
-public class SearchActivity extends RxAppCompatActivity implements Presenter {
+public class SearchActivity extends RxAppCompatActivity implements Presenter, SkinCompatSupportable {
 
     @BindView(R.id.viewStub)
     ViewStub mViewStub;
@@ -92,16 +94,28 @@ public class SearchActivity extends RxAppCompatActivity implements Presenter {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
-        StatusBarUtil.changeStatusBarTextColor(this);
         mBinding.setPresenter(this);
         ButterKnife.bind(this);
 
         getUpdateNums();
+        initStatusBar();
         initNewsRcv();
         initRefreshLayout();
         getHotSearch();
         getHistoryRecord();
         textChangedListener();
+    }
+
+
+    private void initStatusBar(){
+        //根据夜间模式的设置 设置状态栏的颜色
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
     }
 
 
@@ -592,5 +606,20 @@ public class SearchActivity extends RxAppCompatActivity implements Presenter {
         super.onDestroy();
         //取消订阅 避免内存泄漏
         RxBus.getDefault().unregister(this);
+    }
+
+
+    /**
+     * 动态监听换肤行为 设置状态栏颜色
+     */
+    @Override
+    public void applySkin() {
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
     }
 }

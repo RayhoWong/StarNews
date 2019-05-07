@@ -11,6 +11,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //设置支持的SO库架构 GSY视频库
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
     }
     buildTypes {
         release {
@@ -123,5 +128,13 @@ dependencies {
     implementation 'com.shuyu:GSYVideoPlayer:7.0.1'
     //好用的RxBus
     implementation 'com.blankj:rxbus:1.5'
+    // skin-support(换肤库)
+    implementation 'skin.support:skin-support:4.0.1'
+    // skin-support 基础控件支持
+    implementation 'skin.support:skin-support-appcompat:4.0.1'
+    // skin-support-design material design 控件支持[可选]
+    implementation 'skin.support:skin-support-design:4.0.1'
+    // skin-support-cardview CardView 控件支持[可选]
+    implementation 'skin.support:skin-support-cardview:4.0.1'
 
 }

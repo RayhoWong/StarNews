@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/root_view_bg"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context=".module_mine.activity.SettingsActivity">
@@ -14,7 +16,9 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_bg"
+            app:titleTextColor="@color/default_text"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -40,7 +44,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:text="@string/auto_play"
-            android:textColor="@color/black"
+            android:textColor="@color/default_text"
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.SwitchCompat
@@ -55,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/color_line_grey" />
+            android:background="@color/divider" />
 
     </RelativeLayout>
 
@@ -70,7 +74,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:text="@string/night_mode"
-            android:textColor="@color/black"
+            android:textColor="@color/default_text"
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.SwitchCompat
@@ -85,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/color_line_grey" />
+            android:background="@color/divider" />
 
     </RelativeLayout>
 
@@ -94,7 +98,7 @@
         android:id="@+id/rl_clearCache"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/selector_news_bg"
+        android:background="@drawable/selector_default_bg"
         android:clickable="true">
 
         <TextView
@@ -103,7 +107,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:text="@string/clear_cache"
-            android:textColor="@color/black"
+            android:textColor="@color/default_text"
             android:textSize="18sp" />
 
         <ImageView
@@ -118,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/color_line_grey" />
+            android:background="@color/divider" />
 
     </RelativeLayout>
 

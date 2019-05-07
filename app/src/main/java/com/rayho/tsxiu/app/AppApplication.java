@@ -15,17 +15,21 @@ import java.io.IOException;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.functions.Consumer;
 import io.reactivex.plugins.RxJavaPlugins;
+import skin.support.SkinCompatManager;
+import skin.support.app.SkinAppCompatViewInflater;
+import skin.support.app.SkinCardViewInflater;
+import skin.support.design.app.SkinMaterialViewInflater;
 
 /**
  * Created by Rayho on 2018/11/8 0008
  */
 public class AppApplication extends Application {
 
-    private static class AppApplicationHolder{
+    private static class AppApplicationHolder {
         public static AppApplication application = new AppApplication();
     }
 
-    public static AppApplication getAppApplication(){
+    public static AppApplication getAppApplication() {
         return AppApplicationHolder.application;
     }
 
@@ -45,13 +49,22 @@ public class AppApplication extends Application {
         //初始化Stetho 在chrome可以查看app的数据库
         Stetho.initializeWithDefaults(this);
 
+        //初始化Skin库
+        SkinCompatManager.withoutActivity(this)
+                .addInflater(new SkinAppCompatViewInflater())           // 基础控件换肤初始化
+                .addInflater(new SkinMaterialViewInflater())            // material design 控件换肤初始化[可选]
+                .addInflater(new SkinCardViewInflater())                // CardView v7 控件换肤初始化[可选]
+                .setSkinStatusBarColorEnable(true)                     // 关闭状态栏换肤，默认打开[可选]
+                .setSkinWindowBackgroundEnable(true)    // 关闭windowBackground换肤，默认打开[可选]
+                .setSkinAllActivityEnable(true)
+                .loadSkin();
 
     }
 
     /**
      * Logger配置
      */
-    private void initLogger(){
+    private void initLogger() {
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
 //                .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
 //                .methodCount(0)         // (Optional) How many method line to show. Default 2

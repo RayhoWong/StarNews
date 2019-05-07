@@ -20,6 +20,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.just.agentweb.AbsAgentWebSettings;
 import com.just.agentweb.AgentWeb;
@@ -32,6 +33,7 @@ import com.just.agentweb.download.DownloadListenerAdapter;
 import com.just.agentweb.download.DownloadingService;
 import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.base.Presenter;
 import com.rayho.tsxiu.databinding.ActivityScannerResultBinding;
 import com.rayho.tsxiu.module_news.viewmodel.ScannerResultViewModel;
@@ -43,8 +45,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.DataBindingUtil;
+import skin.support.widget.SkinCompatSupportable;
 
-public class ScannerResultActivity extends AppCompatActivity implements Presenter {
+public class ScannerResultActivity extends AppCompatActivity implements Presenter, SkinCompatSupportable {
 
     private ActivityScannerResultBinding mBinding;
 
@@ -76,9 +79,16 @@ public class ScannerResultActivity extends AppCompatActivity implements Presente
         initAgentWeb();
     }
 
+
     private void initView() {
-        StatusBarUtil.changeStatusBarTextColor(this);
-        StatusBarUtil.setStatusBarColor(this, R.color.whitesmoke);
+        //根据夜间模式的设置 设置状态栏的颜色
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
         mBinding.toolbar.setNavigationIcon(R.mipmap.close_2);
         mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,6 +394,21 @@ public class ScannerResultActivity extends AppCompatActivity implements Presente
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    /**
+     * 动态监听换肤行为 设置状态栏颜色
+     */
+    @Override
+    public void applySkin() {
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -12,6 +13,7 @@ import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.greendao.UserDao;
 import com.rayho.tsxiu.module_mine.fragment.NewsCtFragment;
 import com.rayho.tsxiu.module_mine.fragment.PhotosCtFragment;
+import com.rayho.tsxiu.ui.SkinTabLayout;
 import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.GlideUtils;
 import com.rayho.tsxiu.utils.StatusBarUtil;
@@ -29,6 +31,8 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
+import skin.support.design.widget.SkinMaterialCollapsingToolbarLayout;
+import skin.support.widget.SkinCompatSupportable;
 
 
 /**
@@ -43,10 +47,10 @@ public class MyCollectionActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     @BindView(R.id.collapsing_toolbar_layout)
-    CollapsingToolbarLayout mCollapsingToolbarLayout;
+    SkinMaterialCollapsingToolbarLayout mCollapsingToolbarLayout;
 
     @BindView(R.id.tablayout)
-    TabLayout mTablayout;
+    SkinTabLayout mTablayout;
 
     @BindView(R.id.appbar)
     AppBarLayout mAppbarLayout;
@@ -70,8 +74,21 @@ public class MyCollectionActivity extends AppCompatActivity {
 
 
     private void initView() {
-//        StatusBarUtil.changeStatusBarTextColor(this);
         StatusBarUtil.setStatusBarTranslucent(this);
+
+        mCollapsingToolbarLayout.setTitle("我的收藏");
+        mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.white));
+        //根据夜间模式的设置 设置状态栏字体的颜色
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarTextColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+            mCollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarTextColor(getResources().getColor(R.color.colorPrimaryDark), this);
+            mCollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
+        }
+
         mToolbar.setNavigationIcon(R.mipmap.close_2);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +96,8 @@ public class MyCollectionActivity extends AppCompatActivity {
                 finish();
             }
         });
-        mCollapsingToolbarLayout.setTitle("我的收藏");
-        mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.white));
+
+
 
         initViewPager();
 

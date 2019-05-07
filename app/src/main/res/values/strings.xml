@@ -50,6 +50,7 @@
     <string name="auto_play">视频自动播放</string>
     <string name="night_mode">夜间模式</string>
     <string name="clear_cache">清除缓存</string>
+    <string name="sp_nightmode">nightmode</string>
 
 
 </resources>

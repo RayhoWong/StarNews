@@ -9,9 +9,10 @@
     </data>
 
     <RelativeLayout
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="25dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/root_view_bg_4">
 
         <com.rayho.tsxiu.module_video.view.SampleCoverVideo
             android:id="@+id/video_item_player"
@@ -38,7 +39,7 @@
             android:layout_margin="10dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/black"
+            android:textColor="@color/default_text"
             android:textSize="18sp"
             android:textStyle="bold"
             android:text="@{item.title}"
@@ -48,6 +49,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_below="@id/tv_title"
             android:paddingLeft="10dp"
             android:paddingRight="15dp">

@@ -13,19 +13,19 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/whitesmoke"
+        android:background="@color/root_view_bg_2"
         tools:context=".module_news.fragment.ContentFragment">
 
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/toolbar_bg"
                 android:padding="12dp">
 
                 <TextView

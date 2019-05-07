@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.blankj.rxbus.RxBus;
+import com.blankj.utilcode.util.SPUtils;
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.http.api.NetObserver;
 import com.rayho.tsxiu.http.exception.ApiException;
 import com.rayho.tsxiu.http.exception.ServerStatusCode;
@@ -18,6 +20,7 @@ import com.rayho.tsxiu.ui.channelhelper.base.IChannelType;
 import com.rayho.tsxiu.ui.channelhelper.bean.ChannelBean;
 import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.NetworkUtils;
+import com.rayho.tsxiu.utils.StatusBarUtil;
 import com.rayho.tsxiu.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -29,12 +32,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import skin.support.widget.SkinCompatSupportable;
 
 /**
  * Created by rayho on 2019/3/2
  * 频道管理器
  */
-public class ChannelActivity extends AppCompatActivity implements ChannelAdapter.ChannelItemClickListener {
+public class ChannelActivity extends AppCompatActivity implements ChannelAdapter.ChannelItemClickListener, SkinCompatSupportable {
 
     private ImageView mIvClose;
 
@@ -87,6 +91,15 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
 
 
     private void initView() {
+        //根据夜间模式的设置 设置状态栏的颜色
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
+
         mIvClose = findViewById(R.id.iv_close);
         mRecyclerView = findViewById(R.id.id_tab_recycler_view);
         mIvClose.setOnClickListener(new View.OnClickListener() {
@@ -273,6 +286,21 @@ public class ChannelActivity extends AppCompatActivity implements ChannelAdapter
         //动态更新首页的新闻
         if (!mMyChannelStrs.equals(mMyChannelStrs_Db)) {
             mFragment.setContentFts(mMyChannelList_2);
+        }
+    }
+
+
+    /**
+     * 动态监听换肤行为 设置状态栏颜色
+     */
+    @Override
+    public void applySkin() {
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
         }
     }
 }

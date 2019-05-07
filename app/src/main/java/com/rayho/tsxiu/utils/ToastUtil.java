@@ -21,12 +21,10 @@ public class ToastUtil {
     private TextView mTextView;
     private TimeCount timeCount;
     private String message;
-    private Handler mHandler = new Handler();
-    private boolean canceled = true;
 
-    public ToastUtil(Context context,String msg) {
+    public ToastUtil(Context context, String msg) {
         message = msg;
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //自定义toast布局
         View view = inflater.inflate(R.layout.toast, null);
         //自定义toast文本
@@ -40,11 +38,13 @@ public class ToastUtil {
         }
 
         mToast.setGravity(Gravity.BOTTOM, 0, 0);//设置位置(默认底部弹出)
-        mToast.setDuration(Toast.LENGTH_LONG);//设置时长
+        mToast.setDuration(Toast.LENGTH_LONG);//设置默认时长
         mToast.setView(view);//加载布局
     }
 
-
+    /**
+     * 默认show
+     */
     public void show() {
         mToast.show();
         Log.i("ToastUtil", "Toast show...");
@@ -63,17 +63,12 @@ public class ToastUtil {
     }
 
     /**
-     * 自定义时长、居中显示toast
+     * 自定义时长show
+     *
      * @param duration
      */
     public void show(int duration) {
         timeCount = new TimeCount(duration, 1000);
-   /*     Log.i("ToastUtil", "Toast show...");
-        if (canceled) {
-            timeCount.start();
-            canceled = false;
-            showUntilCancel();
-        }*/
         timeCount.start();
         mToast.show();
     }
@@ -85,26 +80,11 @@ public class ToastUtil {
         if (mToast != null) {
             mToast.cancel();
         }
-        canceled = true;
-        Log.i("ToastUtil", "Toast that customed duration hide...");
     }
 
-    /*private void showUntilCancel() {
-        if (canceled) { //如果已经取消显示，就直接return
-            return;
-        }
-        mToast.show();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.i("ToastUtil", "Toast showUntilCancel...");
-                showUntilCancel();
-            }
-        }, Toast.LENGTH_LONG);
-    }*/
 
     /**
-     *  自定义计时器
+     * 自定义计时器
      */
     private class TimeCount extends CountDownTimer {
 
@@ -120,7 +100,7 @@ public class ToastUtil {
 
         @Override
         public void onFinish() {
-//            hide();
+            hide();
         }
     }
 }

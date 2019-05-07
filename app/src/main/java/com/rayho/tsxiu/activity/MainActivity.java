@@ -2,9 +2,9 @@ package com.rayho.tsxiu.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MenuItem;
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.BaseActivity;
 import com.rayho.tsxiu.base.Constant;
@@ -15,34 +15,29 @@ import com.rayho.tsxiu.module_news.NewsTabFragment;
 import com.rayho.tsxiu.module_photo.PhotoTabFragment;
 import com.rayho.tsxiu.module_video.VideoTabFragment;
 import com.rayho.tsxiu.module_video.dao.VideoAutoPlay;
+import com.rayho.tsxiu.ui.SkinBottomNavigationView;
 import com.rayho.tsxiu.utils.DaoManager;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity {
 
-    /* @BindView(R.id.toolbarMain)
-     Toolbar mToolBar;
-     @BindView(R.id.container)
-     CoordinatorLayout container;*/
+
     @BindView(R.id.bottom_navigation_bar)
-    BottomNavigationBar mBottomNavigationBar;
+    SkinBottomNavigationView mBottomNavigationBar;
 
     private Fragment mFragment;//当前显示的fragment
-    private Fragment newsTabFragment;
-    private Fragment photoTabFragment;
-    private Fragment mineTabFragment;
-    private Fragment videoTabFragment;
+    private Fragment mNewsTabFragment;
+    private Fragment mPhotoTabFragment;
+    private Fragment mMineTabFragment;
+    private Fragment mVideoTabFragment;
 
-    private String[] titles;
-    private int lastSelectedPosition = 0;
-
-    private OnTabReselectedListener listener;
+    private OnTabReselectedListener mListener;
 
 
     @Override
@@ -53,7 +48,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void afterSetContentView() {
-        initToolbar();
+        hideBaseToolbar();
         initBottomNavigationBar();
         initFragment();
 
@@ -65,57 +60,16 @@ public class MainActivity extends BaseActivity {
                 .unique()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(videoAutoPlay -> {
-                    if(videoAutoPlay == null){
+                    if (videoAutoPlay == null) {
                         DaoManager.getInstance().getDaoSession().getVideoAutoPlayDao()
                                 .rx()
-                                .insert(new VideoAutoPlay(null,Constant.AUTO_PLAY_ID,false))
+                                .insert(new VideoAutoPlay(null, Constant.AUTO_PLAY_ID, false))
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe();
                     }
                 });
     }
 
-
-    private void initToolbar() {
-        hideBaseToolbar();
-       /* mToolBar.setNavigationIcon(R.mipmap.arrow_back);
-        mToolBar.setTitle("首页");
-        mToolBar.setLogo(R.mipmap.ic_launcher);
-        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "haha", Toast.LENGTH_SHORT).show();
-            }
-        });
-        mToolBar.inflateMenu(R.news.setting_menu);
-        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.search:
-                        Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.favor:
-                        SnackbarUtil.showSnackbarColorAction(MainActivity.this, container,
-                                "ni hao a", "press", R.color.colorAccent, 2000,
-                                R.color.colorPrimary, R.color.colorPrimary,
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        ToastUtil toastUtil = new ToastUtil(MainActivity.this, "testtest");
-                                        toastUtil.show();
-//                                       ActivityUtils.startActivity(TestActivity.class);
-                                    }
-                                });
-                        break;
-                    case R.id.like:
-                        break;
-                }
-                return false;
-            }
-        });*/
-    }
 
     @SuppressLint("MissingSuperCall")
     @Override
@@ -130,67 +84,50 @@ public class MainActivity extends BaseActivity {
     private void initFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        newsTabFragment = NewsTabFragment.newInstance();
-        photoTabFragment = PhotoTabFragment.newInstance();
-        videoTabFragment = VideoTabFragment.newInstance();
-        mineTabFragment = MineTabFragment.newInstance();
+        mNewsTabFragment = NewsTabFragment.newInstance();
+        mPhotoTabFragment = PhotoTabFragment.newInstance();
+        mVideoTabFragment = VideoTabFragment.newInstance();
+        mMineTabFragment = MineTabFragment.newInstance();
         //默认显示新闻首页
-        transaction.add(R.id.frame, newsTabFragment);
+        transaction.add(R.id.frame, mNewsTabFragment);
         transaction.commit();
-        mFragment = newsTabFragment;
+        mFragment = mNewsTabFragment;
     }
 
 
+    /**
+     * 初始化底部导航栏
+     */
     private void initBottomNavigationBar() {
-        titles = getResources().getStringArray(R.array.BottomNavigationNames);
 
-        mBottomNavigationBar.setActiveColor(R.color.colorAccent)
-                .setInActiveColor(R.color.grey)
-                .setBarBackgroundColor(R.color.colorPrimary)
-                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
-                .setMode(BottomNavigationBar.MODE_FIXED);
-
-        mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.news, titles[0]))
-                .addItem(new BottomNavigationItem(R.mipmap.photo, titles[1]))
-                .addItem(new BottomNavigationItem(R.mipmap.video, titles[2]))
-                .addItem(new BottomNavigationItem(R.mipmap.my, titles[3]))
-                .setFirstSelectedPosition(lastSelectedPosition)//默认显示首页
-                .initialise();
-
-        mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int position) {
-                switch (position) {
-                    case 0:
-                        switchFragment(newsTabFragment, "news");
-                        break;
-                    case 1:
-                        switchFragment(photoTabFragment, "photo");
-                        break;
-                    case 2:
-                        switchFragment(videoTabFragment, "video");
-                        break;
-                    case 3:
-                        switchFragment(mineTabFragment, "mine");
-                        break;
-                }
+        mBottomNavigationBar.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    switchFragment(mNewsTabFragment, "news");
+                    return true;
+                case R.id.navigation_photos:
+                    switchFragment(mPhotoTabFragment, "photo");
+                    return true;
+                case R.id.navigation_videos:
+                    switchFragment(mVideoTabFragment, "video");
+                    return true;
+                case R.id.navigation_person:
+                    switchFragment(mMineTabFragment, "mine");
+                    return true;
             }
+            return false;
+        });
 
-            @Override
-            public void onTabUnselected(int position) {
-
-            }
-
-            /**
-             * 再次点击首页Tab时，当前显示Fragment重新加载数据
-             * @param position
-             */
-            @Override
-            public void onTabReselected(int position) {
-                if (position == 0) {
-                    listener.updateData();
-                }
-
+        //监听Tab被重新选中
+        mBottomNavigationBar.setOnNavigationItemReselectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    //再次点击首页Tab时，当前Fragment重新加载数据
+                    if (mListener != null)
+                        mListener.updateData();
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -201,7 +138,7 @@ public class MainActivity extends BaseActivity {
      * @param listener
      */
     public void setOnTabReselectedListener(OnTabReselectedListener listener) {
-        this.listener = listener;
+        mListener = listener;
     }
 
 
@@ -226,8 +163,8 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         VideoTabFragment fragment = null;
-        if (videoTabFragment instanceof VideoTabFragment) {
-            fragment = (VideoTabFragment) videoTabFragment;
+        if (mVideoTabFragment instanceof VideoTabFragment) {
+            fragment = (VideoTabFragment) mVideoTabFragment;
         }
         //如果当前视频是全屏模式->退出全屏
         if (fragment.onBackPressed()) {
@@ -236,4 +173,5 @@ public class MainActivity extends BaseActivity {
         //否则退出app
         finish();
     }
+
 }

@@ -16,9 +16,41 @@
     <color name="color_f5f5f5">#f5f5f5</color>
     <color name="color_f65959">#f65959</color>
 
+    <!--根布局背景-->
+    <color name="root_view_bg">#ffffff</color>
+    <color name="root_view_bg_2">#f5f5f5</color>
+    <color name="root_view_bg_3">#ffffff</color>
+    <color name="root_view_bg_4">#ffffff</color>
+
+    <!--toolbar背景-->
+    <color name="toolbar_bg">#FFFFFF</color>
+
+    <!--底部导航栏-->
+    <color name="bottom_tab_bg">#ffffff</color>
+
+    <!--tablayout-->
+    <color name="tabIndicatorColor">#1E90FF</color>
+    <color name="tabSelectedTextColor">#1E90FF</color>
+    <color name="tabTextColor">#000000</color>
+
+    <!--新闻item-->
+    <color name="news_title">#000000</color>
+    <color name="news_user">#8a8a8a</color>
+    <color name="news_comments">#8a8a8a</color>
+    <color name="news_time">#8a8a8a</color>
+
+    <!--刷新布局 header和footer-->
+    <color name="refreshLayout">#f5f5f5</color>
+
+    <!--分割线-->
+    <color name="divider">#ffd2d2d2</color>
+
 
     <!--内容字体-->
+    <color name="default_text">#000000</color>
+    <color name="default_text_2">#ffffff</color>
     <color name="content_color">#555555</color>
+    <color name="tab_text_nor">#333333</color>
     <color name="text">#605968</color>
     <color name="line_color">#dadada</color>
 
@@ -183,7 +215,6 @@
     <color name="dark_grey">#9F9F9F</color>
     <color name="color_00">#8A000000</color>
     <color name="dark">#5e5656</color>
-    <color name="divider">#ffd2d2d2</color>
     <color name="color_333">#333333</color>
     <color name="color_666">#666</color>
     <color name="color_999">#999</color>
@@ -210,7 +241,6 @@
     <color name="colorHint">#d3d2d2</color>
     <color name="color_black">#37363b</color>
     <color name="button_press">#0063cd</color>
-    <color name="tab_text_nor">#333333</color>
     <color name="txt_line">#e5e5e5</color>
     <color name="color_red">#fa7978</color>
     <color name="color_red_less">#fabcbc</color>
@@ -218,4 +248,256 @@
     <color name="color_sidebar_select">#3399ff</color>
     <color name="color_delete">#f0f0f0</color>
     <color name="colorTitle">#84ccc9</color>
+
+
+
+
+
+    <!--////////////////////////////夜间模式//////////////////////////////////////////////// -->
+
+    <color name="colorPrimary_night">#333333</color>
+    <color name="colorPrimaryDark_night">#000000</color>
+    <color name="colorAccent_night">#1E90FF</color>
+
+    <color name="color_333333_night">#333333</color>
+    <color name="color_999999_night">#999999</color>
+
+    <color name="color_fac0c0_night">#fac0c0</color>
+    <color name="color_ee8f8f_night">#ee8f8f</color>
+    <color name="color_70da93_night">#70da93</color>
+    <color name="color_cccc99_night">#cccc99</color>
+    <color name="color_99ccff_night">#99ccff</color>
+    <color name="color_cfcfcf_night">#cfcfcf</color>
+    <color name="color_f5f5f5_night">#f5f5f5</color>
+    <color name="color_f65959_night">#f65959</color>
+
+    <!--根布局背景-->
+    <color name="root_view_bg_night">#000000</color>
+    <color name="root_view_bg_2_night">#000000</color>
+    <color name="root_view_bg_3_night">#242424</color>
+    <color name="root_view_bg_4_night">#333333</color>
+
+
+    <!--toolbar背景-->
+    <color name="toolbar_bg_night">#242424</color>
+
+    <!--底部导航栏-->
+    <color name="bottom_tab_bg_night">#242424</color>
+
+    <!--tablayout-->
+    <color name="tabIndicatorColor_night">#1E90FF</color>
+    <color name="tabSelectedTextColor_night">#1E90FF</color>
+    <color name="tabTextColor_night">#ffffff</color>
+
+    <!--新闻item-->
+    <color name="news_title_night">#ffffff</color>
+    <color name="news_user_night">#f5f5f5</color>
+    <color name="news_comments_night">#f5f5f5</color>
+    <color name="news_time_night">#f5f5f5</color>
+
+    <!--刷新布局 header和footer-->
+    <color name="refreshLayout_night">#000000</color>
+
+
+    <!--内容字体-->
+    <color name="default_text_night">#ffffff</color>
+    <color name="default_text_2_night">#000000</color>
+    <color name="content_color_night">#555555</color>
+    <color name="tab_text_nor_night">#ffffff</color>
+    <color name="text_night">#ffffff</color>
+    <color name="line_color_night">#dadada</color>
+
+
+
+    <color name="page_bg_night">#f5f5f5</color>
+    <color name="light_grey_night">#bfbfbf</color>
+    <color name="middle_grey_night">#8a8a8a</color>
+
+    <color name="default_on_pressed_night">#22aaaaaa</color>
+    <color name="default_on_pressed_no_alpha_night">#F4F4F4</color>
+    <color name="butter_night">#3497df</color>
+    <color name="small_font_night">#999999</color>
+    <color name="color_20ffffff_night">#20ffffff</color>
+    <color name="line_bg_night">#dadada</color>
+    <color name="transparent_night">#00000000</color>
+    <color name="white_night">#ffffff</color><!--白色 -->
+    <color name="ivory_night">#fffff0</color><!--象牙色 -->
+    <color name="lightyellow_night">#ffffe0</color><!--亮黄色 -->
+    <color name="yellow_night">#ffff00</color><!--黄色 -->
+    <color name="snow_night">#fffafa</color><!--雪白色 -->
+    <color name="floralwhite_night">#fffaf0</color><!--花白色 -->
+    <color name="lemonchiffon_night">#fffacd</color><!--柠檬绸色 -->
+    <color name="cornsilk_night">#fff8dc</color><!--米绸色 -->
+    <color name="seaShell_night">#fff5ee</color><!--海贝色 -->
+    <color name="lavenderblush_night">#fff0f5</color><!--淡紫红 -->
+    <color name="papayawhip_night">#ffefd5</color><!--番木色 -->
+    <color name="blanchedalmond_night">#ffebcd</color><!--白杏色 -->
+    <color name="mistyrose_night">#ffe4e1</color><!--浅玫瑰色 -->
+    <color name="bisque_night">#ffe4c4</color><!--桔黄色 -->
+    <color name="moccasin_night">#ffe4b5</color><!--鹿皮色 -->
+    <color name="navajowhite_night">#ffdead</color><!--纳瓦白 -->
+    <color name="peachpuff_night">#ffdab9</color><!--桃色 -->
+    <color name="gold_night">#ffd700</color><!--金色 -->
+    <color name="pink_night">#ffc0cb</color><!--粉红色 -->
+    <color name="lightpink_night">#ffb6c1</color><!--亮粉红色 -->
+    <color name="orange1_night">#ffa500</color><!--橙色 -->
+    <color name="lightsalmon_night">#ffa07a</color><!--亮肉色 -->
+    <color name="darkorange_night">#ff8c00</color><!--暗桔黄色 -->
+    <color name="coral_night">#ff7f50</color><!--珊瑚色 -->
+    <color name="hotpink_night">#ff69b4</color><!--热粉红色 -->
+    <color name="tomato_night">#ff6347</color><!--西红柿色 -->
+    <color name="orangered_night">#ff4500</color><!--红橙色 -->
+    <color name="deeppink_night">#ff1493</color><!--深粉红色 -->
+    <color name="fuchsia_night">#ff00ff</color><!--紫红色 -->
+    <color name="magenta_night">#ff00ff</color><!--红紫色 -->
+    <color name="red_night">#ff0000</color><!--红色 -->
+    <color name="oldlace_night">#fdf5e6</color><!--老花色 -->
+    <color name="lightgoldenrodyellow_night">#fafad2</color><!--亮金黄色 -->
+    <color name="linen_night">#faf0e6</color><!--亚麻色 -->
+    <color name="antiquewhite_night">#faebd7</color><!--古董白 -->
+    <color name="salmon_night">#fa8072</color><!--鲜肉色 -->
+    <color name="ghostwhite_night">#f8f8ff</color><!--幽灵白 -->
+    <color name="mintcream_night">#f5fffa</color><!--薄荷色 -->
+    <color name="whitesmoke_night">#f5f5f5</color><!--烟白色 -->
+    <color name="beige_night">#f5f5dc</color><!--米色 -->
+    <color name="wheat_night">#f5deb3</color><!--浅黄色 -->
+    <color name="sandybrown_night">#f4a460</color><!--沙褐色 -->
+    <color name="azure_night">#f0ffff</color><!--天蓝色 -->
+    <color name="honeydew_night">#f0fff0</color><!--蜜色 -->
+    <color name="aliceblue_night">#f0f8ff</color><!--艾利斯兰 -->
+    <color name="khaki_night">#f0e68c</color><!--黄褐色 -->
+    <color name="lightcoral_night">#f08080</color><!--亮珊瑚色 -->
+    <color name="palegoldenrod_night">#eee8aa</color><!--苍麒麟色 -->
+    <color name="violet_night">#ee82ee</color><!--紫罗兰色 -->
+    <color name="darksalmon_night">#e9967a</color><!--暗肉色 -->
+    <color name="lavender_night">#e6e6fa</color><!--淡紫色 -->
+    <color name="lightcyan_night">#e0ffff</color><!--亮青色 -->
+    <color name="burlywood_night">#deb887</color><!--实木色 -->
+    <color name="plum_night">#dda0dd</color><!--洋李色 -->
+    <color name="gainsboro_night">#dcdcdc</color><!--淡灰色 -->
+    <color name="crimson_night">#dc143c</color><!--暗深红色 -->
+    <color name="palevioletred_night">#db7093</color><!--苍紫罗兰色 -->
+    <color name="goldenrod_night">#daa520</color><!--金麒麟色 -->
+    <color name="orchid_night">#da70d6</color><!--淡紫色 -->
+    <color name="thistle_night">#d8bfd8</color><!--蓟色 -->
+    <color name="lightgray_night">#d3d3d3</color><!--亮灰色 -->
+    <color name="tan_night">#d2b48c</color><!--茶色 -->
+    <color name="chocolate_night">#d2691e</color><!--巧可力色 -->
+    <color name="peru_night">#cd853f</color><!--秘鲁色 -->
+    <color name="indianred_night">#cd5c5c</color><!--印第安红 -->
+    <color name="mediumvioletred_night">#c71585</color><!--中紫罗兰色 -->
+    <color name="silver_night">#c0c0c0</color><!--银色 -->
+    <color name="darkkhaki_night">#bdb76b</color><!--暗黄褐色 -->
+    <color name="rosybrown_night">#bc8f8f</color><!--褐玫瑰红 -->
+    <color name="mediumorchid_night">#ba55d3</color><!--中粉紫色 -->
+    <color name="darkgoldenrod_night">#b8860b</color><!--暗金黄色 -->
+    <color name="firebrick_night">#b22222</color><!--火砖色 -->
+    <color name="powderblue_night">#b0e0e6</color><!--粉蓝色 -->
+    <color name="lightsteelblue_night">#b0c4de</color><!--亮钢兰色 -->
+    <color name="paleturquoise_night">#afeeee</color><!--苍宝石绿 -->
+    <color name="greenyellow_night">#adff2f</color><!--黄绿色 -->
+    <color name="lightblue_night">#add8e6</color><!--亮蓝色 -->
+    <color name="darkgray_night">#a9a9a9</color><!--暗灰色 -->
+    <color name="brown_night">#a52a2a</color><!--褐色 -->
+    <color name="sienna_night">#a0522d</color><!--赭色 -->
+    <color name="darkorchid_night">#9932cc</color><!--暗紫色 -->
+    <color name="palegreen_night">#98fb98</color><!--苍绿色 -->
+    <color name="darkviolet_night">#9400d3</color><!--暗紫罗兰色 -->
+    <color name="mediumpurple_night">#9370db</color><!--中紫色 -->
+    <color name="lightgreen_night">#90ee90</color><!--亮绿色 -->
+    <color name="darkseagreen_night">#8fbc8f</color><!--暗海兰色 -->
+    <color name="saddlebrown_night">#8b4513</color><!--重褐色 -->
+    <color name="darkmagenta_night">#8b008b</color><!--暗洋红 -->
+    <color name="darkred_night">#8b0000</color><!--暗红色 -->
+    <color name="blueviolet_night">#8a2be2</color><!--紫罗兰蓝色 -->
+    <color name="lightskyblue_night">#87cefa</color><!--亮天蓝色 -->
+    <color name="skyblue_night">#87ceeb</color><!--天蓝色 -->
+    <color name="grey_night">#ffffff</color><!--灰色 -->
+    <color name="olive_night">#808000</color><!--橄榄色 -->
+    <color name="purple_night">#800080</color><!--紫色 -->
+    <color name="maroon_night">#800000</color><!--粟色 -->
+    <color name="aquamarine_night">#7fffd4</color><!--碧绿色 -->
+    <color name="chartreuse_night">#7fff00</color><!--黄绿色 -->
+    <color name="lawngreen_night">#7cfc00</color><!--草绿色 -->
+    <color name="mediumslateblue_night">#7b68ee</color><!--中暗蓝色 -->
+    <color name="lightslategray_night">#778899</color><!--亮蓝灰 -->
+    <color name="slategray_night">#708090</color><!--灰石色 -->
+    <color name="slategrey_night">#708090</color><!--灰石色 -->
+    <color name="olivedrab_night">#6b8e23</color><!--深绿褐色 -->
+    <color name="slateblue_night">#6a5acd</color><!--石蓝色 -->
+    <color name="dimgrey_night">#696969</color><!--暗灰色 -->
+    <color name="mediumaquamarine_night">#66cdaa</color><!--中绿色 -->
+    <color name="cornflowerblue_night">#6495ed</color><!--菊兰色 -->
+    <color name="cadetblue_night">#5f9ea0</color><!--军兰色 -->
+    <color name="darkolivegreen_night">#556b2f</color><!--暗橄榄绿 -->
+    <color name="indigo_night">#4b0082</color><!--靛青色 -->
+    <color name="mediumturquoise_night">#48d1cc</color><!--中绿宝石 -->
+    <color name="darkslateblue_night">#483d8b</color><!--暗灰蓝色 -->
+    <color name="steelblue_night">#4682b4</color><!--钢兰色 -->
+    <color name="royalblue_night">#4169e1</color><!--皇家蓝 -->
+    <color name="turquoise_night">#40e0d0</color><!--青绿色 -->
+    <color name="mediumseagreen_night">#3cb371</color><!--中海蓝 -->
+    <color name="limegreen_night">#32cd32</color><!--橙绿色 -->
+    <color name="darkslategrey_night">#2f4f4f</color><!--暗瓦灰色 -->
+    <color name="seagreen_night">#2e8b57</color><!--海绿色 -->
+    <color name="forestgreen_night">#228b22</color><!--森林绿 -->
+    <color name="lightseagreen_night">#20b2aa</color><!--亮海蓝色 -->
+    <color name="dodgerblue_night">#1e90ff</color><!--闪兰色 -->
+    <color name="midnightblue_night">#191970</color><!--中灰兰色 -->
+    <color name="aqua_night">#00ffff</color><!--浅绿色 -->
+    <color name="cyan_night">#00ffff</color><!--青色 -->
+    <color name="springgreen_night">#00ff7f</color><!--春绿色 -->
+    <color name="lime_night">#00ff00</color><!--酸橙色 -->
+    <color name="mediumspringgreen_night">#00fa9a</color><!--中春绿色 -->
+    <color name="darkturquoise_night">#00ced1</color><!--暗宝石绿 -->
+    <color name="deepskyblue_night">#00bfff</color><!--深天蓝色 -->
+    <color name="darkcyan_night">#008b8b</color><!--暗青色 -->
+    <color name="teal_night">#008080</color><!--水鸭色 -->
+    <color name="green_night">#008000</color><!--绿色 -->
+    <color name="switch_green_night">#4cda64</color><!--绿色 -->
+    <color name="darkgreen_night">#006400</color><!--暗绿色 -->
+    <color name="blue_night">#0000ff</color><!--蓝色 -->
+    <color name="mediumblue_night">#0000cd</color><!--中兰色 -->
+    <color name="darkblue_night">#00008b</color><!--暗蓝色 -->
+    <color name="navy_night">#000080</color><!--海军色 -->
+    <color name="black_night">#000000</color><!--黑色 -->
+    <color name="line_gray_night">#e4e4e4</color>
+    <color name="dark_grey_night">#9F9F9F</color>
+    <color name="color_00_night">#8A000000</color>
+    <color name="dark_night">#5e5656</color>
+    <color name="divider_night">#ffd2d2d2</color>
+    <color name="color_333_night">#333333</color>
+    <color name="color_666_night">#666</color>
+    <color name="color_999_night">#999</color>
+    <color name="color_5e8efa_night">#5e8efa</color>
+    <color name="color_background_night">#F5F5F5</color>
+    <color name="color_line_grey_night_night">#dedede</color>
+    <color name="color_background_dark_night">#14000000</color>
+    <color name="color_177f86_night">#177f86</color>
+    <color name="color_b0d779_night">#b0d779</color>
+    <color name="color_454545_night">#454545</color>
+    <color name="color_f1c345_night">#f1c345</color>
+    <color name="color_80ffffff_night">#80ffffff</color>
+
+
+    <color name="color_d2a178_night">#d2a178</color>
+    <color name="color_ccb49c_night">#ccb49c</color>
+    <color name="color_666666_night">#666666</color>
+    <color name="color_f23030_night">#f23030</color>
+    <color name="color_cccccc_night">#cccccc</color>
+    <color name="color_99999a_night">#99999a</color>
+    <color name="color_cbb49c_night">#cbb49c</color>
+    <color name="color_aae19f_night">#aae19f</color>
+    <color name="color_D8EBB5_night">#d8ebb5</color>
+    <color name="colorHint_night">#d3d2d2</color>
+    <color name="color_black_night">#37363b</color>
+    <color name="button_press_night">#0063cd</color>
+    <color name="txt_line_night">#e5e5e5</color>
+    <color name="color_red_night">#fa7978</color>
+    <color name="color_red_less_night">#fabcbc</color>
+    <color name="translucent_night">#75000000</color>
+    <color name="color_delete_night">#f0f0f0</color>
+    <color name="colorTitle_night">#84ccc9</color>
+
+
 </resources>

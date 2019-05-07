@@ -42,5 +42,9 @@ public class Constant {
     public static String DEFAULT_USER_FACE = "https://photo.tuchong.com/1673709/f/25389444.jpg";
     //视频自动播放的标记id
     public static String AUTO_PLAY_ID = "100";
+    //settings的sp名称
+    public static String SP_SETTINGS = "settings";
+    //skin库的夜间模式皮肤
+    public static String SKIN_NIGHT = "night";
 
 }

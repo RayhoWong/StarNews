@@ -16,9 +16,11 @@ import android.widget.LinearLayout;
 
 import com.blankj.rxbus.RxBus;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.rayho.tsxiu.R;
+import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.databinding.ActivityNewsDetailBinding;
 import com.rayho.tsxiu.module_news.bean.NewsBean;
 import com.rayho.tsxiu.module_news.viewmodel.NewsDetailViewModel;
@@ -28,8 +30,9 @@ import com.rayho.tsxiu.utils.ToastUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import skin.support.widget.SkinCompatSupportable;
 
-public class NewsDetailActivity extends AppCompatActivity {
+public class NewsDetailActivity extends AppCompatActivity implements SkinCompatSupportable {
 
     private ActivityNewsDetailBinding mBinding;
 
@@ -49,6 +52,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_news_detail);
         mBinding.setVm(new NewsDetailViewModel());
+
+        initStatusBar();
         initToolbar();
 
         RxBus.getDefault().subscribeSticky(this, "news", new RxBus.Callback<NewsBean.DataBean>() {
@@ -62,8 +67,19 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
 
+    private void initStatusBar(){
+        //根据夜间模式的设置 设置状态栏的颜色
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
+    }
+
+
     private void initToolbar() {
-        StatusBarUtil.changeStatusBarTextColor(this);
         mBinding.toolbar.setNavigationIcon(R.mipmap.arrow_back_2);
         mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,5 +195,19 @@ public class NewsDetailActivity extends AppCompatActivity {
         super.onDestroy();
         RxBus.getDefault().unregister(this);
 
+    }
+
+    /**
+     * 动态监听换肤行为 设置状态栏颜色
+     */
+    @Override
+    public void applySkin() {
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
     }
 }

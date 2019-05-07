@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitesmoke"
+    android:background="@color/root_view_bg_2"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".module_mine.activity.EditInfoActivity">
@@ -53,17 +53,17 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/user" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <skin.support.design.widget.SkinMaterialTextInputLayout
             android:id="@+id/til_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/iv_name"
-            android:background="@color/whitesmoke"
+            android:background="@color/root_view_bg_2"
             android:paddingTop="10dp"
             app:theme="@style/EditText_Theme">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <skin.support.design.widget.SkinMaterialTextInputEditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:textColor="@color/tab_text_nor"
                 android:textSize="18sp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </skin.support.design.widget.SkinMaterialTextInputLayout>>
 
     </RelativeLayout>
 

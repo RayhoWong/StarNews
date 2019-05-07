@@ -93,6 +93,7 @@
             android:name=".module_mine.activity.ImageDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SlideCloseTheme" />
+        <activity android:name=".base.BaseActivity" />
 
     </application>
 

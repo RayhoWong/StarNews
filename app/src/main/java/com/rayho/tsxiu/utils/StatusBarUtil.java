@@ -1,11 +1,15 @@
 package com.rayho.tsxiu.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+
+import androidx.annotation.ColorInt;
+import androidx.core.graphics.ColorUtils;
 
 /**
  * Created by Rayho on 2018/11/5 0005
@@ -73,11 +77,9 @@ public class StatusBarUtil {
         decorView.setSystemUiVisibility(option);
     }
 
+
     /**
      * 改变状态栏字体的颜色
-     * 默认6.0及以上改字体颜色(白色背景->深色字体)
-     * 6.0及以上版本可以更改状态栏的字体颜色，如果状态栏的背景色是浅色或者白色，
-     * 那么字体图标的颜色趋向于深色或者是黑色
      * 记得根布局设置属性android:fitsSystemWindows="true"，不然toolbar会占用状态栏
      *
      * @param context
@@ -88,6 +90,50 @@ public class StatusBarUtil {
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
     }
+
+
+    /**
+     * Android 6.0 及以上根据状态栏颜色亮度 设置状态栏文字的颜色(黑/白)
+     * 一般应用于夜间模式切换
+     */
+    public static void setStatusBarTextColor(@ColorInt int color, Activity context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            /**判断颜色是不是亮色
+             如果亮色，设置状态栏文字为黑色 否则为白色*/
+            if (ColorUtils.calculateLuminance(color) >= 0.5) {
+                //黑色
+                context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            } else {
+                //白色
+                context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            }
+        }
+    }
+
+
+    /**
+     * Android 6.0 及以上设置状态栏颜色 以及根据状态栏颜色亮度 设置状态栏文字的颜色(黑/白)
+     */
+    public static void setStatusBarColor(@ColorInt int color, Activity context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            // 设置状态栏底色颜色
+            context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            context.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            context.getWindow().setStatusBarColor(color);
+
+            /**判断颜色是不是亮色
+             如果亮色，设置状态栏文字为黑色 否则为白色*/
+            if (ColorUtils.calculateLuminance(color) >= 0.5) {
+                //黑色
+                context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            } else {
+                //白色
+                context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            }
+        }
+    }
+
 
     /**
      * 为ToolBar添加一个状态栏高度的paddingTop

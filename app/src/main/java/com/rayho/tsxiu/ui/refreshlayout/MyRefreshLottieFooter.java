@@ -1,6 +1,7 @@
 package com.rayho.tsxiu.ui.refreshlayout;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,24 +11,36 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.OnAnimEndListener;
+import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.utils.RxTimer;
 
 import androidx.annotation.NonNull;
+import skin.support.widget.SkinCompatBackgroundHelper;
+import skin.support.widget.SkinCompatSupportable;
 
 /**
  * Created by Rayho on 2019/1/18
  * 自定义带有lottie动画的Footer(用于RefreshLayout)
  **/
-public class MyRefreshLottieFooter extends LinearLayout implements IBottomView {
+public class MyRefreshLottieFooter extends LinearLayout implements IBottomView, SkinCompatSupportable {
 
     private LottieAnimationView mLottieAnimationView;
 
     private LinearLayout mLlFooter;
 
+    private SkinCompatBackgroundHelper mBackgroundTintHelper;
+
+
     public MyRefreshLottieFooter(Context context) {
         super(context);
         initView(context);
+    }
+
+    public MyRefreshLottieFooter(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
+        mBackgroundTintHelper.loadFromAttributes(attrs, 0);
     }
 
     private void initView(Context context) {
@@ -73,4 +86,12 @@ public class MyRefreshLottieFooter extends LinearLayout implements IBottomView {
         mLottieAnimationView.setAnimation(name);
     }
 
+
+    @Override
+    public void applySkin() {
+        Logger.d("hahahahahaha");
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.applySkin();
+        }
+    }
 }

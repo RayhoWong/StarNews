@@ -20,12 +20,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import skin.support.SkinCompatManager;
+import skin.support.widget.SkinCompatSupportable;
 
 /**
  * 设置
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SkinCompatSupportable {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -48,16 +49,38 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         ButterKnife.bind(this);
-        StatusBarUtil.changeStatusBarTextColor(this);
         initView();
     }
 
 
     private void initView() {
+        //根据夜间模式的设置 设置状态栏的颜色
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
+        }
+
         mToolbar.setNavigationIcon(R.mipmap.arrow_back_2);
         mToolbar.setTitle(getString(R.string.settings));
-        mToolbar.setNavigationOnClickListener(v -> SettingsActivity.this.finish());
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        initAutoPlay();
+        initNightMode();
+    }
+
+
+    /**
+     * 视频自动播放
+     */
+    private void initAutoPlay() {
         DaoManager.getInstance().getDaoSession().getVideoAutoPlayDao()
                 .queryBuilder()
                 .where(VideoAutoPlayDao.Properties.Vid.eq(Constant.AUTO_PLAY_ID))
@@ -77,6 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
+                    //关闭
                     if (mVideoAutoPlay != null) {
                         mVideoAutoPlay.setAutoplay(false);
                         DaoManager.getInstance().getDaoSession().getVideoAutoPlayDao()
@@ -86,6 +110,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 .subscribe();
                     }
                 } else {
+                    //开启
                     if (mVideoAutoPlay != null) {
                         mVideoAutoPlay.setAutoplay(true);
                         DaoManager.getInstance().getDaoSession().getVideoAutoPlayDao()
@@ -98,7 +123,23 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+
+    /**
+     * 夜间模式切换
+     */
+    private void initNightMode() {
+        mSwitchNightmode.setChecked(SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode)));
+        mSwitchNightmode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                SkinCompatManager.getInstance().loadSkin(Constant.SKIN_NIGHT, SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN); // 后缀加载
+                SPUtils.getInstance(Constant.SP_SETTINGS).put(getString(R.string.sp_nightmode), true);
+            } else {
+                SkinCompatManager.getInstance().restoreDefaultTheme();
+                SPUtils.getInstance(Constant.SP_SETTINGS).put(getString(R.string.sp_nightmode), false);
+            }
+        });
     }
 
 
@@ -108,6 +149,21 @@ public class SettingsActivity extends AppCompatActivity {
             case R.id.rl_clearCache:
 
                 break;
+        }
+    }
+
+
+    /**
+     * 动态监听换肤行为 设置状态栏颜色
+     */
+    @Override
+    public void applySkin() {
+        if (SPUtils.getInstance(Constant.SP_SETTINGS).getBoolean(getString(R.string.sp_nightmode))) {
+            //夜间模式true 黑色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark_night), this);
+        } else {
+            //夜间模式false 白色
+            StatusBarUtil.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), this);
         }
     }
 }

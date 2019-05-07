@@ -10,12 +10,12 @@
             type="com.rayho.tsxiu.module_mine.viewmodel.PhotosCtViewModel" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <skin.support.widget.SkinCompatCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:background="@color/white"
+        app:cardBackgroundColor="@color/root_view_bg_4"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp">
 
@@ -44,7 +44,7 @@
                 android:ellipsize="end"
                 android:maxLines="5"
                 android:text="@{item.title}"
-                android:textColor="@color/black"
+                android:textColor="@color/default_text"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="2019年3月31日" />
@@ -108,5 +108,5 @@
                     android:src="@mipmap/close_2" />
             </RelativeLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </skin.support.widget.SkinCompatCardView>
 </layout>

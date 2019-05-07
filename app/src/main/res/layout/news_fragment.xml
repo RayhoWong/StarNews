@@ -20,10 +20,11 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <skin.support.design.widget.SkinMaterialAppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/toolbar_bg"
             android:orientation="vertical">
 
             <LinearLayout
@@ -89,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:text="@string/search_scan"
-                        android:textColor="@color/content_color"
+                        android:textColor="@color/black"
                         android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -100,18 +101,19 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
-                <com.google.android.material.tabs.TabLayout
+                <com.rayho.tsxiu.ui.SkinTabLayout
                     android:id="@+id/tablayout"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:background="@color/toolbar_bg"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="@color/colorAccent"
+                    app:tabIndicatorColor="@color/tabIndicatorColor"
                     app:tabIndicatorFullWidth="false"
                     app:tabIndicatorHeight="3dp"
                     app:tabMode="scrollable"
                     app:tabPaddingTop="-5dp"
-                    app:tabSelectedTextColor="@color/colorAccent"
-                    app:tabTextColor="@android:color/black" />
+                    app:tabSelectedTextColor="@color/tabSelectedTextColor"
+                    app:tabTextColor="@color/tabTextColor"/>
 
                 <ImageView
                     android:id="@+id/channel_menu"
@@ -122,7 +124,7 @@
                     android:onClick="@{(v) -> presenter.onClick(v)}"
                     android:src="@mipmap/menu" />
             </LinearLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+        </skin.support.design.widget.SkinMaterialAppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"

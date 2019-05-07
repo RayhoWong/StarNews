@@ -23,7 +23,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="28dp"
             android:maxLines="30"
-            android:textColor="@color/black"
+            android:textColor="@color/news_title"
             android:textSize="17sp"
             android:text="@{item.title}"/>
 
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
-                android:textColor="@color/middle_grey"
+                android:textColor="@color/news_user"
                 android:textSize="13sp"
                 android:text="@{item.user}"/>
 
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@id/tv_user"
-                android:textColor="@color/middle_grey"
+                android:textColor="@color/news_comments"
                 android:textSize="13sp"
                 android:text="@{item.commentCounts}"/>
 
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@id/tv_comments"
-                android:textColor="@color/middle_grey"
+                android:textColor="@color/news_time"
                 android:textSize="13sp"
                 android:text="@{item.time}"/>
 
