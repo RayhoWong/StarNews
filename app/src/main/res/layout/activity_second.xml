@@ -5,16 +5,4 @@
     android:layout_height="match_parent"
     tools:context=".activity.TestActivity">
 
-    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-        android:id="@+id/twi_refreshlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never">
-        </androidx.recyclerview.widget.RecyclerView>
-    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
-
 </LinearLayout>

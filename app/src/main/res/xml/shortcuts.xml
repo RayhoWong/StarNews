@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--该shortcuts文件不可用 因为只支持25及以上使用快捷方式-->
+
+    <!--二维码扫描-->
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/scan_st"
+        android:shortcutDisabledMessage="@string/shortcut_unavailable"
+        android:shortcutId="scan"
+        android:shortcutLongLabel="@string/shortcut_scan_long"
+        android:shortcutShortLabel="@string/shortcut_scan_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.yzq.zxinglibrary.android.CaptureActivity"
+            android:targetPackage="com.yzq.zxinglibrary" />
+        <!--当前只有这个分类-->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+
+    <!--搜索-->
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/search_st"
+        android:shortcutDisabledMessage="@string/shortcut_unavailable"
+        android:shortcutId="search"
+        android:shortcutLongLabel="@string/shortcut_search_long"
+        android:shortcutShortLabel="@string/shortcut_search_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.rayho.tsxiu.module_news.activity.SearchActivity"
+            android:targetPackage="com.rayho.tsxiu" />
+        <!--当前只有这个分类-->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

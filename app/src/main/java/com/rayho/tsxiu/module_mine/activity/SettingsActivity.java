@@ -5,14 +5,21 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.util.CacheMemoryStaticUtils;
+import com.blankj.utilcode.util.CacheMemoryUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.base.Constant;
 import com.rayho.tsxiu.greendao.VideoAutoPlayDao;
 import com.rayho.tsxiu.module_video.dao.VideoAutoPlay;
 import com.rayho.tsxiu.utils.DaoManager;
+import com.rayho.tsxiu.utils.DataCleanManager;
 import com.rayho.tsxiu.utils.StatusBarUtil;
+import com.rayho.tsxiu.utils.ToastUtil;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
@@ -40,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity implements SkinCompatSup
     @BindView(R.id.rl_clearCache)
     RelativeLayout mRlClearCache;
 
-    private VideoAutoPlay mVideoAutoPlay;
+    private VideoAutoPlay mVideoAutoPlay;//从数据库获取的自动播放实例
 
 
     @Override
@@ -147,9 +154,33 @@ public class SettingsActivity extends AppCompatActivity implements SkinCompatSup
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_clearCache:
-
+                clearCache();
                 break;
         }
+    }
+
+
+    /**
+     * 清除缓存
+     */
+    private void clearCache(){
+        new MaterialDialog
+                .Builder(this)
+                .title("清除缓存")
+                .content("该操作将清空所有的新闻缓存和图片缓存")
+                .negativeText("取消")
+                .positiveText("确定")
+                .onAny((dialog, which) -> {
+                    if (which == DialogAction.POSITIVE){
+                        DataCleanManager.clearAllCache(SettingsActivity.this);
+                        ToastUtil toast = new ToastUtil(SettingsActivity.this,"清除成功");
+                        toast.show();
+                    }else if(which == DialogAction.NEGATIVE){
+                        dialog.dismiss();
+                    }
+                })
+                .canceledOnTouchOutside(true)
+                .show();
     }
 
 

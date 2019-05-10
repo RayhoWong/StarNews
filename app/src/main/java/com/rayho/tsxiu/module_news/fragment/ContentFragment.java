@@ -54,7 +54,7 @@ import static com.rayho.tsxiu.base.Constant.TYPE_ID;
 /**
  * 新闻列表界面(根据分类id，显示不同的新闻)
  */
-public class ContentFragment extends LazyLoadFragment implements OnTabReselectedListener, Presenter {
+public class ContentFragment extends LazyLoadFragment implements OnTabReselectedListener {
     @BindView(R.id.rcv)
     RecyclerView mRcv;
     @BindView(R.id.twi_refreshlayout)
@@ -69,8 +69,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     private MyRefreshLottieHeader mHeader;
 
     private MyRefreshLottieFooter mFooter;
-
-    private ContentFragment mContentFragment;
 
     private List<NewsBean.DataBean> mData = new ArrayList<>();//返回的新闻列表数据
 
@@ -101,7 +99,6 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContentFragment = this;
         RxBus.getDefault().subscribeSticky(this, "updateNums", new RxBus.Callback<Integer>() {
             @Override
             public void onEvent(Integer integer) {
@@ -195,7 +192,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
 
     /**
-     * 设置缓存
+     * 只通过下拉刷新 设置新闻缓存
      */
     private void setNewsCache() {
         //缓存文章到本地(文件缓存)
@@ -212,18 +209,24 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
                         if (mData.size() > Constant.MAX_CACHE_NUMS) {
                             for (int i = 0; i < Constant.MAX_CACHE_NUMS; i++) {
-                                FileUtil.saveObjectByFile(getActivity(), mData.get(i), mData.get(i).publishDateStr + "_" + mData.get(i).id);
-                                //新闻的文件名保存到数据库
-                                DaoManager.getInstance().getDaoSession().getNewsCacheDao()
-                                        .insertOrReplace(new NewsCache(null, mData.get(i).publishDateStr + "_" + mData.get(i).id, cid));
+                                //新闻写入文件
+                                boolean res = FileUtil.saveObjectByFile(getActivity(), mData.get(i), mData.get(i).publishDateStr + "_" + mData.get(i).id);
+                                if (res) {
+                                    //新闻的文件名保存到数据库
+                                    DaoManager.getInstance().getDaoSession().getNewsCacheDao()
+                                            .insertOrReplace(new NewsCache(null, mData.get(i).publishDateStr + "_" + mData.get(i).id, cid));
+                                }
                             }
+
                         } else {
                             for (NewsBean.DataBean bean : mData) {
                                 //新闻写入文件
-                                FileUtil.saveObjectByFile(getActivity(), bean, bean.publishDateStr + "_" + bean.id);
+                                boolean res = FileUtil.saveObjectByFile(getActivity(), bean, bean.publishDateStr + "_" + bean.id);
                                 //新闻的文件名保存到数据库
-                                DaoManager.getInstance().getDaoSession().getNewsCacheDao()
-                                        .insertOrReplace(new NewsCache(null, bean.publishDateStr + "_" + bean.id, cid));
+                                if (res) {
+                                    DaoManager.getInstance().getDaoSession().getNewsCacheDao()
+                                            .insertOrReplace(new NewsCache(null, bean.publishDateStr + "_" + bean.id, cid));
+                                }
                             }
                         }
                         emitter.onNext(getString(R.string.success));
@@ -237,6 +240,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
 
     /**
      * 获取缓存
+     * 通过数据库获取新闻文件名的集合 根据文件名读取新闻文件缓存
      */
     private void getNewsCache() {
         Observable.create(new ObservableOnSubscribe<String>() {
@@ -244,7 +248,11 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
             public void subscribe(ObservableEmitter<String> emitter) {
                 if (mNewsCaches != null && mNewsCaches.size() > 0) {
                     for (NewsCache news : mNewsCaches) {
-                        mData.add((NewsBean.DataBean) FileUtil.readObjectByFile(getActivity(), news.getFileName()));
+                        NewsBean.DataBean obj = (NewsBean.DataBean) FileUtil.readObjectByFile(getActivity(), news.getFileName());
+                        //如果新闻文件不为Null(没有被删除)
+                        if (obj != null) {
+                            mData.add(obj);
+                        }
                     }
                 }
                 //操作执行完毕 发送数据 触发观察者的onNext方法
@@ -257,9 +265,20 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
                     @Override
                     public void accept(String str) {
                         if (str.equals(getString(R.string.success))) {
-                            contentFtViewModel.setNews(mData, Constant.REFRESH_DATA);
-                            mRcv.setAdapter(mAdapter);
-                            isShowNetWorkErrorLayout(cacheFlag);
+                            if (mData.size() == 0) {
+                                //新闻文件已被全部删除(清除缓存操作导致)
+                                //读取新闻文件缓存失败 数据=0
+                                ToastUtil toast = new ToastUtil(getActivity(), "新闻缓存文件不存在，读取失败");
+                                toast.show();
+                                //显示网络重连布局
+                                isShowNetWorkErrorLayout(false);
+                            }else {
+                                //新闻文件缓存读取成功 数据大于0
+                                contentFtViewModel.setNews(mData, Constant.REFRESH_DATA);
+                                mRcv.setAdapter(mAdapter);
+                                //隐藏网络重连布局
+                                isShowNetWorkErrorLayout(true);
+                            }
                             mHeader.setMsg(getString(R.string.network_error));
                             mTwiRefreshlayout.finishRefreshing();
                         }
@@ -385,7 +404,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         contentFtViewModel
                 .getNewsObservable(cid, null)
                 //自动在onDestroy中取消订阅 避免内存泄漏  一定要在subscribeOn方法之后调用
-                .compose(mContentFragment.<NewsBean>bindToLifecycle())
+                .compose(this.<NewsBean>bindToLifecycle())
                 .subscribe(new NetObserver<NewsBean>() {
                     @Override
                     public void onNext(NewsBean newsBean) {
@@ -442,7 +461,7 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
         contentFtViewModel
                 .getNewsObservable(cid, pageToken)
                 //自动在onDestroy中取消订阅 避免内存泄漏  一定要在subscribeOn方法之后调用
-                .compose(mContentFragment.<NewsBean>bindToLifecycle())
+                .compose(this.<NewsBean>bindToLifecycle())
                 .subscribe(new NetObserver<NewsBean>() {
                     @Override
                     public void onNext(NewsBean newsBean) {
@@ -487,6 +506,4 @@ public class ContentFragment extends LazyLoadFragment implements OnTabReselected
     }
 
 
-    @Override
-    public void onClick(View v) {}
 }

@@ -53,4 +53,11 @@
     <string name="sp_nightmode">nightmode</string>
 
 
+    <string name="shortcut_unavailable">功能不可用</string>
+    <string name="shortcut_scan_long">扫一扫</string>
+    <string name="shortcut_scan_short">扫描</string>
+    <string name="shortcut_search_long">搜索</string>
+    <string name="shortcut_search_short">搜索</string>
+
+
 </resources>

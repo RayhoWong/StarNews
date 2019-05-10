@@ -12,7 +12,6 @@ import com.blankj.rxbus.RxBus;
 import com.orhanobut.logger.Logger;
 import com.rayho.tsxiu.R;
 import com.rayho.tsxiu.activity.MainActivity;
-import com.rayho.tsxiu.activity.TestActivity;
 import com.rayho.tsxiu.base.Presenter;
 import com.rayho.tsxiu.databinding.NewsFragmentBinding;
 import com.rayho.tsxiu.http.api.NetObserver;
@@ -45,8 +44,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import io.reactivex.Observable;
-import io.reactivex.functions.BiFunction;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 

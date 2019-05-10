@@ -46,6 +46,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -56,44 +57,69 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 测试功能 -->
-        <activity android:name=".activity.TestActivity" /> <!-- 频道管理器 -->
+
+            <!--静态配置应用的快捷方式(7.1特性) 最低版本必须25及以上才能使用-->
+            <!--<meta-data-->
+                <!--android:name="android.app.shortcuts"-->
+                <!--android:resource="@xml/shortcuts"/>-->
+        </activity>
+
+        <!-- 测试功能 -->
+        <activity android:name=".activity.TestActivity" />
+
+        <!-- 频道管理器 -->
         <activity
             android:name=".ui.channelhelper.activity.ChannelActivity"
-            android:screenOrientation="portrait" /> <!-- 二维码扫描结果返回的界面 -->
+            android:screenOrientation="portrait" />
+
+        <!-- 二维码扫描结果返回的界面 -->
         <activity
             android:name=".module_news.activity.ScannerResultActivity"
             android:configChanges="orientation|screenSize"
-            android:hardwareAccelerated="true" /> <!-- 新闻详细界面 -->
+            android:hardwareAccelerated="true" />
+
+        <!-- 新闻详细界面 -->
         <activity
             android:name=".module_news.activity.NewsDetailActivity"
-            android:screenOrientation="portrait" /> <!-- 搜索界面 -->
+            android:screenOrientation="portrait" />
+
+        <!-- 搜索界面 -->
         <activity
             android:name=".module_news.activity.SearchActivity"
-            android:screenOrientation="portrait" /> <!-- 图片详细 -->
+            android:screenOrientation="portrait" />
+
+        <!-- 图片详细 -->
         <activity
             android:name=".module_photo.activity.PhotoDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SlideCloseTheme" /> <!-- 设置界面 -->
+            android:theme="@style/SlideCloseTheme" />
+
+        <!-- 设置界面 -->
         <activity
             android:name=".module_mine.activity.SettingsActivity"
-            android:screenOrientation="portrait" /> <!-- 我的收藏 -->
+            android:screenOrientation="portrait" />
+
+        <!-- 我的收藏 -->
         <activity
             android:name=".module_mine.activity.MyCollectionActivity"
-            android:screenOrientation="portrait" /> <!-- 编辑个人资料 -->
+            android:screenOrientation="portrait" />
+
+        <!-- 编辑个人资料 -->
         <activity
             android:name=".module_mine.activity.EditInfoActivity"
-            android:screenOrientation="portrait" /> <!-- 头像图片详细查看 -->
+            android:screenOrientation="portrait" />
+
+        <!-- 头像图片详细查看 -->
         <activity
             android:name=".module_mine.activity.FaceDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SlideCloseTheme" />
+
         <!--图片收藏的详细查看-->
         <activity
             android:name=".module_mine.activity.ImageDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SlideCloseTheme" />
-        <activity android:name=".base.BaseActivity" />
 
     </application>
 
