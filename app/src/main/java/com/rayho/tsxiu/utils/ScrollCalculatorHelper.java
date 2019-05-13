@@ -211,7 +211,8 @@ public class ScrollCalculatorHelper {
             Toast.makeText(context, context.getResources().getString(com.shuyu.gsyvideoplayer.R.string.no_net), Toast.LENGTH_LONG).show();
             return;
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        //暂时忽略移动网络情况下的视频播放
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(context.getResources().getString(com.shuyu.gsyvideoplayer.R.string.tips_not_wifi));
         builder.setPositiveButton(context.getResources().getString(com.shuyu.gsyvideoplayer.R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
             @Override
@@ -226,7 +227,7 @@ public class ScrollCalculatorHelper {
                 dialog.dismiss();
             }
         });
-        builder.create().show();
+        builder.create().show();*/
     }
 
 }
