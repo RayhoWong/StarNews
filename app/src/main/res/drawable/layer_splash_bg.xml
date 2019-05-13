@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--闪屏页背景图 代替黑白屏-->
+    <item>
+        <bitmap android:src="@mipmap/splash_bg"
+            android:gravity="center"/>
+    </item> 
+
+</layer-list>
