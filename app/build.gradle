@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'org.greenrobot.greendao'
+//apply plugin: 'bugly'
 
 android {
     compileSdkVersion 28
@@ -46,6 +47,12 @@ greendao {
     //targetGenDirTest：设置生成单元测试目录
     //generateTests：设置自动生成单元测试用例
 }
+
+
+//bugly {
+//    appId = '9b842bc8ea' // 注册时分配的App ID
+//    appKey = '6ba66cf2-4e36-4c80-9cdf-95e84f2205ba' // 注册时分配的App Key
+//}
 
 
 dependencies {
@@ -136,5 +143,11 @@ dependencies {
     implementation 'skin.support:skin-support-design:4.0.1'
     // skin-support-cardview CardView 控件支持[可选]
     implementation 'skin.support:skin-support-cardview:4.0.1'
+
+    //leakcanary debug下检测内存泄漏 正式包时请注释
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
+
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
+//    implementation 'com.tencent.bugly:crashreport:latest.release'
 
 }

@@ -42,6 +42,8 @@ public class AppApplication extends Application {
         //初始化Logger
         initLogger();
 
+//        initBugly();
+
         //初始化greenDao数据库
         DaoManager.getInstance().init(this);
         DaoManager.getInstance().getDaoMaster();
@@ -61,6 +63,7 @@ public class AppApplication extends Application {
 
     }
 
+
     /**
      * Logger配置
      */
@@ -73,6 +76,25 @@ public class AppApplication extends Application {
                 .build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
     }
+
+
+    /**
+     * Bugly初始化
+     */
+//    private void initBugly() {
+//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
+//        strategy.setAppVersion(AppUtils.getAppVersionName()); //app版本
+//        strategy.setAppPackageName(AppUtils.getAppPackageName()); //app包名
+////        strategy.setAppReportDelay(20000);   //Bugly会在启动20s后联网同步数据
+//
+///*
+//          第三个参数为SDK调试模式开关，调试模式的行为特性如下：
+//            输出详细的Bugly SDK的Log；
+//            每一条Crash都会被立即上报；
+//            自定义日志将会在Logcat中输出。
+//            建议在测试阶段建议设置成true，发布时设置为false。*/
+//        CrashReport.initCrashReport(getApplicationContext(), "9b842bc8ea", false ,strategy);
+//    }
 
 
     /**

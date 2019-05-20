@@ -134,6 +134,8 @@ public class MineTabFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_face://头像查看
+                //Bugly崩溃测试代码
+//                CrashReport.testJavaCrash();
                 Intent intent = new Intent(getActivity(), FaceDetailActivity.class);
                 intent.putExtra("path", mPhotoPath);
                 startActivity(intent);

@@ -74,6 +74,7 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.ViewHold
         void onItemLongClick(AppInfo parent, View view, int position);
     }
 
+
     static final class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
         ImageView img;

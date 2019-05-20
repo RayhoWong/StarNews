@@ -1,24 +1,16 @@
 package com.rayho.tsxiu.utils;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.orhanobut.logger.Logger;
-import com.rayho.tsxiu.base.Constant;
-import com.rayho.tsxiu.greendao.VideoAutoPlayDao;
 import com.rayho.tsxiu.module_video.adapter.VideoAdapter;
-import com.rayho.tsxiu.module_video.dao.VideoAutoPlay;
 import com.shuyu.gsyvideoplayer.utils.NetworkUtils;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 
 import androidx.recyclerview.widget.RecyclerView;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * 计算视频列表滑动，自动播放的帮助类
