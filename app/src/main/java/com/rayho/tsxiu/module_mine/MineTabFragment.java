@@ -22,6 +22,7 @@ import com.rayho.tsxiu.module_mine.viewmodel.MineTabViewModel;
 import com.rayho.tsxiu.utils.DaoManager;
 import com.rayho.tsxiu.utils.GlideUtils;
 import com.rayho.tsxiu.utils.ToastUtil;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
