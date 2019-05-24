@@ -8,6 +8,7 @@ import android.os.Build;
 
 import com.blankj.utilcode.util.Utils;
 import com.facebook.stetho.Stetho;
+import com.meituan.android.walle.WalleChannelReader;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -109,13 +110,13 @@ public class AppApplicationLike extends DefaultApplicationLike {
             @Override
             public void onPatchReceived(String patchFile) {
                 Logger.t("Bugly-Tinker");
-                Logger.d("补丁下载地址" + patchFile);
+                Logger.d("onPatchReceived:   补丁下载地址" + patchFile);
             }
 
             @Override
             public void onDownloadReceived(long savedLength, long totalLength) {
                 Logger.t("Bugly-Tinker");
-                Logger.d("onDownloadReceived: " + "补丁下载地址" + String.format(Locale.getDefault(), "%s %d%%",
+                Logger.d("onDownloadReceived:  补丁下载地址" + String.format(Locale.getDefault(), "%s %d%%",
                         Beta.strNotificationDownloading,
                         (int) (totalLength == 0 ? 0 : savedLength * 100 / totalLength)));
             }
@@ -123,41 +124,41 @@ public class AppApplicationLike extends DefaultApplicationLike {
             @Override
             public void onDownloadSuccess(String msg) {
                 Logger.t("Bugly-Tinker");
-                Logger.d("补丁下载成功");
+                Logger.d("onDownloadSuccess:   补丁下载成功");
             }
 
             @Override
             public void onDownloadFailure(String msg) {
                 Logger.t("Bugly-Tinker");
-                Logger.d("补丁下载失败");
+                Logger.d("onDownloadFailure:   补丁下载失败");
 
             }
 
             @Override
             public void onApplySuccess(String msg) {
                 Logger.t("Bugly-Tinker");
-                Logger.d("补丁应用成功");
+                Logger.d("onApplySuccess:   补丁应用成功");
             }
 
             @Override
             public void onApplyFailure(String msg) {
                 Logger.t("Bugly-Tinker");
-                Logger.d("补丁应用失败");
+                Logger.d("onApplyFailure:   补丁应用失败");
             }
 
             @Override
             public void onPatchRollback() {
                 Logger.t("Bugly-Tinker");
-                Logger.d("补丁应用失败");
+                Logger.d("onPatchRollback:   补丁应用失败");
             }
         };
 
         // 设置开发设备，默认为false，上传补丁如果下发范围指定为“开发设备”，需要调用此接口来标识开发设备
 //        Bugly.setIsDevelopmentDevice(getApplication(), true);
 
-        // 多渠道需求塞入
-//        String channel = WalleChannelReader.getChannel(getApplication());
-//        Bugly.setAppChannel(getApplication(), channel);
+        // 多渠道信息塞入
+        String channel = WalleChannelReader.getChannel(getApplication());
+        Bugly.setAppChannel(getApplication(), channel);
 
         /*
           这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId
